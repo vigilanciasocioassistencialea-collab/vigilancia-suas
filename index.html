@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Vigilância Socioassistencial - SUAS</title>
+    <style>
+        :root {
+            --primary: #15803d;        /* Verde Principal */
+            --primary-hover: #16a34a;  /* Verde Hover */
+            --secondary: #064e3b;      /* Verde Profundo (Sidebar) */
+            --bg-color: #f4fbf7;       /* Fundo suave do painel */
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --border-color: #d1e7dd;   /* Borda verde suave */
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+        }
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .login-card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-card h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        .login-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: white;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .btn {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+        .btn:hover { background-color: var(--primary-hover); }
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+            font-weight: 600;
+        }
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+        }
+        .top-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.85rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        .top-header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .top-header .badge-system {
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .app-body {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 52px);
+            overflow: hidden;
+        }
+        aside {
+            width: 270px;
+            background-color: var(--secondary);
+            color: #d1fae5;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+        }
+        .user-profile {
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #047857;
+        }
+        .user-profile h4 { color: white; font-size: 0.95rem; word-break: break-word; }
+        .user-profile span { font-size: 0.75rem; color: #4ade80; font-weight: 600; }
+        .menu-section {
+            margin-bottom: 1.5rem;
+        }
+        .menu-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a7f3d0;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+            font-weight: bold;
+        }
+        .nav-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #d1fae5;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .nav-item.active, .nav-item:hover {
+            background-color: #065f46;
+            color: white;
+        }
+        .logout-btn {
+            margin-top: auto;
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        main {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .page-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .sub-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .sub-tab-btn {
+            padding: 0.6rem 1.2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sub-tab-btn:hover { color: var(--primary); }
+        .sub-tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: rgba(21, 128, 61, 0.08);
+            border-radius: 6px 6px 0 0;
+        }
+        .btn-report {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        .btn-report:hover {
+            background-color: #f0fdf4;
+            border-color: var(--primary);
+            color: var(--primary-hover);
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            padding: 0.65rem 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f0fdf4;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+        }
+        .modal-card {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .modal-header h3 { color: var(--primary); }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .modal-body { overflow-y: auto; flex: 1; }
+        .badge-locked {
+            background-color: #fee2e2;
+            color: #dc2626;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .badge-unlocked {
+            background-color: #fef3c7;
+            color: #d97706;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .btn-action-sm {
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-action-sm:hover { opacity: 0.85; }
+        .btn-unlock { background-color: var(--warning); color: white; }
+        .btn-lock { background-color: var(--text-muted); color: white; }
+        .btn-edit { background-color: #2563eb; color: white; }
+    </style>
+</head>
+<body>
+
+    <!-- TELA DE LOGIN -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>Vigilância Socioassistencial</h2>
+            <p>Informe suas credenciais para acessar</p>
+            <form onsubmit="event.preventDefault(); handleLogin();">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" placeholder="Digite seu usuário" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn">Entrar</button>
+                <div id="error-msg" class="error-message">Usuário ou senha incorretos ou não cadastrados.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ESTRUTURA PRINCIPAL DO SISTEMA -->
+    <div id="app-container" style="display: none;">
+        <header class="top-header">
+            <h1>Painel de Monitoramento - SUAS <span class="badge-system">Vigilância Socioassistencial</span></h1>
+        </header>
+
+        <div class="app-body">
+            <!-- BARRA LATERAL DE NAVEGAÇÃO -->
+            <aside>
+                <div class="user-profile">
+                    <h4 id="user-display-name">Usuário</h4>
+                    <span id="user-display-role">Perfil</span>
+                </div>
+
+                <!-- Seção Gestão (Visível apenas para a Vigilância Socioassistencial) -->
+                <div class="menu-section" id="admin-menu-section">
+                    <div class="menu-title">Gestão</div>
+                    <a class="nav-item" id="nav-monitoramento" onclick="showTab('monitoramento', this)">Monitoramento Geral</a>
+                    <a class="nav-item" id="nav-usuarios" onclick="showTab('usuarios', this)">Gestão de Usuários</a>
+                </div>
+
+                <!-- Seção Serviços (Filtrada por perfil do usuário) -->
+                <div class="menu-section" id="services-menu-section">
+                    <div class="menu-title">Serviços</div>
+                    <a class="nav-item" id="nav-cras" onclick="showTab('cras', this)">CRAS</a>
+                    <a class="nav-item" id="nav-creas" onclick="showTab('creas', this)">CREAS</a>
+                    <a class="nav-item" id="nav-cadunico" onclick="showTab('cadunico', this)">Cadastro Único</a>
+                    <a class="nav-item" id="nav-crianca-feliz" onclick="showTab('crianca-feliz', this)">Programa Criança Feliz</a>
+                    <a class="nav-item" id="nav-cria" onclick="showTab('cria', this)">Programa CRIA</a>
+                    <a class="nav-item" id="nav-seguranca-alimentar" onclick="showTab('seguranca-alimentar', this)">Segurança Alimentar</a>
+                </div>
+
+                <button class="logout-btn" onclick="handleLogout()">Sair do Sistema</button>
+            </aside>
+
+            <!-- ÁREA DE CONTEÚDO -->
+            <main>
+                <!-- ABA: MONITORAMENTO GERAL -->
+                <section id="tab-monitoramento" class="tab-content">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Monitoramento Geral</h1>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">
+                                Painel de acompanhamento unificado e controle de autorizações de edições.
+                            </p>
+                        </div>
+                        <button class="btn-report" onclick="abrirModalGeralRelatorios()">
+                            <span>📅</span> Consultar Banco de Dados Central
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="section-title">Relatórios Recebidos de Todos os Serviços</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Serviço</th>
+                                    <th>Mês/Ano Ref.</th>
+                                    <th>Data de Envio</th>
+                                    <th>Enviado por</th>
+                                    <th>Resumo/Observações</th>
+                                    <th>Status / Liberação</th>
+                                    <th style="text-align: center;">Ação da Vigilância</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-monitoramento-direto"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ABA: GESTÃO DE USUÁRIOS -->
+                <section id="tab-usuarios" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">Gestão de Usuários</h1>
+                    </div>
+
+                    <div class="card">
+                        <div class="section-title">Cadastrar Novo Usuário</div>
+                        <form onsubmit="event.preventDefault(); cadastrarNovoUsuario();" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end;">
+                            <div class="form-group" style="margin: 0;">
+                                <label>Nome Completo</label>
+                                <input type="text" id="novo-nome" placeholder="Ex: Maria Silva" required>
+                            </div>
+                            <div class="form-group" style="margin: 0;">
+                                <label>Usuário (Login)</label>
+                                <input type="text" id="novo-usuario" placeholder="Ex: maria.silva" required>
+                            </div>
+                            <div class="form-group" style="margin: 0;">
+                                <label>Senha</label>
+                                <input type="password" id="nova-senha" placeholder="Digite a senha" required>
+                            </div>
+                            <div class="form-group" style="margin: 0;">
+                                <label>Serviço / Perfil</label>
+                                <select id="novo-servico">
+                                    <option value="CRAS">CRAS</option>
+                                    <option value="CREAS">CREAS</option>
+                                    <option value="Cadastro Único">Cadastro Único</option>
+                                    <option value="Programa Criança Feliz">Programa Criança Feliz</option>
+                                    <option value="Programa CRIA">Programa CRIA</option>
+                                    <option value="Segurança Alimentar">Segurança Alimentar</option>
+                                    <option value="Vigilância Socioassistencial">Vigilância Socioassistencial</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn" style="height: 45px; margin-top: 0;">Salvar Usuário</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <div class="section-title">Usuários Cadastrados no Sistema</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome Completo</th>
+                                    <th>Usuário (Login)</th>
+                                    <th>Serviço / Perfil</th>
+                                    <th style="width: 200px; text-align: center;">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-usuarios-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ABA: CRAS -->
+                <section id="tab-cras" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">CRAS - Centro de Referência de Assistência Social</h1>
+                    </div>
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" id="btn-subtab-cras-envio" onclick="switchSubTab('cras', 'envio')">📝 Enviar Relatório</button>
+                        <button class="sub-tab-btn" id="btn-subtab-cras-historico" onclick="switchSubTab('cras', 'historico')">📜 Histórico do Serviço</button>
+                    </div>
+                    <div id="subtab-cras-envio">
+                        <div class="card">
+                            <div class="section-title">Enviar Relatório Mensal do CRAS para a Vigilância Socioassistencial</div>
+                            <form onsubmit="event.preventDefault(); enviarRelatorioServico('CRAS', 'cras-mes-ano', 'cras-obs');">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: start;">
+                                    <div class="form-group">
+                                        <label>Mês e Ano Referência</label>
+                                        <input type="month" id="cras-mes-ano" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resumo dos Dados / Indicadores do Mês</label>
+                                        <textarea id="cras-obs" rows="3" placeholder="Digite as informações e indicadores consolidados do mês..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn" style="width: auto; padding: 0.6rem 1.5rem;">Enviar Relatório para a Vigilância Socioassistencial</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="subtab-cras-historico" style="display: none;">
+                        <div class="card">
+                            <div class="section-title">Histórico de Relatórios Enviados à Vigilância - CRAS</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mês/Ano Ref.</th>
+                                        <th>Data de Envio</th>
+                                        <th>Enviado Por</th>
+                                        <th>Resumo/Observações</th>
+                                        <th>Status do Relatório</th>
+                                        <th style="text-align: center;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-relatorios-cras"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ABA: CREAS -->
+                <section id="tab-creas" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">CREAS - Centro de Referência Especializado</h1>
+                    </div>
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" id="btn-subtab-creas-envio" onclick="switchSubTab('creas', 'envio')">📝 Enviar Relatório</button>
+                        <button class="sub-tab-btn" id="btn-subtab-creas-historico" onclick="switchSubTab('creas', 'historico')">📜 Histórico do Serviço</button>
+                    </div>
+                    <div id="subtab-creas-envio">
+                        <div class="card">
+                            <div class="section-title">Enviar Relatório Mensal do CREAS para a Vigilância Socioassistencial</div>
+                            <form onsubmit="event.preventDefault(); enviarRelatorioServico('CREAS', 'creas-mes-ano', 'creas-obs');">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: start;">
+                                    <div class="form-group">
+                                        <label>Mês e Ano Referência</label>
+                                        <input type="month" id="creas-mes-ano" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resumo dos Dados / Indicadores do Mês</label>
+                                        <textarea id="creas-obs" rows="3" placeholder="Digite as informações e indicadores consolidados do mês..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn" style="width: auto; padding: 0.6rem 1.5rem;">Enviar Relatório para a Vigilância Socioassistencial</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="subtab-creas-historico" style="display: none;">
+                        <div class="card">
+                            <div class="section-title">Histórico de Relatórios Enviados à Vigilância - CREAS</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mês/Ano Ref.</th>
+                                        <th>Data de Envio</th>
+                                        <th>Enviado Por</th>
+                                        <th>Resumo/Observações</th>
+                                        <th>Status do Relatório</th>
+                                        <th style="text-align: center;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-relatorios-creas"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ABA: CADASTRO ÚNICO -->
+                <section id="tab-cadunico" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">Cadastro Único</h1>
+                    </div>
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" id="btn-subtab-cadunico-envio" onclick="switchSubTab('cadunico', 'envio')">📝 Enviar Relatório</button>
+                        <button class="sub-tab-btn" id="btn-subtab-cadunico-historico" onclick="switchSubTab('cadunico', 'historico')">📜 Histórico do Serviço</button>
+                    </div>
+                    <div id="subtab-cadunico-envio">
+                        <div class="card">
+                            <div class="section-title">Enviar Relatório Mensal do Cadastro Único para a Vigilância Socioassistencial</div>
+                            <form onsubmit="event.preventDefault(); enviarRelatorioServico('Cadastro Único', 'cadunico-mes-ano', 'cadunico-obs');">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: start;">
+                                    <div class="form-group">
+                                        <label>Mês e Ano Referência</label>
+                                        <input type="month" id="cadunico-mes-ano" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resumo dos Dados / Indicadores do Mês</label>
+                                        <textarea id="cadunico-obs" rows="3" placeholder="Digite as informações e indicadores consolidados do mês..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn" style="width: auto; padding: 0.6rem 1.5rem;">Enviar Relatório para a Vigilância Socioassistencial</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="subtab-cadunico-historico" style="display: none;">
+                        <div class="card">
+                            <div class="section-title">Histórico de Relatórios Enviados à Vigilância - Cadastro Único</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mês/Ano Ref.</th>
+                                        <th>Data de Envio</th>
+                                        <th>Enviado Por</th>
+                                        <th>Resumo/Observações</th>
+                                        <th>Status do Relatório</th>
+                                        <th style="text-align: center;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-relatorios-cadunico"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ABA: PROGRAMA CRIANÇA FELIZ -->
+                <section id="tab-crianca-feliz" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">Programa Criança Feliz</h1>
+                    </div>
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" id="btn-subtab-crianca-feliz-envio" onclick="switchSubTab('crianca-feliz', 'envio')">📝 Enviar Relatório</button>
+                        <button class="sub-tab-btn" id="btn-subtab-crianca-feliz-historico" onclick="switchSubTab('crianca-feliz', 'historico')">📜 Histórico do Serviço</button>
+                    </div>
+                    <div id="subtab-crianca-feliz-envio">
+                        <div class="card">
+                            <div class="section-title">Enviar Relatório Mensal do Criança Feliz para a Vigilância Socioassistencial</div>
+                            <form onsubmit="event.preventDefault(); enviarRelatorioServico('Programa Criança Feliz', 'crianca-feliz-mes-ano', 'crianca-feliz-obs');">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: start;">
+                                    <div class="form-group">
+                                        <label>Mês e Ano Referência</label>
+                                        <input type="month" id="crianca-feliz-mes-ano" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resumo dos Dados / Indicadores do Mês</label>
+                                        <textarea id="crianca-feliz-obs" rows="3" placeholder="Digite as informações e indicadores consolidados do mês..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn" style="width: auto; padding: 0.6rem 1.5rem;">Enviar Relatório para a Vigilância Socioassistencial</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="subtab-crianca-feliz-historico" style="display: none;">
+                        <div class="card">
+                            <div class="section-title">Histórico de Relatórios Enviados à Vigilância - Criança Feliz</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mês/Ano Ref.</th>
+                                        <th>Data de Envio</th>
+                                        <th>Enviado Por</th>
+                                        <th>Resumo/Observações</th>
+                                        <th>Status do Relatório</th>
+                                        <th style="text-align: center;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-relatorios-crianca-feliz"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ABA: PROGRAMA CRIA -->
+                <section id="tab-cria" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">Programa CRIA</h1>
+                    </div>
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" id="btn-subtab-cria-envio" onclick="switchSubTab('cria', 'envio')">📝 Enviar Relatório</button>
+                        <button class="sub-tab-btn" id="btn-subtab-cria-historico" onclick="switchSubTab('cria', 'historico')">📜 Histórico do Serviço</button>
+                    </div>
+                    <div id="subtab-cria-envio">
+                        <div class="card">
+                            <div class="section-title">Enviar Relatório Mensal do Programa CRIA para a Vigilância Socioassistencial</div>
+                            <form onsubmit="event.preventDefault(); enviarRelatorioServico('Programa CRIA', 'cria-mes-ano', 'cria-obs');">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: start;">
+                                    <div class="form-group">
+                                        <label>Mês e Ano Referência</label>
+                                        <input type="month" id="cria-mes-ano" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resumo dos Dados / Indicadores do Mês</label>
+                                        <textarea id="cria-obs" rows="3" placeholder="Digite as informações e indicadores consolidados do mês..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn" style="width: auto; padding: 0.6rem 1.5rem;">Enviar Relatório para a Vigilância Socioassistencial</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="subtab-cria-historico" style="display: none;">
+                        <div class="card">
+                            <div class="section-title">Histórico de Relatórios Enviados à Vigilância - Programa CRIA</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mês/Ano Ref.</th>
+                                        <th>Data de Envio</th>
+                                        <th>Enviado Por</th>
+                                        <th>Resumo/Observações</th>
+                                        <th>Status do Relatório</th>
+                                        <th style="text-align: center;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-relatorios-cria"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ABA: SEGURANÇA ALIMENTAR -->
+                <section id="tab-seguranca-alimentar" class="tab-content">
+                    <div class="page-header">
+                        <h1 class="page-title">Segurança Alimentar</h1>
+                    </div>
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" id="btn-subtab-seguranca-alimentar-envio" onclick="switchSubTab('seguranca-alimentar', 'envio')">📝 Enviar Relatório</button>
+                        <button class="sub-tab-btn" id="btn-subtab-seguranca-alimentar-historico" onclick="switchSubTab('seguranca-alimentar', 'historico')">📜 Histórico do Serviço</button>
+                    </div>
+                    <div id="subtab-seguranca-alimentar-envio">
+                        <div class="card">
+                            <div class="section-title">Enviar Relatório Mensal de Segurança Alimentar para a Vigilância Socioassistencial</div>
+                            <form onsubmit="event.preventDefault(); enviarRelatorioServico('Segurança Alimentar', 'seguranca-alimentar-mes-ano', 'seguranca-alimentar-obs');">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: start;">
+                                    <div class="form-group">
+                                        <label>Mês e Ano Referência</label>
+                                        <input type="month" id="seguranca-alimentar-mes-ano" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resumo dos Dados / Indicadores do Mês</label>
+                                        <textarea id="seguranca-alimentar-obs" rows="3" placeholder="Digite as informações e indicadores consolidados do mês..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn" style="width: auto; padding: 0.6rem 1.5rem;">Enviar Relatório para a Vigilância Socioassistencial</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="subtab-seguranca-alimentar-historico" style="display: none;">
+                        <div class="card">
+                            <div class="section-title">Histórico de Relatórios Enviados à Vigilância - Segurança Alimentar</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mês/Ano Ref.</th>
+                                        <th>Data de Envio</th>
+                                        <th>Enviado Por</th>
+                                        <th>Resumo/Observações</th>
+                                        <th>Status do Relatório</th>
+                                        <th style="text-align: center;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-relatorios-seguranca-alimentar"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO GERAL DE RELATÓRIOS -->
+    <div class="modal-overlay" id="modal-geral-relatorios">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📅 Relatórios Armazenados na Vigilância Socioassistencial</h3>
+                <button class="modal-close" onclick="fecharModalGeral()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Mês/Ano Ref.</th>
+                            <th>Data Envio</th>
+                            <th>Enviado Por</th>
+                            <th>Resumo / Detalhes</th>
+                            <th>Status</th>
+                            <th style="text-align: center;">Ação da Vigilância</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-relatorios-geral"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- BIBLIOTECAS DO FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- LÓGICA DO SISTEMA COM CONEXÃO AO FIREBASE -->
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBd0jLCU-lPFiabjG8yr-k7fmTJM81PgXU",
+            authDomain: "vigilancia-suas.firebaseapp.com",
+            projectId: "vigilancia-suas",
+            storageBucket: "vigilancia-suas.firebasestorage.app",
+            messagingSenderId: "1034641036400",
+            appId: "1:1034641036400:web:791280b633b91fab1450b5"
+        };
+
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Variáveis de Estado
+        let usuarioLogado = null;
+        let relatoriosEnviados = [];
+        let usuariosCadastrados = [];
+
+        const mapaServicos = {
+            'CRAS': { navId: 'nav-cras', tabId: 'cras', key: 'cras' },
+            'CREAS': { navId: 'nav-creas', tabId: 'creas', key: 'creas' },
+            'Cadastro Único': { navId: 'nav-cadunico', tabId: 'cadunico', key: 'cadunico' },
+            'Programa Criança Feliz': { navId: 'nav-crianca-feliz', tabId: 'crianca-feliz', key: 'crianca-feliz' },
+            'Programa CRIA': { navId: 'nav-cria', tabId: 'cria', key: 'cria' },
+            'Segurança Alimentar': { navId: 'nav-seguranca-alimentar', tabId: 'seguranca-alimentar', key: 'seguranca-alimentar' }
+        };
+
+        // ESCUTADORES EM TEMPO REAL DO FIREBASE
+        db.collection('relatorios').onSnapshot(snapshot => {
+            relatoriosEnviados = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            atualizarTodasTabelasRelatorios();
+        });
+
+        db.collection('usuarios').onSnapshot(snapshot => {
+            usuariosCadastrados = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderizarUsuarios();
+        });
+
+        // Cria o usuário admin inicial caso o banco de usuários esteja totalmente vazio
+        db.collection('usuarios').get().then(snapshot => {
+            if (snapshot.empty) {
+                db.collection('usuarios').add({
+                    nome: "Administrador Geral",
+                    usuario: "admin",
+                    senha: "123",
+                    servico: "Vigilância Socioassistencial"
+                });
+            }
+        });
+
+        // Login no Sistema
+        function handleLogin() {
+            const userInput = document.getElementById('username').value.trim();
+            const passInput = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('error-msg');
+
+            const usuarioEncontrado = usuariosCadastrados.find(
+                user => user.usuario.toLowerCase() === userInput.toLowerCase() && user.senha === passInput
+            );
+
+            if (usuarioEncontrado) {
+                usuarioLogado = usuarioEncontrado;
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-container').style.display = 'flex';
+                
+                document.getElementById('user-display-name').textContent = usuarioEncontrado.nome;
+                document.getElementById('user-display-role').textContent = usuarioEncontrado.servico;
+                
+                errorMsg.style.display = 'none';
+
+                aplicarPermissoesMenu(usuarioEncontrado);
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        // Permissões por perfil
+        function aplicarPermissoesMenu(usuario) {
+            const isVigilancia = (usuario.servico === "Vigilância Socioassistencial");
+
+            const adminMenuSection = document.getElementById('admin-menu-section');
+            if (adminMenuSection) {
+                adminMenuSection.style.display = isVigilancia ? 'block' : 'none';
+            }
+
+            Object.keys(mapaServicos).forEach(nomeServico => {
+                const navElement = document.getElementById(mapaServicos[nomeServico].navId);
+                if (navElement) {
+                    if (isVigilancia || usuario.servico === nomeServico) {
+                        navElement.style.display = 'block';
+                    } else {
+                        navElement.style.display = 'none';
+                    }
+                }
+            });
+
+            if (isVigilancia) {
+                showTab('monitoramento', document.getElementById('nav-monitoramento'));
+            } else if (mapaServicos[usuario.servico]) {
+                const targetService = mapaServicos[usuario.servico];
+                showTab(targetService.tabId, document.getElementById(targetService.navId));
+            }
+        }
+
+        // Controle de Sub-abas
+        function switchSubTab(servicoKey, subTabType) {
+            const envioView = document.getElementById(`subtab-${servicoKey}-envio`);
+            const histView = document.getElementById(`subtab-${servicoKey}-historico`);
+            const btnEnvio = document.getElementById(`btn-subtab-${servicoKey}-envio`);
+            const btnHist = document.getElementById(`btn-subtab-${servicoKey}-historico`);
+
+            if (subTabType === 'envio') {
+                if (envioView) envioView.style.display = 'block';
+                if (histView) histView.style.display = 'none';
+                if (btnEnvio) btnEnvio.classList.add('active');
+                if (btnHist) btnHist.classList.remove('active');
+            } else {
+                if (envioView) envioView.style.display = 'none';
+                if (histView) histView.style.display = 'block';
+                if (btnEnvio) btnEnvio.classList.remove('active');
+                if (btnHist) btnHist.classList.add('active');
+            }
+        }
+
+        // Logout
+        function handleLogout() {
+            usuarioLogado = null;
+            document.getElementById('app-container').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('error-msg').style.display = 'none';
+        }
+
+        // Navegação de Abas
+        function showTab(tabId, element) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) targetTab.classList.add('active');
+
+            if (element) element.classList.add('active');
+        }
+
+        // Enviar / Atualizar Relatórios no Firestore
+        function enviarRelatorioServico(nomeServico, inputMesId, obsId) {
+            const mesAnoVal = document.getElementById(inputMesId).value;
+            const obsVal = document.getElementById(obsId).value.trim();
+
+            if (!mesAnoVal || !obsVal) {
+                alert('Preencha o mês/ano e as observações do relatório antes de enviar.');
+                return;
+            }
+
+            const dataHoje = new Date().toLocaleDateString('pt-BR');
+            const relExistente = relatoriosEnviados.find(r => r.servico === nomeServico && r.mesAno === mesAnoVal);
+
+            if (relExistente) {
+                if (relExistente.bloqueado !== false) {
+                    alert(`O relatório de ${formatarMesAno(mesAnoVal)} está BLOQUEADO para alterações.\n\nCaso precise alterar, solicite a liberação à Vigilância Socioassistencial.`);
+                    return;
+                } else {
+                    // Atualiza no banco e re-bloqueia
+                    db.collection('relatorios').doc(relExistente.id).update({
+                        observacoes: obsVal,
+                        dataEnvio: dataHoje + ' (Atualizado)',
+                        enviadoPor: usuarioLogado ? usuarioLogado.nome : "Usuário do Serviço",
+                        bloqueado: true
+                    }).then(() => {
+                        alert(`Relatório do mês ${formatarMesAno(mesAnoVal)} alterado com sucesso! Ele foi reenviado e novamente bloqueado.`);
+                    }).catch(err => alert("Erro ao atualizar relatório: " + err.message));
+                }
+            } else {
+                // Insere novo no Firestore (Bloqueado por padrão)
+                db.collection('relatorios').add({
+                    servico: nomeServico,
+                    mesAno: mesAnoVal,
+                    dataEnvio: dataHoje,
+                    enviadoPor: usuarioLogado ? usuarioLogado.nome : "Usuário do Serviço",
+                    observacoes: obsVal,
+                    bloqueado: true,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    alert(`Relatório do serviço "${nomeServico}" (${formatarMesAno(mesAnoVal)}) enviado com sucesso e bloqueado para edições!`);
+                }).catch(err => alert("Erro ao salvar relatório: " + err.message));
+            }
+
+            document.getElementById(inputMesId).value = '';
+            document.getElementById(obsId).value = '';
+
+            if (mapaServicos[nomeServico]) {
+                switchSubTab(mapaServicos[nomeServico].key, 'historico');
+            }
+        }
+
+        // Vigilância: Liberar / Bloquear Edição no Firestore
+        function alternarBloqueioVigilancia(idRelatorio) {
+            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
+            if (relatorio) {
+                const statusAtual = (relatorio.bloqueado !== false);
+                const novoStatus = !statusAtual;
+
+                db.collection('relatorios').doc(idRelatorio).update({
+                    bloqueado: novoStatus
+                }).then(() => {
+                    if (novoStatus) {
+                        alert(`O relatório de ${relatorio.servico} (${formatarMesAno(relatorio.mesAno)}) foi BLOQUEADO novamente.`);
+                    } else {
+                        alert(`O relatório de ${relatorio.servico} (${formatarMesAno(relatorio.mesAno)}) foi LIBERADO para alteração pelo serviço!`);
+                    }
+                }).catch(err => alert("Erro ao atualizar status: " + err.message));
+            }
+        }
+
+        // Carregar Relatório Liberado no Formulário
+        function prepararEdicaoServico(servicoKey, idRelatorio) {
+            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
+            if (!relatorio) return;
+
+            if (relatorio.bloqueado !== false) {
+                alert("Este relatório está bloqueado. Peça a liberação para a Vigilância Socioassistencial para poder editar.");
+                return;
+            }
+
+            const camposForm = {
+                'cras': { mes: 'cras-mes-ano', obs: 'cras-obs' },
+                'creas': { mes: 'creas-mes-ano', obs: 'creas-obs' },
+                'cadunico': { mes: 'cadunico-mes-ano', obs: 'cadunico-obs' },
+                'crianca-feliz': { mes: 'crianca-feliz-mes-ano', obs: 'crianca-feliz-obs' },
+                'cria': { mes: 'cria-mes-ano', obs: 'cria-obs' },
+                'seguranca-alimentar': { mes: 'seguranca-alimentar-mes-ano', obs: 'seguranca-alimentar-obs' }
+            };
+
+            const campos = camposForm[servicoKey];
+            if (campos) {
+                document.getElementById(campos.mes).value = relatorio.mesAno;
+                document.getElementById(campos.obs).value = relatorio.observacoes;
+                switchSubTab(servicoKey, 'envio');
+                alert(`Relatório do mês ${formatarMesAno(relatorio.mesAno)} carregado no formulário. Faça as alterações desejadas e clique em enviar.`);
+            }
+        }
+
+        // Atualização de Tabelas na Tela
+        function atualizarTodasTabelasRelatorios() {
+            const isVigilancia = usuarioLogado && (usuarioLogado.servico === "Vigilância Socioassistencial");
+
+            const servicos = [
+                { nome: 'CRAS', tbody: 'tbody-relatorios-cras', key: 'cras' },
+                { nome: 'CREAS', tbody: 'tbody-relatorios-creas', key: 'creas' },
+                { nome: 'Cadastro Único', tbody: 'tbody-relatorios-cadunico', key: 'cadunico' },
+                { nome: 'Programa Criança Feliz', tbody: 'tbody-relatorios-crianca-feliz', key: 'crianca-feliz' },
+                { nome: 'Programa CRIA', tbody: 'tbody-relatorios-cria', key: 'cria' },
+                { nome: 'Segurança Alimentar', tbody: 'tbody-relatorios-seguranca-alimentar', key: 'seguranca-alimentar' }
+            ];
+
+            servicos.forEach(s => {
+                const tbody = document.getElementById(s.tbody);
+                if (!tbody) return;
+                tbody.innerHTML = '';
+
+                const relsDoServico = relatoriosEnviados.filter(r => r.servico === s.nome);
+
+                if (relsDoServico.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum relatório enviado até o momento.</td></tr>`;
+                } else {
+                    relsDoServico.slice().reverse().forEach(r => {
+                        const estaBloqueado = (r.bloqueado !== false);
+                        const badgeHtml = estaBloqueado 
+                            ? `<span class="badge-locked">🔒 Bloqueado</span>` 
+                            : `<span class="badge-unlocked">🔓 Liberado p/ Edição</span>`;
+                        
+                        const botaoEditarHtml = estaBloqueado 
+                            ? `<button disabled style="opacity: 0.5; cursor: not-allowed;" class="btn-action-sm btn-edit">🔒 Bloqueado</button>` 
+                            : `<button onclick="prepararEdicaoServico('${s.key}', '${r.id}')" class="btn-action-sm btn-edit">✏️ Editar</button>`;
+
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><strong>${formatarMesAno(r.mesAno)}</strong></td>
+                            <td>${r.dataEnvio || '-'}</td>
+                            <td>${r.enviadoPor || '-'}</td>
+                            <td>${r.observacoes || '-'}</td>
+                            <td>${badgeHtml}</td>
+                            <td style="text-align: center;">${botaoEditarHtml}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            });
+
+            // Tabela do Monitoramento Geral
+            const tbodyMonit = document.getElementById('tbody-monitoramento-direto');
+            if (tbodyMonit) {
+                tbodyMonit.innerHTML = '';
+                if (relatoriosEnviados.length === 0) {
+                    tbodyMonit.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Nenhum relatório recebido pela Vigilância Socioassistencial ainda.</td></tr>`;
+                } else {
+                    relatoriosEnviados.slice().reverse().forEach(r => {
+                        const estaBloqueado = (r.bloqueado !== false);
+                        const badgeHtml = estaBloqueado 
+                            ? `<span class="badge-locked">🔒 Bloqueado</span>` 
+                            : `<span class="badge-unlocked">🔓 Liberado p/ Edição</span>`;
+
+                        const btnVigilancia = estaBloqueado
+                            ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar p/ Edição</button>`
+                            : `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-lock">🔒 Bloquear Novamente</button>`;
+
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><strong>${r.servico}</strong></td>
+                            <td>${formatarMesAno(r.mesAno)}</td>
+                            <td>${r.dataEnvio || '-'}</td>
+                            <td>${r.enviadoPor || '-'}</td>
+                            <td>${r.observacoes || '-'}</td>
+                            <td>${badgeHtml}</td>
+                            <td style="text-align: center;">${isVigilancia ? btnVigilancia : '-'}</td>
+                        `;
+                        tbodyMonit.appendChild(tr);
+                    });
+                }
+            }
+
+            if (document.getElementById('modal-geral-relatorios').style.display === 'flex') {
+                abrirModalGeralRelatorios();
+            }
+        }
+
+        function formatarMesAno(valor) {
+            if (!valor) return '';
+            const partes = valor.split('-');
+            if (partes.length === 2) {
+                return `${partes[1]}/${partes[0]}`;
+            }
+            return valor;
+        }
+
+        // Modal Geral
+        function abrirModalGeralRelatorios() {
+            const tbodyGeral = document.getElementById('tbody-relatorios-geral');
+            const isVigilancia = usuarioLogado && (usuarioLogado.servico === "Vigilância Socioassistencial");
+            tbodyGeral.innerHTML = '';
+
+            if (relatoriosEnviados.length === 0) {
+                tbodyGeral.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Nenhum relatório armazenado até o momento.</td></tr>`;
+            } else {
+                relatoriosEnviados.slice().reverse().forEach(r => {
+                    const estaBloqueado = (r.bloqueado !== false);
+                    const badgeHtml = estaBloqueado 
+                        ? `<span class="badge-locked">🔒 Bloqueado</span>` 
+                        : `<span class="badge-unlocked">🔓 Liberado</span>`;
+
+                    const btnVigilancia = estaBloqueado
+                        ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar p/ Edição</button>`
+                        : `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-lock">🔒 Bloquear</button>`;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${r.servico}</strong></td>
+                        <td>${formatarMesAno(r.mesAno)}</td>
+                        <td>${r.dataEnvio || '-'}</td>
+                        <td>${r.enviadoPor || '-'}</td>
+                        <td>${r.observacoes || '-'}</td>
+                        <td>${badgeHtml}</td>
+                        <td style="text-align: center;">${isVigilancia ? btnVigilancia : '-'}</td>
+                    `;
+                    tbodyGeral.appendChild(tr);
+                });
+            }
+
+            document.getElementById('modal-geral-relatorios').style.display = 'flex';
+        }
+
+        function fecharModalGeral() {
+            document.getElementById('modal-geral-relatorios').style.display = 'none';
+        }
+
+        // Cadastro de Usuários no Firestore
+        function cadastrarNovoUsuario() {
+            const nome = document.getElementById('novo-nome').value.trim();
+            const usuario = document.getElementById('novo-usuario').value.trim();
+            const senha = document.getElementById('nova-senha').value.trim();
+            const servico = document.getElementById('novo-servico').value;
+
+            if (nome && usuario && senha) {
+                const existe = usuariosCadastrados.some(u => u.usuario.toLowerCase() === usuario.toLowerCase());
+                if (existe) {
+                    alert('Este nome de usuário (login) já está em uso!');
+                    return;
+                }
+
+                db.collection('usuarios').add({
+                    nome: nome,
+                    usuario: usuario,
+                    senha: senha,
+                    servico: servico
+                }).then(() => {
+                    alert(`Usuário de "${servico}" criado com sucesso no banco de dados!`);
+                    document.getElementById('novo-nome').value = '';
+                    document.getElementById('novo-usuario').value = '';
+                    document.getElementById('nova-senha').value = '';
+                }).catch(err => alert("Erro ao salvar usuário: " + err.message));
+            }
+        }
+
+        function renderizarUsuarios() {
+            const tbody = document.getElementById('lista-usuarios-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            usuariosCadastrados.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.nome}</td>
+                    <td>${user.usuario}</td>
+                    <td>${user.servico}</td>
+                    <td style="text-align: center;">
+                        <button onclick="alterarSenhaUsuario('${user.id}')" style="background: var(--warning); color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; margin-right: 0.25rem;">Alterar Senha</button>
+                        <button onclick="removerUsuario('${user.id}')" style="background: var(--danger); color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Excluir</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function alterarSenhaUsuario(id) {
+            const user = usuariosCadastrados.find(u => u.id === id);
+            if (!user) return;
+
+            const novaSenha = prompt(`Digite a nova senha para "${user.nome}" (${user.usuario}):`);
+            if (novaSenha !== null) {
+                if (novaSenha.trim() === '') {
+                    alert('A senha não pode ser vazia!');
+                    return;
+                }
+                db.collection('usuarios').doc(id).update({
+                    senha: novaSenha.trim()
+                }).then(() => {
+                    alert('Senha atualizada com sucesso!');
+                }).catch(err => alert("Erro ao atualizar senha: " + err.message));
+            }
+        }
+
+        function removerUsuario(id) {
+            if (usuariosCadastrados.length <= 1) {
+                alert('É necessário manter ao menos um usuário no sistema!');
+                return;
+            }
+            if (confirm('Deseja realmente remover este usuário do sistema?')) {
+                db.collection('usuarios').doc(id).delete().then(() => {
+                    alert('Usuário removido!');
+                }).catch(err => alert("Erro ao remover usuário: " + err.message));
+            }
+        }
+    </script>
+</body>
+</html>

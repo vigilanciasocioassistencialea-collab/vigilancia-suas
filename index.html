@@ -16,10 +16,11 @@
             --card-bg: #ffffff;
             --text-main: #0f172a;        /* Texto principal escuro */
             --text-muted: #64748b;       /* Texto secundário */
-            --border-color: #e2e8f0;     /* Borda neutra */
+            --border-color: #cbd5e1;     /* Borda neutra */
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
+            --info: #0284c7;
         }
 
         * {
@@ -318,71 +319,61 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* FOCO DA MELHORIA VISUAL: ROTEIRO FIXO x RESPOSTAS PREENCHÍVEIS */
-        .roteiro-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .roteiro-item {
-            background-color: #ffffff;
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary);
-            border-radius: 10px;
-            padding: 1.25rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-            transition: border-color 0.2s ease;
-        }
-
-        .roteiro-item:focus-within {
-            border-color: var(--primary);
-        }
-
-        .roteiro-header {
-            margin-bottom: 0.75rem;
-            user-select: none;
-        }
-
-        .roteiro-titulo {
+        /* TABELAS ESTILIZADAS RMA CREAS */
+        .rma-section-header {
+            background-color: #ecfdf5;
+            color: #065f46;
             font-weight: 700;
-            color: #1e293b;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0 1rem 0;
             font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
+            border-left: 5px solid var(--primary);
         }
 
-        .roteiro-sub {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-            line-height: 1.4;
+        .rma-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .rma-table th, .rma-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+        }
+
+        .rma-table th {
+            background-color: #f0fdf4;
+            color: var(--primary-hover);
+            font-weight: 600;
+        }
+
+        .rma-input-num {
+            width: 80px;
+            padding: 0.4rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .rma-input-num:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
         }
 
         .campo-resposta {
             width: 100%;
-            padding: 0.85rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 0.925rem;
-            line-height: 1.5;
-            color: var(--text-main);
-            background-color: #f8fafc;
-            transition: all 0.2s ease;
-            resize: vertical;
-            min-height: 90px;
+            padding: 0.6rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.875rem;
         }
 
-        .campo-resposta:focus {
-            outline: none;
-            border-color: var(--primary);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
-        }
-
-        /* TABELAS */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -390,7 +381,7 @@
         }
 
         th, td {
-            padding: 0.75rem 0.9rem;
+            padding: 0.85rem 1rem;
             border-bottom: 1px solid var(--border-color);
             font-size: 0.875rem;
             text-align: left;
@@ -402,7 +393,6 @@
             font-weight: 600;
         }
 
-        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -417,8 +407,8 @@
         .modal-card {
             background: white;
             width: 90%;
-            max-width: 950px;
-            max-height: 85vh;
+            max-width: 980px;
+            max-height: 88vh;
             border-radius: 14px;
             padding: 1.75rem;
             display: flex;
@@ -446,7 +436,6 @@
 
         .modal-body { overflow-y: auto; flex: 1; }
 
-        /* BADGES E BOTÕES DE AÇÃO */
         .badge-locked {
             background-color: #fef2f2;
             color: #dc2626;
@@ -468,19 +457,24 @@
         }
 
         .btn-action-sm {
-            padding: 0.4rem 0.7rem;
+            padding: 0.45rem 0.75rem;
             border-radius: 6px;
             border: none;
             font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             transition: opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
-        .btn-action-sm:hover { opacity: 0.85; }
+        .btn-action-sm:hover { opacity: 0.88; }
         .btn-unlock { background-color: var(--warning); color: white; }
         .btn-lock { background-color: var(--text-muted); color: white; }
         .btn-edit { background-color: #2563eb; color: white; }
+        .btn-view { background-color: var(--info); color: white; }
+        .btn-delete { background-color: #dc2626; color: white; }
     </style>
 </head>
 <body>
@@ -519,36 +513,29 @@
                     <span id="user-display-role">Perfil</span>
                 </div>
 
-                <!-- Seção Gestão (Visível para Vigilância Socioassistencial) -->
                 <div class="menu-section" id="admin-menu-section">
                     <div class="menu-title">Gestão e Controle</div>
                     <a class="nav-item" id="nav-monitoramento" onclick="showTab('monitoramento', this)">Monitoramento Geral</a>
                     <a class="nav-item" id="nav-usuarios" onclick="showTab('usuarios', this)">Gestão de Usuários</a>
                 </div>
 
-                <!-- Seção Serviços -->
-                <div class="menu-section" id="services-menu-section">
+                <div class="menu-section">
                     <div class="menu-title">Serviços Socioassistenciais</div>
-                    <a class="nav-item" id="nav-cras" onclick="showTab('cras', this)">CRAS</a>
-                    <a class="nav-item" id="nav-creas" onclick="showTab('creas', this)">CREAS</a>
-                    <a class="nav-item" id="nav-cadunico" onclick="showTab('cadunico', this)">Cadastro Único</a>
-                    <a class="nav-item" id="nav-crianca-feliz" onclick="showTab('crianca-feliz', this)">Programa Criança Feliz</a>
-                    <a class="nav-item" id="nav-cria" onclick="showTab('cria', this)">Programa CRIA</a>
-                    <a class="nav-item" id="nav-seguranca-alimentar" onclick="showTab('seguranca-alimentar', this)">Segurança Alimentar</a>
+                    <div id="services-menu-section"></div>
                 </div>
 
                 <button class="logout-btn" onclick="handleLogout()">Sair do Sistema</button>
             </aside>
 
             <!-- ÁREA DE CONTEÚDO -->
-            <main>
+            <main id="main-content">
                 <!-- ABA: MONITORAMENTO GERAL -->
                 <section id="tab-monitoramento" class="tab-content">
                     <div class="page-header">
                         <div>
                             <h1 class="page-title">Monitoramento Geral de Relatórios</h1>
                             <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem;">
-                                Acompanhamento unificado dos relatórios mensais e gestão de autorizações de edição.
+                                Acompanhamento unificado dos relatórios mensais, liberações e exclusão de envios para ajustes.
                             </p>
                         </div>
                         <button class="btn-report" onclick="abrirModalGeralRelatorios()">
@@ -564,9 +551,8 @@
                                     <th>Mês/Ano Ref.</th>
                                     <th>Data de Envio</th>
                                     <th>Enviado por</th>
-                                    <th>Resumo/Respostas</th>
                                     <th>Status</th>
-                                    <th style="text-align: center;">Ação da Vigilância</th>
+                                    <th style="text-align: center; width: 270px;">Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody-monitoramento-direto"></tbody>
@@ -597,15 +583,7 @@
                             </div>
                             <div class="form-group" style="margin: 0;">
                                 <label>Serviço / Perfil</label>
-                                <select id="novo-servico">
-                                    <option value="CRAS">CRAS</option>
-                                    <option value="CREAS">CREAS</option>
-                                    <option value="Cadastro Único">Cadastro Único</option>
-                                    <option value="Programa Criança Feliz">Programa Criança Feliz</option>
-                                    <option value="Programa CRIA">Programa CRIA</option>
-                                    <option value="Segurança Alimentar">Segurança Alimentar</option>
-                                    <option value="Vigilância Socioassistencial">Vigilância Socioassistencial</option>
-                                </select>
+                                <select id="novo-servico"></select>
                             </div>
                             <div>
                                 <button type="submit" class="btn" style="height: 45px; margin-top: 0;">Salvar Usuário</button>
@@ -628,443 +606,19 @@
                         </table>
                     </div>
                 </section>
-
-                <!-- ABA: CRAS -->
-                <section id="tab-cras" class="tab-content">
-                    <div class="page-header">
-                        <h1 class="page-title">CRAS - Centro de Referência de Assistência Social</h1>
-                    </div>
-                    <div class="sub-tabs">
-                        <button class="sub-tab-btn active" id="btn-subtab-cras-envio" onclick="switchSubTab('cras', 'envio')">📝 Preencher Relatório Mensal</button>
-                        <button class="sub-tab-btn" id="btn-subtab-cras-historico" onclick="switchSubTab('cras', 'historico')">📜 Histórico de Enviados</button>
-                    </div>
-
-                    <div id="subtab-cras-envio">
-                        <div class="card">
-                            <div class="section-title">Formulário Mensal do CRAS</div>
-                            <form id="form-cras" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('CRAS', 'cras-mes-ano', 'form-cras');">
-                                <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
-                                    <label>Mês/Ano de Referência</label>
-                                    <input type="month" id="cras-mes-ano" required>
-                                </div>
-
-                                <div class="roteiro-container">
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">1. Atendimentos Particularizados e Acompanhamentos PAIF</div>
-                                            <div class="roteiro-sub">Informe o número total de famílias atendidas, acompanhadas e demandas prioritárias identificadas.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="1. Atendimentos PAIF" placeholder="Digite as informações referentes a este item..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">2. Atividades Coletivas, Grupos e Oficinas</div>
-                                            <div class="roteiro-sub">Descreva as palestras, reuniões comunitárias e oficinas do SCFV ou PAIF executadas no período.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="2. Atividades Coletivas" placeholder="Digite as informações referentes a este item..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">3. Benefícios Eventuais e Encaminhamentos</div>
-                                            <div class="roteiro-sub">Concessões de cestas básicas, auxílio natalidade/funeral e encaminhamentos para a rede socioassistencial.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="3. Benefícios e Encaminhamentos" placeholder="Digite as informações referentes a este item..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">4. Destaques e Observações Gerais</div>
-                                            <div class="roteiro-sub">Outros apontamentos relevantes ou desafios operacionais observados pela equipe no mês.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="4. Destaques e Observações" placeholder="Digite observações gerais (opcional)..."></textarea>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn" style="width: auto; padding: 0.75rem 2rem;">Enviar Relatório para a Vigilância</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="subtab-cras-historico" style="display: none;">
-                        <div class="card">
-                            <div class="section-title">Histórico do CRAS</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Mês/Ano Ref.</th>
-                                        <th>Data de Envio</th>
-                                        <th>Enviado Por</th>
-                                        <th>Resumo das Respostas</th>
-                                        <th>Status</th>
-                                        <th style="text-align: center;">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-relatorios-cras"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ABA: CREAS -->
-                <section id="tab-creas" class="tab-content">
-                    <div class="page-header">
-                        <h1 class="page-title">CREAS - Centro de Referência Especializado</h1>
-                    </div>
-                    <div class="sub-tabs">
-                        <button class="sub-tab-btn active" id="btn-subtab-creas-envio" onclick="switchSubTab('creas', 'envio')">📝 Preencher Relatório Mensal</button>
-                        <button class="sub-tab-btn" id="btn-subtab-creas-historico" onclick="switchSubTab('creas', 'historico')">📜 Histórico de Enviados</button>
-                    </div>
-
-                    <div id="subtab-creas-envio">
-                        <div class="card">
-                            <div class="section-title">Formulário Mensal do CREAS</div>
-                            <form id="form-creas" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('CREAS', 'creas-mes-ano', 'form-creas');">
-                                <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
-                                    <label>Mês/Ano de Referência</label>
-                                    <input type="month" id="creas-mes-ano" required>
-                                </div>
-
-                                <div class="roteiro-container">
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">1. Casos Acompanhados no PAEFI</div>
-                                            <div class="roteiro-sub">Quantitativo e síntese das situações de violações de direitos em acompanhamento ativo no mês.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="1. Acompanhamento PAEFI" placeholder="Digite os dados do acompanhamento..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">2. Medidas Socioeducativas (LA e PSC)</div>
-                                            <div class="roteiro-sub">Informe os adolescentes em cumprimento de Liberdade Assistida ou Prestação de Serviços à Comunidade.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="2. Medidas Socioeducativas" placeholder="Digite os dados referentes às MSE..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">3. Articulação Intersetorial e Poder Judiciário</div>
-                                            <div class="roteiro-sub">Relatório de respostas a ofícios, audiências e articulações com o sistema de garantia de direitos.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="3. Articulação Intersetorial" placeholder="Digite os dados da articulação..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">4. Destaques e Observações Gerais</div>
-                                            <div class="roteiro-sub">Outros dados relevantes do trabalho especializado executado.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="4. Destaques e Observações" placeholder="Digite observações adicionais..."></textarea>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn" style="width: auto; padding: 0.75rem 2rem;">Enviar Relatório para a Vigilância</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="subtab-creas-historico" style="display: none;">
-                        <div class="card">
-                            <div class="section-title">Histórico do CREAS</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Mês/Ano Ref.</th>
-                                        <th>Data de Envio</th>
-                                        <th>Enviado Por</th>
-                                        <th>Resumo das Respostas</th>
-                                        <th>Status</th>
-                                        <th style="text-align: center;">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-relatorios-creas"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ABA: CADASTRO ÚNICO -->
-                <section id="tab-cadunico" class="tab-content">
-                    <div class="page-header">
-                        <h1 class="page-title">Cadastro Único</h1>
-                    </div>
-                    <div class="sub-tabs">
-                        <button class="sub-tab-btn active" id="btn-subtab-cadunico-envio" onclick="switchSubTab('cadunico', 'envio')">📝 Preencher Relatório Mensal</button>
-                        <button class="sub-tab-btn" id="btn-subtab-cadunico-historico" onclick="switchSubTab('cadunico', 'historico')">📜 Histórico de Enviados</button>
-                    </div>
-
-                    <div id="subtab-cadunico-envio">
-                        <div class="card">
-                            <div class="section-title">Formulário Mensal do Cadastro Único</div>
-                            <form id="form-cadunico" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('Cadastro Único', 'cadunico-mes-ano', 'form-cadunico');">
-                                <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
-                                    <label>Mês/Ano de Referência</label>
-                                    <input type="month" id="cadunico-mes-ano" required>
-                                </div>
-
-                                <div class="roteiro-container">
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">1. Cadastramentos Novos e Atualizações Cadastrais</div>
-                                            <div class="roteiro-sub">Quantitativo de famílias recém-cadastradas e atualizações realizadas durante o mês.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="1. Inclusões e Atualizações" placeholder="Digite as informações do mês..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">2. Atendimentos de Condicionalidades e PBF</div>
-                                            <div class="roteiro-sub">Acompanhamento dos benefícios do Programa Bolsa Família e averiguação/revisão cadastral.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="2. PBF e Condicionalidades" placeholder="Digite as informações do mês..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">3. Buscas Ativas e Mutirões Comunitários</div>
-                                            <div class="roteiro-sub">Visitas nos territórios, mutirões de cadastramento e ações itinerantes efetuadas.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="3. Buscas Ativas e Mutirões" placeholder="Digite as informações do mês..." required></textarea>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn" style="width: auto; padding: 0.75rem 2rem;">Enviar Relatório para a Vigilância</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="subtab-cadunico-historico" style="display: none;">
-                        <div class="card">
-                            <div class="section-title">Histórico do Cadastro Único</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Mês/Ano Ref.</th>
-                                        <th>Data de Envio</th>
-                                        <th>Enviado Por</th>
-                                        <th>Resumo das Respostas</th>
-                                        <th>Status</th>
-                                        <th style="text-align: center;">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-relatorios-cadunico"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ABA: PROGRAMA CRIANÇA FELIZ -->
-                <section id="tab-crianca-feliz" class="tab-content">
-                    <div class="page-header">
-                        <h1 class="page-title">Programa Criança Feliz</h1>
-                    </div>
-                    <div class="sub-tabs">
-                        <button class="sub-tab-btn active" id="btn-subtab-crianca-feliz-envio" onclick="switchSubTab('crianca-feliz', 'envio')">📝 Preencher Relatório Mensal</button>
-                        <button class="sub-tab-btn" id="btn-subtab-crianca-feliz-historico" onclick="switchSubTab('crianca-feliz', 'historico')">📜 Histórico de Enviados</button>
-                    </div>
-
-                    <div id="subtab-crianca-feliz-envio">
-                        <div class="card">
-                            <div class="section-title">Formulário Mensal do Criança Feliz</div>
-                            <form id="form-crianca-feliz" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('Programa Criança Feliz', 'crianca-feliz-mes-ano', 'form-crianca-feliz');">
-                                <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
-                                    <label>Mês/Ano de Referência</label>
-                                    <input type="month" id="crianca-feliz-mes-ano" required>
-                                </div>
-
-                                <div class="roteiro-container">
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">1. Visitas Domiciliares e Gestantes/Crianças Acompanhadas</div>
-                                            <div class="roteiro-sub">Quantitativo de visitas domiciliares efetuadas e total de gestantes e crianças atendidas no mês.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="1. Visitas e Acompanhamentos" placeholder="Digite os dados das visitas..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">2. Articulação com a Rede de Primeira Infância</div>
-                                            <div class="roteiro-sub">Ações conjuntas e encaminhamentos para as redes de Saúde, Educação e Assistência Social.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="2. Ações Intersetoriais" placeholder="Digite os dados da articulação..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">3. Destaques e Observações do Programa</div>
-                                            <div class="roteiro-sub">Avanços no desenvolvimento infantil e desafios observados pelas visitadoras no território.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="3. Observações Gerais" placeholder="Digite observações gerais..."></textarea>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn" style="width: auto; padding: 0.75rem 2rem;">Enviar Relatório para a Vigilância</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="subtab-crianca-feliz-historico" style="display: none;">
-                        <div class="card">
-                            <div class="section-title">Histórico do Programa Criança Feliz</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Mês/Ano Ref.</th>
-                                        <th>Data de Envio</th>
-                                        <th>Enviado Por</th>
-                                        <th>Resumo das Respostas</th>
-                                        <th>Status</th>
-                                        <th style="text-align: center;">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-relatorios-crianca-feliz"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ABA: PROGRAMA CRIA -->
-                <section id="tab-cria" class="tab-content">
-                    <div class="page-header">
-                        <h1 class="page-title">Programa CRIA</h1>
-                    </div>
-                    <div class="sub-tabs">
-                        <button class="sub-tab-btn active" id="btn-subtab-cria-envio" onclick="switchSubTab('cria', 'envio')">📝 Preencher Relatório Mensal</button>
-                        <button class="sub-tab-btn" id="btn-subtab-cria-historico" onclick="switchSubTab('cria', 'historico')">📜 Histórico de Enviados</button>
-                    </div>
-
-                    <div id="subtab-cria-envio">
-                        <div class="card">
-                            <div class="section-title">Formulário Mensal do Programa CRIA</div>
-                            <form id="form-cria" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('Programa CRIA', 'cria-mes-ano', 'form-cria');">
-                                <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
-                                    <label>Mês/Ano de Referência</label>
-                                    <input type="month" id="cria-mes-ano" required>
-                                </div>
-
-                                <div class="roteiro-container">
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">1. Cartões CRIA Cadastrados e Beneficiários Ativos</div>
-                                            <div class="roteiro-sub">Quantitativo de gestantes e crianças beneficiárias acompanhadas e cadastradas no mês.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="1. Beneficiários Ativos" placeholder="Digite os dados dos beneficiários..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">2. Entregas de Cartões e Resolução de Pendências</div>
-                                            <div class="roteiro-sub">Relato das entregas de cartões realizadas e tratamento de bloqueios/desbloqueios.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="2. Entregas e Pendências" placeholder="Digite as informações sobre entregas..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">3. Observações e Acompanhamento de Impacto</div>
-                                            <div class="roteiro-sub">Pontos relevantes observados pela equipe gestora do programa municipal.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="3. Observações Gerais" placeholder="Digite observações gerais..."></textarea>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn" style="width: auto; padding: 0.75rem 2rem;">Enviar Relatório para a Vigilância</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="subtab-cria-historico" style="display: none;">
-                        <div class="card">
-                            <div class="section-title">Histórico do Programa CRIA</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Mês/Ano Ref.</th>
-                                        <th>Data de Envio</th>
-                                        <th>Enviado Por</th>
-                                        <th>Resumo das Respostas</th>
-                                        <th>Status</th>
-                                        <th style="text-align: center;">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-relatorios-cria"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ABA: SEGURANÇA ALIMENTAR -->
-                <section id="tab-seguranca-alimentar" class="tab-content">
-                    <div class="page-header">
-                        <h1 class="page-title">Segurança Alimentar</h1>
-                    </div>
-                    <div class="sub-tabs">
-                        <button class="sub-tab-btn active" id="btn-subtab-seguranca-alimentar-envio" onclick="switchSubTab('seguranca-alimentar', 'envio')">📝 Preencher Relatório Mensal</button>
-                        <button class="sub-tab-btn" id="btn-subtab-seguranca-alimentar-historico" onclick="switchSubTab('seguranca-alimentar', 'historico')">📜 Histórico de Enviados</button>
-                    </div>
-
-                    <div id="subtab-seguranca-alimentar-envio">
-                        <div class="card">
-                            <div class="section-title">Formulário Mensal de Segurança Alimentar</div>
-                            <form id="form-seguranca-alimentar" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('Segurança Alimentar', 'seguranca-alimentar-mes-ano', 'form-seguranca-alimentar');">
-                                <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
-                                    <label>Mês/Ano de Referência</label>
-                                    <input type="month" id="seguranca-alimentar-mes-ano" required>
-                                </div>
-
-                                <div class="roteiro-container">
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">1. Cestas Básicas e Refeições Distribuídas</div>
-                                            <div class="roteiro-sub">Volume de alimentos, refeições ou cestas fornecidas às famílias em vulnerabilidade.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="1. Distribuição de Alimentos" placeholder="Digite os dados de distribuição..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">2. Equipamentos Alimentares e PAA / Cozinhas Comunitárias</div>
-                                            <div class="roteiro-sub">Relato do funcionamento dos equipamentos de SAN e compras da agricultura familiar.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="2. Equipamentos e PAA" placeholder="Digite os dados dos equipamentos..." required></textarea>
-                                    </div>
-
-                                    <div class="roteiro-item">
-                                        <div class="roteiro-header">
-                                            <div class="roteiro-titulo">3. Observações e Demandas Reprimidas</div>
-                                            <div class="roteiro-sub">Análise do panorama da vulnerabilidade alimentar observada no município durante o mês.</div>
-                                        </div>
-                                        <textarea class="campo-resposta" data-rotulo="3. Análise e Observações" placeholder="Digite observações..."></textarea>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn" style="width: auto; padding: 0.75rem 2rem;">Enviar Relatório para a Vigilância</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="subtab-seguranca-alimentar-historico" style="display: none;">
-                        <div class="card">
-                            <div class="section-title">Histórico de Segurança Alimentar</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Mês/Ano Ref.</th>
-                                        <th>Data de Envio</th>
-                                        <th>Enviado Por</th>
-                                        <th>Resumo das Respostas</th>
-                                        <th>Status</th>
-                                        <th style="text-align: center;">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-relatorios-seguranca-alimentar"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
             </main>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO COMPLETA DO RELATÓRIO SELECIONADO -->
+    <div class="modal-overlay" id="modal-visualizar-relatorio">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-vis-titulo">📄 Detalhes do Relatório</h3>
+                <button class="modal-close" onclick="fecharModalVisualizar()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-vis-conteudo" style="white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6; color: var(--text-main); background: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color);">
+            </div>
         </div>
     </div>
 
@@ -1072,7 +626,7 @@
     <div class="modal-overlay" id="modal-geral-relatorios">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>🔍 Banco de Dados Central - Relatórios da Vigilância</h3>
+                <h3>🔍 Banco de Dados Central - Relatórios Registrados</h3>
                 <button class="modal-close" onclick="fecharModalGeral()">&times;</button>
             </div>
             <div class="modal-body">
@@ -1083,9 +637,8 @@
                             <th>Mês/Ano Ref.</th>
                             <th>Data Envio</th>
                             <th>Enviado Por</th>
-                            <th>Resumo das Respostas</th>
                             <th>Status</th>
-                            <th style="text-align: center;">Ação da Vigilância</th>
+                            <th style="text-align: center; width: 270px;">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="tbody-relatorios-geral"></tbody>
@@ -1094,13 +647,352 @@
         </div>
     </div>
 
-    <!-- BIBLIOTECAS DO FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-    <!-- LÓGICA EM JAVASCRIPT DO SISTEMA -->
     <script>
-        // Configuração do Firebase
+        // CONFIGURAÇÃO DOS SERVIÇOS E PERGUNTAS DOS FORMULÁRIOS
+        const SERVICOS_CONFIG = [
+            {
+                key: 'cras',
+                nome: 'CRAS',
+                titulo: 'CRAS - Centro de Referência de Assistência Social',
+                perguntas: [
+                    { rotulo: '1. Atendimentos PAIF', titulo: '1. Atendimentos Particularizados e Acompanhamentos PAIF', sub: 'Informe o número total de famílias atendidas, acompanhadas e demandas prioritárias identificadas.' },
+                    { rotulo: '2. Atividades Coletivas', titulo: '2. Atividades Coletivas, Grupos e Oficinas', sub: 'Descreva as palestras, reuniões comunitárias e oficinas do SCFV ou PAIF executadas no período.' },
+                    { rotulo: '3. Benefícios e Encaminhamentos', titulo: '3. Benefícios Eventuais e Encaminhamentos', sub: 'Concessões de cestas básicas, auxílio natalidade/funeral e encaminhamentos para a rede socioassistencial.' },
+                    { rotulo: '4. Destaques e Observações', titulo: '4. Destaques e Observações Gerais', sub: 'Outros apontamentos relevantes ou desafios operacionais observados pela equipe no mês.', opcional: true }
+                ]
+            },
+            {
+                key: 'creas',
+                nome: 'CREAS',
+                titulo: 'CREAS - Registro Mensal de Atendimentos (RMA Oficial MDS)',
+                isRmaCreas: true
+            },
+            {
+                key: 'cadunico',
+                nome: 'Cadastro Único',
+                titulo: 'Cadastro Único e Programa Bolsa Família',
+                perguntas: [
+                    { rotulo: '1. Inclusões e Atualizações', titulo: '1. Cadastramentos Novos e Atualizações Cadastrais', sub: 'Quantitativo de famílias recém-cadastradas e atualizações realizadas durante o mês.' },
+                    { rotulo: '2. PBF e Condicionalidades', titulo: '2. Atendimentos de Condicionalidades e PBF', sub: 'Acompanhamento dos benefícios do Programa Bolsa Família e averiguação/revisão cadastral.' },
+                    { rotulo: '3. Buscas Ativas e Mutirões', titulo: '3. Buscas Ativas e Mutirões Comunitários', sub: 'Visitas nos territórios, mutirões de cadastramento e ações itinerantes efetuadas.' }
+                ]
+            },
+            {
+                key: 'crianca-feliz',
+                nome: 'Programa Criança Feliz',
+                titulo: 'Programa Criança Feliz - Primeira Infância',
+                perguntas: [
+                    { rotulo: '1. Visitas e Acompanhamentos', titulo: '1. Visitas Domiciliares e Gestantes/Crianças Acompanhadas', sub: 'Quantitativo de visitas domiciliares efetuadas e total de gestantes e crianças atendidas no mês.' },
+                    { rotulo: '2. Ações Intersetoriais', titulo: '2. Articulação com a Rede de Primeira Infância', sub: 'Ações conjuntas e encaminhamentos para as redes de Saúde, Educação e Assistência Social.' },
+                    { rotulo: '3. Observações Gerais', titulo: '3. Destaques e Observações do Programa', sub: 'Avanços no desenvolvimento infantil e desafios observados pelas visitadoras no território.', opcional: true }
+                ]
+            },
+            {
+                key: 'cria',
+                nome: 'Programa CRIA',
+                titulo: 'Programa CRIA',
+                perguntas: [
+                    { rotulo: '1. Beneficiários Ativos', titulo: '1. Cartões CRIA Cadastrados e Beneficiários Ativos', sub: 'Quantitativo de gestantes e crianças beneficiárias acompanhadas e cadastradas no mês.' },
+                    { rotulo: '2. Entregas e Pendências', titulo: '2. Entregas de Cartões e Resolução de Pendências', sub: 'Relato das entregas de cartões realizadas e tratamento de bloqueios/desbloqueios.' },
+                    { rotulo: '3. Observações Gerais', titulo: '3. Observações e Acompanhamento de Impacto', sub: 'Pontos relevantes observados pela equipe gestora do programa municipal.', opcional: true }
+                ]
+            },
+            {
+                key: 'seguranca-alimentar',
+                nome: 'Segurança Alimentar',
+                titulo: 'Segurança Alimentar e Nutricional',
+                perguntas: [
+                    { rotulo: '1. Distribuição de Alimentos', titulo: '1. Cestas Básicas e Refeições Distribuídas', sub: 'Volume de alimentos, refeições ou cestas fornecidas às famílias em vulnerabilidade.' },
+                    { rotulo: '2. Equipamentos e PAA', titulo: '2. Equipamentos Alimentares e PAA / Cozinhas Comunitárias', sub: 'Relato do funcionamento dos equipamentos de SAN e compras da agricultura familiar.' },
+                    { rotulo: '3. Análise e Observações', titulo: '3. Observações e Demandas Reprimidas', sub: 'Análise do panorama da vulnerabilidade alimentar observada no município durante o mês.', opcional: true }
+                ]
+            }
+        ];
+
+        const mapaServicos = {};
+        SERVICOS_CONFIG.forEach(s => {
+            mapaServicos[s.nome] = { navId: `nav-${s.key}`, tabId: s.key, key: s.key };
+        });
+
+        function gerarEstruturaDinamica() {
+            const menuContainer = document.getElementById('services-menu-section');
+            const mainContent = document.getElementById('main-content');
+            const selectNovoServico = document.getElementById('novo-servico');
+
+            menuContainer.innerHTML = '';
+            selectNovoServico.innerHTML = '';
+
+            SERVICOS_CONFIG.forEach(s => {
+                const navLink = document.createElement('a');
+                navLink.className = 'nav-item';
+                navLink.id = `nav-${s.key}`;
+                navLink.textContent = s.nome;
+                navLink.onclick = function() { showTab(s.key, this); };
+                menuContainer.appendChild(navLink);
+
+                const opt = document.createElement('option');
+                opt.value = s.nome;
+                opt.textContent = s.nome;
+                selectNovoServico.appendChild(opt);
+
+                const section = document.createElement('section');
+                section.id = `tab-${s.key}`;
+                section.className = 'tab-content';
+
+                if (s.isRmaCreas) {
+                    // FORMULÁRIO RMA CREAS COMPLETO FIEL AO PDF DO MDS
+                    section.innerHTML = `
+                        <div class="page-header">
+                            <h1 class="page-title">${s.titulo}</h1>
+                        </div>
+                        <div class="sub-tabs">
+                            <button class="sub-tab-btn active" id="btn-subtab-${s.key}-envio" onclick="switchSubTab('${s.key}', 'envio')">📝 Preencher RMA CREAS Oficial</button>
+                            <button class="sub-tab-btn" id="btn-subtab-${s.key}-historico" onclick="switchSubTab('${s.key}', 'historico')">📜 Histórico de Enviados</button>
+                        </div>
+
+                        <div id="subtab-${s.key}-envio">
+                            <div class="card">
+                                <form id="form-${s.key}" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('${s.nome}', '${s.key}-mes-ano', 'form-${s.key}');">
+                                    <div class="form-group" style="max-width: 260px; margin-bottom: 1.5rem;">
+                                        <label><strong>Mês/Ano de Referência</strong></label>
+                                        <input type="month" id="${s.key}-mes-ano" required>
+                                    </div>
+
+                                    <!-- BLOCO 1: PAEFI -->
+                                    <div class="rma-section-header">BLOCO 1 - SERVIÇO DE PROTEÇÃO E ATENDIMENTO ESPECIALIZADO A FAMÍLIAS E INDIVÍDUOS (PAEFI)</div>
+                                    
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">A. Volume de Famílias em Acompanhamento pelo PAEFI</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicadores de Acompanhamento PAEFI</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>A.1. Total de famílias/indivíduos em acompanhamento pelo PAEFI no início do mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.1 Em acompanhamento no início do mês" value="0"></td></tr>
+                                            <tr><td>A.2. Novas famílias/indivíduos inseridos no acompanhamento durante o mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.2 Novos casos no mês" value="0"></td></tr>
+                                            <tr><td>A.3. Famílias/indivíduos desligados do acompanhamento durante o mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.3 Desligados no mês" value="0"></td></tr>
+                                            <tr><td>A.4. Demanda reprimida (famílias aguardando inserção no PAEFI)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.4 Demanda Reprimida" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b; margin-top: 1rem;">B. Perfil dos Novos Casos Inseridos no Acompanhamento (Mês de Referência)</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Perfil Identificado</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>B.1. Famílias beneficiárias do Programa Bolsa Família (PBF)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.1 Beneficiárias Bolsa Família" value="0"></td></tr>
+                                            <tr><td>B.2. Famílias com membros beneficiários do BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.2 Beneficiários BPC" value="0"></td></tr>
+                                            <tr><td>B.3. Famílias com crianças/adolescentes em situação de trabalho infantil</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.3 Trabalho Infantil" value="0"></td></tr>
+                                            <tr><td>B.4. Famílias com crianças/adolescentes em Serviços de Acolhimento</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.4 Crianças/Adolescentes Acolhidos" value="0"></td></tr>
+                                            <tr><td>B.5. Famílias/indivíduos com violação associada ao uso abusivo de substâncias psicoativas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.5 Substâncias Psicoativas" value="0"></td></tr>
+                                            <tr><td>B.6. Famílias com adolescentes em cumprimento de MSE em meio aberto</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.6 MSE em Meio Aberto" value="0"></td></tr>
+                                            <tr><td>B.7. Famílias/indivíduos atendidos que não receberam o primeiro atendimento especializado no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.7 Aguardando 1º Atendimento" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b; margin-top: 1rem;">C a I. Motivos de Inserção / Violações de Direitos Identificadas nos Novos Casos</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Violação de Direitos Identificada</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>C.1. Crianças/adolescentes vítimas de violência física/psicológica intrafamiliar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.1 Violência Intrafamiliar Criança/Adolescente" value="0"></td></tr>
+                                            <tr><td>C.2. Crianças/adolescentes vítimas de abuso sexual</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.2 Abuso Sexual Criança/Adolescente" value="0"></td></tr>
+                                            <tr><td>C.3. Crianças/adolescentes vítimas de exploração sexual</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.3 Exploração Sexual Criança/Adolescente" value="0"></td></tr>
+                                            <tr><td>C.4. Crianças/adolescentes em negligência ou abandono</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.4 Negligência Criança/Adolescente" value="0"></td></tr>
+                                            <tr><td>D.1. Pessoas idosas vítimas de violência intrafamiliar/física/psicológica</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - D.1 Idosos Violência Intrafamiliar" value="0"></td></tr>
+                                            <tr><td>D.2. Pessoas idosas em situação de negligência ou abandono</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - D.2 Idosos Negligência/Abandono" value="0"></td></tr>
+                                            <tr><td>E.1. Pessoas com deficiência vítimas de violência intrafamiliar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - E.1 PcD Violência Intrafamiliar" value="0"></td></tr>
+                                            <tr><td>E.2. Pessoas com deficiência em situação de negligência/abandono</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - E.2 PcD Negligência/Abandono" value="0"></td></tr>
+                                            <tr><td>F.1. Mulheres vítimas de violência intrafamiliar ou de gênero</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - F.1 Mulheres Violência Doméstica" value="0"></td></tr>
+                                            <tr><td>G.1. Pessoas vítimas de tráfico de seres humanos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - G.1 Tráfico de Pessoas" value="0"></td></tr>
+                                            <tr><td>H.1. Pessoas vítimas de discriminação por orientação sexual / identidade de gênero / raça</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - H.1 Discriminação/Homofobia/Racismo" value="0"></td></tr>
+                                            <tr><td>I.1. Pessoas em situação de rua atendidas vinculadas ao PAEFI</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - I.1 Pessoas em Situação de Rua" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 2: ATENDIMENTOS REALIZADOS -->
+                                    <div class="rma-section-header">BLOCO 2 - ATENDIMENTOS E AÇÕES REALIZADAS NO AMBITO DO PAEFI</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">M. Quantitativo de Atendimentos no Mês</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Atendimento / Ação</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>M.1. Atendimentos individualizados realizados durante o mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.1 Individualizados" value="0"></td></tr>
+                                            <tr><td>M.2. Atendimentos em grupo / oficinas com famílias realizados no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.2 Em Grupo" value="0"></td></tr>
+                                            <tr><td>M.3. Famílias encaminhadas para acompanhamento no CRAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.3 Encaminhadas ao CRAS" value="0"></td></tr>
+                                            <tr><td>M.4. Visitas domiciliares realizadas pela equipe do CREAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.4 Visitas Domiciliares" value="0"></td></tr>
+                                            <tr><td>M.5. Atendimentos realizados pelo Assistente Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.5 Serviço Social" value="0"></td></tr>
+                                            <tr><td>M.6. Atendimentos realizados pelo Psicólogo(a)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.6 Psicologia" value="0"></td></tr>
+                                            <tr><td>M.7. Atendimentos realizados pelo Advogado(a) / Orientador Jurídico</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.7 Orientação Jurídica" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 1rem;">
+                                        <label>Detalhamento Qualitativo das Ações do PAEFI (Estudos de Caso, Reuniões de Rede e Articulações)</label>
+                                        <textarea class="campo-resposta" data-rotulo="PAEFI - Resumo Qualitativo e Articulações" placeholder="Descreva os principais encaminhamentos para o Poder Judiciário, Conselho Tutelar, Saúde e atividades de rede..."></textarea>
+                                    </div>
+
+                                    <!-- BLOCO 3: MEDIDAS SOCIOEDUCATIVAS -->
+                                    <div class="rma-section-header">BLOCO 3 - SERVIÇO DE PROTEÇÃO SOCIAL A ADOLESCENTES EM CUMPRIMENTO DE MEDIDAS SOCIOEDUCATIVAS (LA / PSC)</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">J. Volume de Adolescentes em Medida Socioeducativa em Meio Aberto</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicadores do Serviço de MSE</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>J.1. Total de adolescentes em cumprimento de MSE em meio aberto no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.1 Total em Cumprimento" value="0"></td></tr>
+                                            <tr><td>J.2. Adolescentes em cumprimento de Liberdade Assistida (LA)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.2 Em Liberdade Assistida (LA)" value="0"></td></tr>
+                                            <tr><td>J.3. Adolescentes em cumprimento de Prestação de Serviços à Comunidade (PSC)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.3 Em Prestação de Serviços (PSC)" value="0"></td></tr>
+                                            <tr><td>J.4. Novos adolescentes que ingressaram na MSE no mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.4 Novos Ingressos" value="0"></td></tr>
+                                            <tr><td>J.5. Adolescentes que tiveram a medida encerrada/desligada no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.5 Desligados/Encerrados" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 4: ABORDAGEM SOCIAL -->
+                                    <div class="rma-section-header">BLOCO 4 - SERVIÇO ESPECIALIZADO EM ABORDAGEM SOCIAL</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">K & L. Pessoas Abordadas e Abordagens Realizadas</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicadores de Abordagem Social</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>K.1. Total de pessoas distintas abordadas no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.1 Pessoas Distintas Abordadas" value="0"></td></tr>
+                                            <tr><td>K.2. Crianças ou adolescentes em situação de trabalho infantil identificados na abordagem</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.2 Crianças em Trabalho Infantil" value="0"></td></tr>
+                                            <tr><td>K.3. Crianças ou adolescentes em situação de exploração sexual identificados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.3 Crianças em Exploração Sexual" value="0"></td></tr>
+                                            <tr><td>K.4. Pessoas adultas usuárias de crack ou outras drogas em situação de rua</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.4 Adultos Usuários de Drogas/Rua" value="0"></td></tr>
+                                            <tr><td>L.1. Quantidade total de procedimentos de abordagem realizados no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - L.1 Total de Abordagens Realizadas" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- IDENTIFICAÇÃO DO RESPONSÁVEL -->
+                                    <div class="rma-section-header">IDENTIFICAÇÃO DO RESPONSÁVEL PELO PREENCHIMENTO DAS INFORMAÇÕES</div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group" style="margin:0;">
+                                            <label>Nome do Responsável</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Responsável - Nome" placeholder="Nome completo" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>Cargo / Função</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Responsável - Cargo" placeholder="Ex: Coordenador / Assistente Social" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>CPF do Responsável</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Responsável - CPF" placeholder="000.000.000-00" required>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RMA CREAS no Firebase</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="subtab-${s.key}-historico" style="display: none;">
+                            <div class="card">
+                                <div class="section-title">Histórico de ${s.nome}</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mês/Ano Ref.</th>
+                                            <th>Data de Envio</th>
+                                            <th>Enviado Por</th>
+                                            <th>Status</th>
+                                            <th style="text-align: center; width: 180px;">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-relatorios-${s.key}"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // OUTROS SERVIÇOS
+                    let roteirosHtml = s.perguntas.map(p => `
+                        <div style="background-color: #ffffff; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem;">
+                            <div style="margin-bottom: 0.75rem;">
+                                <div style="font-weight: 700; color: #1e293b; font-size: 0.95rem;">${p.titulo}</div>
+                                <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">${p.sub}</div>
+                            </div>
+                            <textarea class="campo-resposta" data-rotulo="${p.rotulo}" placeholder="Preencha as informações detalhadas sobre este item..." ${p.opcional ? '' : 'required'} style="min-height: 100px; resize: vertical;"></textarea>
+                        </div>
+                    `).join('');
+
+                    section.innerHTML = `
+                        <div class="page-header">
+                            <h1 class="page-title">${s.titulo}</h1>
+                        </div>
+                        <div class="sub-tabs">
+                            <button class="sub-tab-btn active" id="btn-subtab-${s.key}-envio" onclick="switchSubTab('${s.key}', 'envio')">📝 Preencher Relatório Mensal</button>
+                            <button class="sub-tab-btn" id="btn-subtab-${s.key}-historico" onclick="switchSubTab('${s.key}', 'historico')">📜 Histórico de Enviados</button>
+                        </div>
+
+                        <div id="subtab-${s.key}-envio">
+                            <div class="card">
+                                <div class="section-title">Formulário Mensal de ${s.nome}</div>
+                                <form id="form-${s.key}" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('${s.nome}', '${s.key}-mes-ano', 'form-${s.key}');">
+                                    <div class="form-group" style="max-width: 220px; margin-bottom: 1.5rem;">
+                                        <label>Mês/Ano de Referência</label>
+                                        <input type="month" id="${s.key}-mes-ano" required>
+                                    </div>
+
+                                    <div>${roteirosHtml}</div>
+
+                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar Relatório no Firebase</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="subtab-${s.key}-historico" style="display: none;">
+                            <div class="card">
+                                <div class="section-title">Histórico de ${s.nome}</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mês/Ano Ref.</th>
+                                            <th>Data de Envio</th>
+                                            <th>Enviado Por</th>
+                                            <th>Status</th>
+                                            <th style="text-align: center; width: 180px;">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-relatorios-${s.key}"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+                mainContent.appendChild(section);
+            });
+
+            const optVig = document.createElement('option');
+            optVig.value = "Vigilância Socioassistencial";
+            optVig.textContent = "Vigilância Socioassistencial";
+            selectNovoServico.appendChild(optVig);
+        }
+
+        // CONFIGURAÇÃO DO FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyBd0jLCU-lPFiabjG8yr-k7fmTJM81PgXU",
             authDomain: "vigilancia-suas.firebaseapp.com",
@@ -1110,25 +1002,13 @@
             appId: "1:1034641036400:web:791280b633b91fab1450b5"
         };
 
-        // Inicialização
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Estados Globais
         let usuarioLogado = null;
         let relatoriosEnviados = [];
         let usuariosCadastrados = [];
 
-        const mapaServicos = {
-            'CRAS': { navId: 'nav-cras', tabId: 'cras', key: 'cras' },
-            'CREAS': { navId: 'nav-creas', tabId: 'creas', key: 'creas' },
-            'Cadastro Único': { navId: 'nav-cadunico', tabId: 'cadunico', key: 'cadunico' },
-            'Programa Criança Feliz': { navId: 'nav-crianca-feliz', tabId: 'crianca-feliz', key: 'crianca-feliz' },
-            'Programa CRIA': { navId: 'nav-cria', tabId: 'cria', key: 'cria' },
-            'Segurança Alimentar': { navId: 'nav-seguranca-alimentar', tabId: 'seguranca-alimentar', key: 'seguranca-alimentar' }
-        };
-
-        // Sincronização em Tempo Real com Firestore
         db.collection('relatorios').onSnapshot(snapshot => {
             relatoriosEnviados = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             atualizarTodasTabelasRelatorios();
@@ -1139,7 +1019,7 @@
             renderizarUsuarios();
         });
 
-        // Garantia de Usuário Admin Padrão caso banco esteja limpo
+        // CRIAÇÃO DO ADMIN INICIAL CASO BANCO ESTEJA VAZIO
         db.collection('usuarios').get().then(snapshot => {
             if (snapshot.empty) {
                 db.collection('usuarios').add({
@@ -1151,7 +1031,6 @@
             }
         });
 
-        // Função de Autenticação
         function handleLogin() {
             const userInput = document.getElementById('username').value.trim();
             const passInput = document.getElementById('password').value.trim();
@@ -1176,7 +1055,6 @@
             }
         }
 
-        // Filtro de Permissões no Menu
         function aplicarPermissoesMenu(usuario) {
             const isVigilancia = (usuario.servico === "Vigilância Socioassistencial");
 
@@ -1200,7 +1078,6 @@
             }
         }
 
-        // Sub-abas (Envio / Histórico)
         function switchSubTab(servicoKey, subTabType) {
             const envioView = document.getElementById(`subtab-${servicoKey}-envio`);
             const histView = document.getElementById(`subtab-${servicoKey}-historico`);
@@ -1220,7 +1097,6 @@
             }
         }
 
-        // Logout
         function handleLogout() {
             usuarioLogado = null;
             document.getElementById('app-container').style.display = 'none';
@@ -1230,7 +1106,6 @@
             document.getElementById('error-msg').style.display = 'none';
         }
 
-        // Troca de Abas Principais
         function showTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -1240,7 +1115,7 @@
             if (element) element.classList.add('active');
         }
 
-        // SALVAMENTO COMPACTO: Lê as respostas dos textareas dinamicamente sem alterar os roteiros
+        // SALVAMENTO DE RELATÓRIO NO BANCO DE DADOS FIREBASE
         function enviarRelatorioEstruturado(nomeServico, inputMesId, formId) {
             const mesAnoVal = document.getElementById(inputMesId).value;
             const formElement = document.getElementById(formId);
@@ -1256,8 +1131,8 @@
             campos.forEach(campo => {
                 const rotuloFixo = campo.dataset.rotulo || 'Item';
                 const resposta = campo.value.trim();
-                if (resposta) {
-                    relatorioFormatado += `📌 ${rotuloFixo}:\n${resposta}\n\n`;
+                if (resposta !== '') {
+                    relatorioFormatado += `📌 ${rotuloFixo}: ${resposta}\n`;
                 }
             });
 
@@ -1280,9 +1155,12 @@
                         enviadoPor: usuarioLogado ? usuarioLogado.nome : "Usuário do Serviço",
                         bloqueado: true
                     }).then(() => {
-                        alert(`Relatório de ${formatarMesAno(mesAnoVal)} alterado com sucesso! Ele foi reenviado e bloqueado novamente.`);
+                        alert(`Relatório de ${formatarMesAno(mesAnoVal)} salvo e atualizado com sucesso no Firebase!`);
                         formElement.reset();
-                    }).catch(err => alert("Erro ao atualizar: " + err.message));
+                        if (mapaServicos[nomeServico]) {
+                            switchSubTab(mapaServicos[nomeServico].key, 'historico');
+                        }
+                    }).catch(err => alert("Erro ao atualizar no banco de dados: " + err.message));
                 }
             } else {
                 db.collection('relatorios').add({
@@ -1294,17 +1172,29 @@
                     bloqueado: true,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
-                    alert(`Relatório do serviço "${nomeServico}" (${formatarMesAno(mesAnoVal)}) enviado com sucesso e bloqueado para edições!`);
+                    alert(`Relatório do serviço "${nomeServico}" (${formatarMesAno(mesAnoVal)}) salvo com sucesso no Firebase!`);
                     formElement.reset();
-                }).catch(err => alert("Erro ao salvar: " + err.message));
-            }
-
-            if (mapaServicos[nomeServico]) {
-                switchSubTab(mapaServicos[nomeServico].key, 'historico');
+                    if (mapaServicos[nomeServico]) {
+                        switchSubTab(mapaServicos[nomeServico].key, 'historico');
+                    }
+                }).catch(err => alert("Erro ao salvar no banco de dados: " + err.message));
             }
         }
 
-        // Vigilância: Liberar / Bloquear Edição
+        // FUNÇÃO PARA APAGAR / EXCLUIR RELATÓRIO DO FIREBASE
+        function excluirRelatorio(idRelatorio) {
+            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
+            const nomeServ = relatorio ? `${relatorio.servico} (${formatarMesAno(relatorio.mesAno)})` : "este relatório";
+
+            if (confirm(`Tem certeza que deseja EXCLUIR permanentemente o relatório do ${nomeServ}?\n\nEsta ação apagará os dados do banco de dados e não poderá ser desfeita.`)) {
+                db.collection('relatorios').doc(idRelatorio).delete().then(() => {
+                    alert("Relatório excluído com sucesso do Firebase!");
+                }).catch(err => {
+                    alert("Erro ao excluir relatório: " + err.message);
+                });
+            }
+        }
+
         function alternarBloqueioVigilancia(idRelatorio) {
             const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
             if (relatorio) {
@@ -1322,7 +1212,6 @@
             }
         }
 
-        // Preenche de volta as caixas de resposta ao editar um relatório liberado
         function prepararEdicaoServico(servicoKey, idRelatorio) {
             const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
             if (!relatorio) return;
@@ -1343,38 +1232,48 @@
             campos.forEach(campo => {
                 const rotulo = campo.dataset.rotulo;
                 if (rotulo && relatorio.observacoes) {
-                    const regex = new RegExp(`📌 ${rotulo.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}:\\n([\\s\\S]*?)(?=\\n\\n📌|$)`);
+                    const regex = new RegExp(`📌 ${rotulo.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}:\\s*([^\\n]*)`);
                     const match = relatorio.observacoes.match(regex);
                     campo.value = (match && match[1]) ? match[1].trim() : '';
                 }
             });
 
             switchSubTab(servicoKey, 'envio');
-            alert(`Relatório de ${formatarMesAno(relatorio.mesAno)} recarregado para edição. Faça seus ajustes e clique em Enviar.`);
+            alert(`Relatório de ${formatarMesAno(relatorio.mesAno)} recarregado nos campos para edição. Faça seus ajustes e clique em Salvar.`);
         }
 
-        // Renderização em tempo real das tabelas
+        // VISUALIZAR RELATÓRIO COMPLETO EM MODAL
+        function abrirVisualizacao(idRelatorio) {
+            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
+            if (!relatorio) return;
+
+            document.getElementById('modal-vis-titulo').textContent = `📄 Relatório: ${relatorio.servico} - ${formatarMesAno(relatorio.mesAno)}`;
+            document.getElementById('modal-vis-conteudo').innerHTML = `
+                <div style="margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid #cbd5e1; font-size: 0.85rem; color: #64748b;">
+                    <strong>Enviado por:</strong> ${relatorio.enviadoPor || '-'} &nbsp;|&nbsp; <strong>Data de Envio:</strong> ${relatorio.dataEnvio || '-'}
+                </div>
+                <div>${relatorio.observacoes || 'Nenhum conteúdo registrado neste relatório.'}</div>
+            `;
+            document.getElementById('modal-visualizar-relatorio').style.display = 'flex';
+        }
+
+        function fecharModalVisualizar() {
+            document.getElementById('modal-visualizar-relatorio').style.display = 'none';
+        }
+
+        // ATUALIZAÇÃO DAS TABELAS DE HISTÓRICO E MONITORAMENTO
         function atualizarTodasTabelasRelatorios() {
             const isVigilancia = usuarioLogado && (usuarioLogado.servico === "Vigilância Socioassistencial");
 
-            const servicos = [
-                { nome: 'CRAS', tbody: 'tbody-relatorios-cras', key: 'cras' },
-                { nome: 'CREAS', tbody: 'tbody-relatorios-creas', key: 'creas' },
-                { nome: 'Cadastro Único', tbody: 'tbody-relatorios-cadunico', key: 'cadunico' },
-                { nome: 'Programa Criança Feliz', tbody: 'tbody-relatorios-crianca-feliz', key: 'crianca-feliz' },
-                { nome: 'Programa CRIA', tbody: 'tbody-relatorios-cria', key: 'cria' },
-                { nome: 'Segurança Alimentar', tbody: 'tbody-relatorios-seguranca-alimentar', key: 'seguranca-alimentar' }
-            ];
-
-            servicos.forEach(s => {
-                const tbody = document.getElementById(s.tbody);
+            SERVICOS_CONFIG.forEach(s => {
+                const tbody = document.getElementById(`tbody-relatorios-${s.key}`);
                 if (!tbody) return;
                 tbody.innerHTML = '';
 
                 const relsDoServico = relatoriosEnviados.filter(r => r.servico === s.nome);
 
                 if (relsDoServico.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum relatório enviado até o momento.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhum relatório enviado até o momento.</td></tr>`;
                 } else {
                     relsDoServico.slice().reverse().forEach(r => {
                         const estaBloqueado = (r.bloqueado !== false);
@@ -1391,21 +1290,24 @@
                             <td><strong>${formatarMesAno(r.mesAno)}</strong></td>
                             <td>${r.dataEnvio || '-'}</td>
                             <td>${r.enviadoPor || '-'}</td>
-                            <td style="white-space: pre-line;">${r.observacoes || '-'}</td>
                             <td>${badgeHtml}</td>
-                            <td style="text-align: center;">${botaoEditarHtml}</td>
+                            <td style="text-align: center;">
+                                <div style="display: flex; gap: 0.35rem; justify-content: center;">
+                                    <button onclick="abrirVisualizacao('${r.id}')" class="btn-action-sm btn-view">👁️ Ver</button>
+                                    ${botaoEditarHtml}
+                                </div>
+                            </td>
                         `;
                         tbody.appendChild(tr);
                     });
                 }
             });
 
-            // Tabela do Monitoramento
             const tbodyMonit = document.getElementById('tbody-monitoramento-direto');
             if (tbodyMonit) {
                 tbodyMonit.innerHTML = '';
                 if (relatoriosEnviados.length === 0) {
-                    tbodyMonit.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Nenhum relatório recebido até o momento.</td></tr>`;
+                    tbodyMonit.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum relatório recebido até o momento.</td></tr>`;
                 } else {
                     relatoriosEnviados.slice().reverse().forEach(r => {
                         const estaBloqueado = (r.bloqueado !== false);
@@ -1414,8 +1316,10 @@
                             : `<span class="badge-unlocked">🔓 Liberado</span>`;
 
                         const btnVigilancia = estaBloqueado
-                            ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar p/ Edição</button>`
+                            ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar</button>`
                             : `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-lock">🔒 Bloquear</button>`;
+
+                        const btnApagar = `<button onclick="excluirRelatorio('${r.id}')" class="btn-action-sm btn-delete">🗑️ Apagar</button>`;
 
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
@@ -1423,9 +1327,14 @@
                             <td>${formatarMesAno(r.mesAno)}</td>
                             <td>${r.dataEnvio || '-'}</td>
                             <td>${r.enviadoPor || '-'}</td>
-                            <td style="white-space: pre-line;">${r.observacoes || '-'}</td>
                             <td>${badgeHtml}</td>
-                            <td style="text-align: center;">${isVigilancia ? btnVigilancia : '-'}</td>
+                            <td style="text-align: center;">
+                                <div style="display: flex; gap: 0.35rem; justify-content: center; flex-wrap: wrap;">
+                                    <button onclick="abrirVisualizacao('${r.id}')" class="btn-action-sm btn-view">👁️ Ver</button>
+                                    ${isVigilancia ? btnVigilancia : ''}
+                                    ${isVigilancia ? btnApagar : ''}
+                                </div>
+                            </td>
                         `;
                         tbodyMonit.appendChild(tr);
                     });
@@ -1443,14 +1352,13 @@
             return partes.length === 2 ? `${partes[1]}/${partes[0]}` : valor;
         }
 
-        // Modal do Banco de Dados Central
         function abrirModalGeralRelatorios() {
             const tbodyGeral = document.getElementById('tbody-relatorios-geral');
             const isVigilancia = usuarioLogado && (usuarioLogado.servico === "Vigilância Socioassistencial");
             tbodyGeral.innerHTML = '';
 
             if (relatoriosEnviados.length === 0) {
-                tbodyGeral.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Nenhum relatório armazenado até o momento.</td></tr>`;
+                tbodyGeral.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum relatório armazenado até o momento.</td></tr>`;
             } else {
                 relatoriosEnviados.slice().reverse().forEach(r => {
                     const estaBloqueado = (r.bloqueado !== false);
@@ -1459,8 +1367,10 @@
                         : `<span class="badge-unlocked">🔓 Liberado</span>`;
 
                     const btnVigilancia = estaBloqueado
-                        ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar p/ Edição</button>`
+                        ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar</button>`
                         : `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-lock">🔒 Bloquear</button>`;
+
+                    const btnApagar = `<button onclick="excluirRelatorio('${r.id}')" class="btn-action-sm btn-delete">🗑️ Apagar</button>`;
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
@@ -1468,9 +1378,14 @@
                         <td>${formatarMesAno(r.mesAno)}</td>
                         <td>${r.dataEnvio || '-'}</td>
                         <td>${r.enviadoPor || '-'}</td>
-                        <td style="white-space: pre-line;">${r.observacoes || '-'}</td>
                         <td>${badgeHtml}</td>
-                        <td style="text-align: center;">${isVigilancia ? btnVigilancia : '-'}</td>
+                        <td style="text-align: center;">
+                            <div style="display: flex; gap: 0.35rem; justify-content: center; flex-wrap: wrap;">
+                                <button onclick="abrirVisualizacao('${r.id}')" class="btn-action-sm btn-view">👁️ Ver</button>
+                                ${isVigilancia ? btnVigilancia : ''}
+                                ${isVigilancia ? btnApagar : ''}
+                            </div>
+                        </td>
                     `;
                     tbodyGeral.appendChild(tr);
                 });
@@ -1483,7 +1398,6 @@
             document.getElementById('modal-geral-relatorios').style.display = 'none';
         }
 
-        // Gestão de Usuários
         function cadastrarNovoUsuario() {
             const nome = document.getElementById('novo-nome').value.trim();
             const usuario = document.getElementById('novo-usuario').value.trim();
@@ -1556,6 +1470,10 @@
                 db.collection('usuarios').doc(id).delete().then(() => alert('Usuário removido!')).catch(err => alert("Erro: " + err.message));
             }
         }
+
+        window.onload = function() {
+            gerarEstruturaDinamica();
+        };
     </script>
 </body>
 </html>

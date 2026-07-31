@@ -319,7 +319,7 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* TABELAS ESTILIZADAS RMA CREAS */
+        /* TABELAS ESTILIZADAS RMA */
         .rma-section-header {
             background-color: #ecfdf5;
             color: #065f46;
@@ -656,13 +656,8 @@
             {
                 key: 'cras',
                 nome: 'CRAS',
-                titulo: 'CRAS - Centro de Referência de Assistência Social',
-                perguntas: [
-                    { rotulo: '1. Atendimentos PAIF', titulo: '1. Atendimentos Particularizados e Acompanhamentos PAIF', sub: 'Informe o número total de famílias atendidas, acompanhadas e demandas prioritárias identificadas.' },
-                    { rotulo: '2. Atividades Coletivas', titulo: '2. Atividades Coletivas, Grupos e Oficinas', sub: 'Descreva as palestras, reuniões comunitárias e oficinas do SCFV ou PAIF executadas no período.' },
-                    { rotulo: '3. Benefícios e Encaminhamentos', titulo: '3. Benefícios Eventuais e Encaminhamentos', sub: 'Concessões de cestas básicas, auxílio natalidade/funeral e encaminhamentos para a rede socioassistencial.' },
-                    { rotulo: '4. Destaques e Observações', titulo: '4. Destaques e Observações Gerais', sub: 'Outros apontamentos relevantes ou desafios operacionais observados pela equipe no mês.', opcional: true }
-                ]
+                titulo: 'CRAS - Relatório Mensal de Atendimentos (RMA Oficial)',
+                isRmaCras: true
             },
             {
                 key: 'creas',
@@ -742,8 +737,213 @@
                 section.id = `tab-${s.key}`;
                 section.className = 'tab-content';
 
-                if (s.isRmaCreas) {
-                    // FORMULÁRIO RMA CREAS COMPLETO FIEL AO PDF DO MDS
+                if (s.isRmaCras) {
+                    // FORMULÁRIO RMA CRAS OFICIAL FIEL AO PDF
+                    section.innerHTML = `
+                        <div class="page-header">
+                            <h1 class="page-title">${s.titulo}</h1>
+                        </div>
+                        <div class="sub-tabs">
+                            <button class="sub-tab-btn active" id="btn-subtab-${s.key}-envio" onclick="switchSubTab('${s.key}', 'envio')">📝 Preencher RMA CRAS Oficial</button>
+                            <button class="sub-tab-btn" id="btn-subtab-${s.key}-historico" onclick="switchSubTab('${s.key}', 'historico')">📜 Histórico de Enviados</button>
+                        </div>
+
+                        <div id="subtab-${s.key}-envio">
+                            <div class="card">
+                                <form id="form-${s.key}" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('${s.nome}', '${s.key}-mes-ano', 'form-${s.key}');">
+                                    <div class="form-group" style="max-width: 260px; margin-bottom: 1.5rem;">
+                                        <label><strong>Mês/Ano de Referência</strong></label>
+                                        <input type="month" id="${s.key}-mes-ano" required>
+                                    </div>
+
+                                    <!-- BLOCO 1: PAIF -->
+                                    <div class="rma-section-header">BLOCO 1 - FAMÍLIAS EM ACOMPANHAMENTO PELO PAIF</div>
+                                    
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">A. Volume de famílias em acompanhamento pelo PAIF</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicadores de Acompanhamento PAIF</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>A.1. Total de famílias em acompanhamento pelo PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.1 Total de famílias em acompanhamento" value="0"></td></tr>
+                                            <tr><td>A.2. Novas famílias inseridas no acompanhamento do PAIF durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.2 Novas famílias inseridas no mês" value="0"></td></tr>
+                                            <tr><td>A.3. Desligamento de acompanhamento pelo PAIF durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.3 Desligamento de acompanhamento no mês" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">*Atenção! O total de famílias em acompanhamento é o resultado da soma entre a quantidade de famílias que já vinham sendo acompanhadas pelo PAIF e a quantidade de novas famílias que ingressaram no PAIF durante o mês de referência.</p>
+
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">B. Perfil das novas famílias inseridas em acompanhamento no PAIF, no mês de referência</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Perfil Identificado</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>B.1. Famílias em situação de extrema pobreza</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.1 Famílias em extrema pobreza" value="0"></td></tr>
+                                            <tr><td>B.2. Famílias beneficiárias do Programa Bolsa Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.2 Beneficiárias Bolsa Família" value="0"></td></tr>
+                                            <tr><td>B.3. Famílias beneficiárias do Programa Bolsa Família, em descumprimento de condicionalidades</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.3 Descumprimento de condicionalidades PBF" value="0"></td></tr>
+                                            <tr><td>B.4. Famílias com membros beneficiários do BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.4 Membros beneficiários do BPC" value="0"></td></tr>
+                                            <tr><td>B.5. Famílias com crianças ou adolescentes em situação de trabalho infantil</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.5 Trabalho Infantil" value="0"></td></tr>
+                                            <tr><td>B.6. Famílias com crianças ou adolescentes em Serviço de Acolhimento</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.6 Crianças/Adolescentes em Acolhimento" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">*Atenção! Os itens B1 a B6 buscam identificar apenas alguns "perfis" de famílias, portanto é normal que algumas famílias contadas no item A2 não se enquadrem em nenhuma das condições acima, enquanto outras podem se enquadrar simultaneamente em mais de uma condição.</p>
+
+                                    <!-- BLOCO 2: ATENDIMENTOS INDIVIDUALIZADOS -->
+                                    <div class="rma-section-header">BLOCO 2 - ATENDIMENTOS INDIVIDUALIZADOS REALIZADOS NO CRAS</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">C. Volume de atendimentos individualizados realizados no CRAS, no mês de referência</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Atendimento / Encaminhamento</th>
+                                                <th style="width: 120px; text-align: center;">Quantidade</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>C.1. Total de atendimentos individualizados realizados, no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1 Total de atendimentos individualizados" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.1. Pessoa por raça/cor</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.1 Pessoa por raça/cor" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.2. Gênero</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.2 Gênero" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.3. Faixa etária/grupo</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.3 Faixa etária/grupo" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.4. Composição familiar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.4 Composição familiar" value="0"></td></tr>
+                                            <tr><td>C.2. Famílias encaminhadas para inclusão no Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.2 Inclusão no CadÚnico" value="0"></td></tr>
+                                            <tr><td>C.3. Famílias encaminhadas para atualização cadastral no Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.3 Atualização no CadÚnico" value="0"></td></tr>
+                                            <tr><td>C.4. Indivíduos encaminhados para acesso ao BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.4 Encaminhados ao BPC" value="0"></td></tr>
+                                            <tr><td>C.5. Famílias encaminhadas para o CREAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5 Encaminhadas ao CREAS" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.1 Famílias encaminhadas para rede socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.1 Encaminhadas para rede socioassistencial" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.2 Famílias encaminhadas para rede intersetorial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.2 Encaminhadas para rede intersetorial" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.3 Encaminhamentos recebidos da rede socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.3 Encaminhamentos recebidos da rede socioassistencial" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.4 Encaminhamentos recebidos de outras políticas públicas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.4 Encaminhamentos recebidos de outras políticas públicas" value="0"></td></tr>
+                                            <tr><td>C.6. Visitas domiciliares realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.6 Visitas domiciliares" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.6.1 Visitas institucionais realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.6.1 Visitas institucionais" value="0"></td></tr>
+                                            <tr><td>C.7. Total de auxílios-natalidade concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.7 Auxílios-natalidade" value="0"></td></tr>
+                                            <tr><td>C.8. Total de auxílios-funeral concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.8 Auxílios-funeral" value="0"></td></tr>
+                                            <tr><td>C.9. Outros benefícios eventuais concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.9 Outros benefícios eventuais" value="0"></td></tr>
+                                            <tr><td>C.10. Quantidade de benefícios eventuais solicitados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.10 Benefícios eventuais solicitados" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 3: ATENDIMENTOS COLETIVOS -->
+                                    <div class="rma-section-header">BLOCO 3 - ATENDIMENTOS COLETIVOS REALIZADOS NO CRAS</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">D. Volume dos Serviços de Convivência e Fortalecimentos de Vínculos, no mês de referência</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Serviços e Grupos do SCFV / PAIF</th>
+                                                <th style="width: 120px; text-align: center;">Quantidade</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>D.1. Famílias participando regularmente de grupos no âmbito do PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.1 Grupos do PAIF" value="0"></td></tr>
+                                            <tr><td>D.2. Crianças de 0 a 6 anos em Serviços de Convivência e Fortalecimentos de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.2 Crianças 0-6 anos SCFV" value="0"></td></tr>
+                                            <tr><td>D.3. Crianças/adolescentes de 7 a 14 anos em Serv. de Convivência e Fortalecimento de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.3 Crianças/Adolescentes 7-14 anos SCFV" value="0"></td></tr>
+                                            <tr><td>D.4. Adolescentes de 15 a 17 anos em Serviços de Convivência e Fortalecimentos de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.4 Adolescentes 15-17 anos SCFV" value="0"></td></tr>
+                                            <tr><td>D.8. Adultos entre 18 e 59 anos em Serviços de Convivência e Fortalecimento de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.8 Adultos 18-59 anos SCFV" value="0"></td></tr>
+                                            <tr><td>D.5. Idosos em Serviços de Convivência e Fortalecimentos de Vínculos para idosos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.5 Idosos SCFV" value="0"></td></tr>
+                                            <tr><td>D.6. Pessoas que participaram de palestras, oficinas e outras atividades coletivas de caráter não continuado</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.6 Palestras/Oficinas não continuadas" value="0"></td></tr>
+                                            <tr><td>D.7. Pessoas com deficiência, participando dos Serviços de Convivência ou dos grupos do PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.7 PcD nos grupos SCFV/PAIF" value="0"></td></tr>
+                                            <tr><td>D.9. Desligamento de usuários no SCFV</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.9 Desligamento de usuários SCFV" value="0"></td></tr>
+                                            <tr><td>D.10. Inclusão de usuários</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.10 Inclusão de usuários SCFV" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.11. De 0 a 6 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.11 Inclusão 0-6 anos" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.12. De 7 a 14 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.12 Inclusão 7-14 anos" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.13. De 15 a 17 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.13 Inclusão 15-17 anos" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.14. De 18 a 59 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.14 Inclusão 18-59 anos" value="0"></td></tr>
+                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.15. De 60 ou mais</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.15 Inclusão 60+ anos" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 4: AÇÕES E ATIVIDADES REALIZADAS -->
+                                    <div class="rma-section-header">BLOCO 4 - AÇÕES E ATIVIDADES REALIZADAS</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">E. Volume de Ações e Atividades Realizadas</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Atividade / Ação Realizada</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>E.1. Orientações Coletivas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.1 Orientações Coletivas" value="0"></td></tr>
+                                            <tr><td>E.2. Busca Ativa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.2 Busca Ativa" value="0"></td></tr>
+                                            <tr><td>E.3. Reuniões internas e externas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.3 Reuniões internas e externas" value="0"></td></tr>
+                                            <tr><td>E.4. Campanhas socioeducativas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.4 Campanhas socioeducativas" value="0"></td></tr>
+                                            <tr><td>E.5. Articulação com a rede</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.5 Articulação com a rede" value="0"></td></tr>
+                                            <tr><td>E.6. Capacitações</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.6 Capacitações" value="0"></td></tr>
+                                            <tr><td>E.7. Participação em Eventos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.7 Participação em Eventos" value="0"></td></tr>
+                                            <tr><td>E.8. Palestras</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.8 Palestras" value="0"></td></tr>
+                                            <tr><td>E.9. Estudo de Caso</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.9 Estudo de Caso" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 5: GESTÃO TERRITORIAL -->
+                                    <div class="rma-section-header">BLOCO 5 - GESTÃO TERRITORIAL</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">F. Atendimentos realizados a usuários por subterritórios</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Subterritório / Região</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody-territorios-cras">
+                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.1 - Nome" placeholder="Subterritório F.1"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.1 - Total Atendimentos" value="0"></td></tr>
+                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.2 - Nome" placeholder="Subterritório F.2"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.2 - Total Atendimentos" value="0"></td></tr>
+                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.3 - Nome" placeholder="Subterritório F.3"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.3 - Total Atendimentos" value="0"></td></tr>
+                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.4 - Nome" placeholder="Subterritório F.4"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.4 - Total Atendimentos" value="0"></td></tr>
+                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.5 - Nome" placeholder="Subterritório F.5"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.5 - Total Atendimentos" value="0"></td></tr>
+                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.6 - Nome" placeholder="Subterritório F.6"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.6 - Total Atendimentos" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                    <!-- BOTÃO ADICIONADO NO BLOCO 5 -->
+                                    <div style="margin-bottom: 1.5rem; text-align: right;">
+                                        <button type="button" class="btn-report" onclick="adicionarTerritorioCras()" style="background-color: var(--primary); color: white; border: none;">
+                                            ➕ Adicionar Subterritório
+                                        </button>
+                                    </div>
+
+                                    <!-- IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR -->
+                                    <div class="rma-section-header">IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR</div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group" style="margin:0;">
+                                            <label>Nome do Coordenador do Programa</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador - Nome" placeholder="Nome completo do coordenador" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>CPF do Coordenador</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador - CPF" placeholder="000.000.000-00" required>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RMA CRAS no Firebase</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="subtab-${s.key}-historico" style="display: none;">
+                            <div class="card">
+                                <div class="section-title">Histórico de ${s.nome}</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mês/Ano Ref.</th>
+                                            <th>Data de Envio</th>
+                                            <th>Enviado Por</th>
+                                            <th>Status</th>
+                                            <th style="text-align: center; width: 180px;">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-relatorios-${s.key}"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else if (s.isRmaCreas) {
+                    // FORMULÁRIO RMA CREAS COMPLETO
                     section.innerHTML = `
                         <div class="page-header">
                             <h1 class="page-title">${s.titulo}</h1>
@@ -990,6 +1190,20 @@
             optVig.value = "Vigilância Socioassistencial";
             optVig.textContent = "Vigilância Socioassistencial";
             selectNovoServico.appendChild(optVig);
+        }
+
+        // FUNÇÃO PARA ADICIONAR SUBTERRITÓRIO DINAMICAMENTE NO BLOCO 5 DO CRAS
+        function adicionarTerritorioCras() {
+            const tbody = document.getElementById('tbody-territorios-cras');
+            if (!tbody) return;
+
+            const proximoNumero = tbody.children.length + 1;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.${proximoNumero} - Nome" placeholder="Subterritório F.${proximoNumero}"></td>
+                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.${proximoNumero} - Total Atendimentos" value="0"></td>
+            `;
+            tbody.appendChild(tr);
         }
 
         // CONFIGURAÇÃO DO FIREBASE

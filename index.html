@@ -467,6 +467,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
+            margin-right: 0.2rem;
         }
 
         .btn-action-sm:hover { opacity: 0.88; }
@@ -668,22 +669,14 @@
             {
                 key: 'cadunico',
                 nome: 'Cadastro Único',
-                titulo: 'Cadastro Único e Programa Bolsa Família',
-                perguntas: [
-                    { rotulo: '1. Inclusões e Atualizações', titulo: '1. Cadastramentos Novos e Atualizações Cadastrais', sub: 'Quantitativo de famílias recém-cadastradas e atualizações realizadas durante o mês.' },
-                    { rotulo: '2. PBF e Condicionalidades', titulo: '2. Atendimentos de Condicionalidades e PBF', sub: 'Acompanhamento dos benefícios do Programa Bolsa Família e averiguação/revisão cadastral.' },
-                    { rotulo: '3. Buscas Ativas e Mutirões', titulo: '3. Buscas Ativas e Mutirões Comunitários', sub: 'Visitas nos territórios, mutirões de cadastramento e ações itinerantes efetuadas.' }
-                ]
+                titulo: 'Cadastro Único - Relatório de Produção Mensal (RPM CadÚnico)',
+                isRmaCadunico: true
             },
             {
                 key: 'crianca-feliz',
                 nome: 'Programa Criança Feliz',
-                titulo: 'Programa Criança Feliz - Primeira Infância',
-                perguntas: [
-                    { rotulo: '1. Visitas e Acompanhamentos', titulo: '1. Visitas Domiciliares e Gestantes/Crianças Acompanhadas', sub: 'Quantitativo de visitas domiciliares efetuadas e total de gestantes e crianças atendidas no mês.' },
-                    { rotulo: '2. Ações Intersetoriais', titulo: '2. Articulação com a Rede de Primeira Infância', sub: 'Ações conjuntas e encaminhamentos para as redes de Saúde, Educação e Assistência Social.' },
-                    { rotulo: '3. Observações Gerais', titulo: '3. Destaques e Observações do Programa', sub: 'Avanços no desenvolvimento infantil e desafios observados pelas visitadoras no território.', opcional: true }
-                ]
+                titulo: 'FORMULÁRIO 1 - RELATÓRIO MENSAL DE ATENDIMENTOS (RMA - PROGRAMA CRIANÇA FELIZ)',
+                isRmaCriancaFeliz: true
             },
             {
                 key: 'cria',
@@ -738,7 +731,6 @@
                 section.className = 'tab-content';
 
                 if (s.isRmaCras) {
-                    // FORMULÁRIO RMA CRAS OFICIAL FIEL AO PDF
                     section.innerHTML = `
                         <div class="page-header">
                             <h1 class="page-title">${s.titulo}</h1>
@@ -757,13 +749,12 @@
                                     </div>
 
                                     <!-- BLOCO 1: PAIF -->
-                                    <div class="rma-section-header">BLOCO 1 - FAMÍLIAS EM ACOMPANHAMENTO PELO PAIF</div>
-                                    
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">A. Volume de famílias em acompanhamento pelo PAIF</p>
+                                    <div class="rma-section-header">Bloco 1 – Famílias em Acompanhamento pelo PAIF</div>
+                              
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
-                                                <th>Indicadores de Acompanhamento PAIF</th>
+                                                <th>A. Volume de famílias em acompanhamento pelo PAIF</th>
                                                 <th style="width: 120px; text-align: center;">Total</th>
                                             </tr>
                                         </thead>
@@ -773,96 +764,98 @@
                                             <tr><td>A.3. Desligamento de acompanhamento pelo PAIF durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.3 Desligamento de acompanhamento no mês" value="0"></td></tr>
                                         </tbody>
                                     </table>
-                                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">*Atenção! O total de famílias em acompanhamento é o resultado da soma entre a quantidade de famílias que já vinham sendo acompanhadas pelo PAIF e a quantidade de novas famílias que ingressaram no PAIF durante o mês de referência.</p>
-
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">B. Perfil das novas famílias inseridas em acompanhamento no PAIF, no mês de referência</p>
+                                    <div class="rma-alert-box">
+                                        ⚠️ <strong>Atenção!</strong> O total de famílias em acompanhamento é o resultado da soma entre a quantidade de famílias que já vinham sendo acompanhadas pelo PAIF e a quantidade de novas famílias que ingressaram no PAIF durante o mês de referência.
+                                    </div>
+       
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
-                                                <th>Perfil Identificado</th>
+                                                <th>B. Perfil das novas famílias inseridas em acompanhamento no PAIF, no mês de referência</th>
                                                 <th style="width: 120px; text-align: center;">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>B.1. Famílias em situação de extrema pobreza</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.1 Famílias em extrema pobreza" value="0"></td></tr>
-                                            <tr><td>B.2. Famílias beneficiárias do Programa Bolsa Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.2 Beneficiárias Bolsa Família" value="0"></td></tr>
-                                            <tr><td>B.3. Famílias beneficiárias do Programa Bolsa Família, em descumprimento de condicionalidades</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.3 Descumprimento de condicionalidades PBF" value="0"></td></tr>
-                                            <tr><td>B.4. Famílias com membros beneficiários do BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.4 Membros beneficiários do BPC" value="0"></td></tr>
-                                            <tr><td>B.5. Famílias com crianças ou adolescentes em situação de trabalho infantil</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.5 Trabalho Infantil" value="0"></td></tr>
-                                            <tr><td>B.6. Famílias com crianças ou adolescentes em Serviço de Acolhimento</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil PAIF - B.6 Crianças/Adolescentes em Acolhimento" value="0"></td></tr>
+                                            <tr><td>B.1. Famílias em situação de extrema pobreza</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - B.1 Famílias em extrema pobreza" value="0"></td></tr>
+                                            <tr><td>B.2. Famílias beneficiárias do Programa Bolsa Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - B.2 Beneficiárias Programa Bolsa Família" value="0"></td></tr>
+                                            <tr><td>B.3. Famílias beneficiárias do Programa Bolsa Família, em descumprimento de condicionalidades</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - B.3 Bolsa Família em descumprimento de condicionalidades" value="0"></td></tr>
+                                            <tr><td>B.4. Famílias com membros beneficiários do BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - B.4 Famílias com membros beneficiários do BPC" value="0"></td></tr>
+                                            <tr><td>B.5. Famílias com crianças ou adolescentes em situação de trabalho infantil</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - B.5 Crianças/adolescentes em trabalho infantil" value="0"></td></tr>
+                                            <tr><td>B.6. Famílias com crianças ou adolescentes em Serviço de Acolhimento</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - B.6 Crianças/adolescentes em Serviço de Acolhimento" value="0"></td></tr>
                                         </tbody>
                                     </table>
-                                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic;">*Atenção! Os itens B1 a B6 buscam identificar apenas alguns "perfis" de famílias, portanto é normal que algumas famílias contadas no item A2 não se enquadrem em nenhuma das condições acima, enquanto outras podem se enquadrar simultaneamente em mais de uma condição.</p>
+                                    <div class="rma-alert-box">
+                                        ⚠️ <strong>Atenção!</strong> Os itens B1 a B6 buscam identificar apenas alguns “perfis” de famílias, portanto é normal que algumas famílias contadas no item A2 não se enquadrem em nenhuma das condições acima, enquanto outras podem se enquadrar simultaneamente em mais de uma condição; portanto a soma de B1 a B5 não terá, necessariamente, o mesmo valor relatado em A2.
+                                    </div>
 
                                     <!-- BLOCO 2: ATENDIMENTOS INDIVIDUALIZADOS -->
-                                    <div class="rma-section-header">BLOCO 2 - ATENDIMENTOS INDIVIDUALIZADOS REALIZADOS NO CRAS</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">C. Volume de atendimentos individualizados realizados no CRAS, no mês de referência</p>
+                                    <div class="rma-section-header">Bloco 2 – Atendimentos Individualizados realizados no CRAS</div> 
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
-                                                <th>Tipo de Atendimento / Encaminhamento</th>
+                                                <th>C. Volume de atendimentos individualizados realizados no CRAS, no mês de referência</th>
                                                 <th style="width: 120px; text-align: center;">Quantidade</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>C.1. Total de atendimentos individualizados realizados, no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1 Total de atendimentos individualizados" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.1. Pessoa por raça/cor</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.1 Pessoa por raça/cor" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.2. Gênero</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.2 Gênero" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.3. Faixa etária/grupo</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.3 Faixa etária/grupo" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.1.4. Composição familiar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.1.4 Composição familiar" value="0"></td></tr>
-                                            <tr><td>C.2. Famílias encaminhadas para inclusão no Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.2 Inclusão no CadÚnico" value="0"></td></tr>
-                                            <tr><td>C.3. Famílias encaminhadas para atualização cadastral no Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.3 Atualização no CadÚnico" value="0"></td></tr>
-                                            <tr><td>C.4. Indivíduos encaminhados para acesso ao BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.4 Encaminhados ao BPC" value="0"></td></tr>
-                                            <tr><td>C.5. Famílias encaminhadas para o CREAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5 Encaminhadas ao CREAS" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.1 Famílias encaminhadas para rede socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.1 Encaminhadas para rede socioassistencial" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.2 Famílias encaminhadas para rede intersetorial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.2 Encaminhadas para rede intersetorial" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.3 Encaminhamentos recebidos da rede socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.3 Encaminhamentos recebidos da rede socioassistencial" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.5.4 Encaminhamentos recebidos de outras políticas públicas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.5.4 Encaminhamentos recebidos de outras políticas públicas" value="0"></td></tr>
-                                            <tr><td>C.6. Visitas domiciliares realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.6 Visitas domiciliares" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;C.6.1 Visitas institucionais realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.6.1 Visitas institucionais" value="0"></td></tr>
-                                            <tr><td>C.7. Total de auxílios-natalidade concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.7 Auxílios-natalidade" value="0"></td></tr>
-                                            <tr><td>C.8. Total de auxílios-funeral concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.8 Auxílios-funeral" value="0"></td></tr>
-                                            <tr><td>C.9. Outros benefícios eventuais concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.9 Outros benefícios eventuais" value="0"></td></tr>
-                                            <tr><td>C.10. Quantidade de benefícios eventuais solicitados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos CRAS - C.10 Benefícios eventuais solicitados" value="0"></td></tr>
+                                            <tr><td>C.1. Total de atendimentos individualizados realizados, no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.1 Total de atendimentos individualizados" value="0"></td></tr>
+                                            <tr><td>C.1.1. Pessoa por raça/cor</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.1.1 Pessoa por raça/cor" value="0"></td></tr>
+                                            <tr><td>C.1.2. Gênero</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.1.2 Gênero" value="0"></td></tr>
+                                            <tr><td>C.1.3. Faixa etária/grupo</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.1.3 Faixa etária/grupo" value="0"></td></tr>
+                                            <tr><td>C.1.4. Composição familiar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.1.4 Composição familiar" value="0"></td></tr>
+                                            <tr><td>C.2. Famílias encaminhadas para inclusão no Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.2 Encaminhadas para inclusão no Cadastro Único" value="0"></td></tr>
+                                            <tr><td>C.3. Famílias encaminhadas para atualização cadastral no Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.3 Encaminhadas para atualização no Cadastro Único" value="0"></td></tr>
+                                            <tr><td>C.4. Indivíduos encaminhados para acesso ao BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.4 Indivíduos encaminhados para BPC" value="0"></td></tr>
+                                            <tr><td>C.5. Famílias encaminhadas para o CREAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.5 Famílias encaminhadas para o CREAS" value="0"></td></tr>
+                                            <tr><td>C.5.1 Famílias encaminhadas para rede socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.5.1 Encaminhadas rede socioassistencial" value="0"></td></tr>
+                                            <tr><td>C.5.2 Famílias encaminhadas para rede intersetorial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.5.2 Encaminhadas rede intersetorial" value="0"></td></tr>
+                                            <tr><td>C.5.3 Encaminhamentos recebidos da rede socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.5.3 Encaminhamentos recebidos da rede socioassistencial" value="0"></td></tr>
+                                            <tr><td>C.5.4 Encaminhamentos recebidos de outras políticas públicas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.5.4 Encaminhamentos recebidos de outras políticas" value="0"></td></tr>
+                                            <tr><td>C.6. Visitas domiciliares realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.6 Visitas domiciliares realizadas" value="0"></td></tr>
+                                            <tr><td>C.6.1 Visitas institucionais realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.6.1 Visitas institucionais realizadas" value="0"></td></tr>
+                                            <tr><td>C.7. Total de auxílios-natalidade concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.7 Auxílios-natalidade concedidos" value="0"></td></tr>
+                                            <tr><td>C.8. Total de auxílios-funeral concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.8 Auxílios-funeral concedidos" value="0"></td></tr>
+                                            <tr><td>C.9. Outros benefícios eventuais concedidos/entregues durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.9 Outros benefícios eventuais concedidos" value="0"></td></tr>
+                                            <tr><td>C.10. Quantidade de benefícios eventuais solicitados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - C.10 Benefícios eventuais solicitados" value="0"></td></tr>
                                         </tbody>
                                     </table>
 
                                     <!-- BLOCO 3: ATENDIMENTOS COLETIVOS -->
-                                    <div class="rma-section-header">BLOCO 3 - ATENDIMENTOS COLETIVOS REALIZADOS NO CRAS</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">D. Volume dos Serviços de Convivência e Fortalecimentos de Vínculos, no mês de referência</p>
+                                    <div class="rma-section-header">Bloco 3 – Atendimentos Coletivos realizados no CRAS</div>
+
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
-                                                <th>Serviços e Grupos do SCFV / PAIF</th>
+                                                <th>D. Volume dos Serviços de Convivência e Fortalecimentos de Vínculos, no mês de referência</th>
                                                 <th style="width: 120px; text-align: center;">Quantidade</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>D.1. Famílias participando regularmente de grupos no âmbito do PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.1 Grupos do PAIF" value="0"></td></tr>
-                                            <tr><td>D.2. Crianças de 0 a 6 anos em Serviços de Convivência e Fortalecimentos de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.2 Crianças 0-6 anos SCFV" value="0"></td></tr>
-                                            <tr><td>D.3. Crianças/adolescentes de 7 a 14 anos em Serv. de Convivência e Fortalecimento de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.3 Crianças/Adolescentes 7-14 anos SCFV" value="0"></td></tr>
-                                            <tr><td>D.4. Adolescentes de 15 a 17 anos em Serviços de Convivência e Fortalecimentos de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.4 Adolescentes 15-17 anos SCFV" value="0"></td></tr>
-                                            <tr><td>D.8. Adultos entre 18 e 59 anos em Serviços de Convivência e Fortalecimento de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.8 Adultos 18-59 anos SCFV" value="0"></td></tr>
-                                            <tr><td>D.5. Idosos em Serviços de Convivência e Fortalecimentos de Vínculos para idosos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.5 Idosos SCFV" value="0"></td></tr>
-                                            <tr><td>D.6. Pessoas que participaram de palestras, oficinas e outras atividades coletivas de caráter não continuado</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.6 Palestras/Oficinas não continuadas" value="0"></td></tr>
-                                            <tr><td>D.7. Pessoas com deficiência, participando dos Serviços de Convivência ou dos grupos do PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.7 PcD nos grupos SCFV/PAIF" value="0"></td></tr>
-                                            <tr><td>D.9. Desligamento de usuários no SCFV</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.9 Desligamento de usuários SCFV" value="0"></td></tr>
-                                            <tr><td>D.10. Inclusão de usuários</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.10 Inclusão de usuários SCFV" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.11. De 0 a 6 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.11 Inclusão 0-6 anos" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.12. De 7 a 14 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.12 Inclusão 7-14 anos" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.13. De 15 a 17 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.13 Inclusão 15-17 anos" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.14. De 18 a 59 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.14 Inclusão 18-59 anos" value="0"></td></tr>
-                                            <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;D.15. De 60 ou mais</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos Coletivos - D.15 Inclusão 60+ anos" value="0"></td></tr>
+                                            <tr><td>D.1. Famílias participando regularmente de grupos no âmbito do PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.1 Famílias participando de grupos PAIF" value="0"></td></tr>
+                                            <tr><td>D.2. Crianças de 0 a 6 anos em Serviços de Convivência e Fortalecimentos de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.2 Crianças 0 a 6 anos" value="0"></td></tr>
+                                            <tr><td>D.3. Crianças/adolescentes de 7 a 14 anos em Serv. de Convivência e Fortalecimento de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.3 Crianças/Adolescentes 7 a 14 anos" value="0"></td></tr>
+                                            <tr><td>D.4. Adolescentes de 15 a 17 anos em Serviços de Convivência e Fortalecimentos de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.4 Adolescentes 15 a 17 anos" value="0"></td></tr>
+                                            <tr><td>D.8. Adultos entre 18 e 59 anos em Serviços de Convivência e Fortalecimento de Vínculos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.8 Adultos 18 a 59 anos" value="0"></td></tr>
+                                            <tr><td>D.5. Idosos em Serviços de Convivência e Fortalecimentos de Vínculos para idosos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.5 Idosos" value="0"></td></tr>
+                                            <tr><td>D.6. Pessoas que participaram de palestras, oficinas e outras atividades coletivas de caráter não continuado</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.6 Atividades coletivas não continuadas" value="0"></td></tr>
+                                            <tr><td>D.7. Pessoas com deficiência, participando dos Serviços de Convivência ou dos grupos do PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.7 Pessoas com deficiência em SCFV/PAIF" value="0"></td></tr>
+                                            <tr><td>D.9. Desligamento de usuários no SCFV</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.9 Desligamento de usuários no SCFV" value="0"></td></tr>
+                                            <tr><td>D.10. Inclusão de usuários</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.10 Inclusão de usuários" value="0"></td></tr>
+                                            <tr><td>D.11. De 0 a 6 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.11 Inclusões 0 a 6 anos" value="0"></td></tr>
+                                            <tr><td>D.12. De 7 a 14 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.12 Inclusões 7 a 14 anos" value="0"></td></tr>
+                                            <tr><td>D.13. De 15 a 17 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.13 Inclusões 15 a 17 anos" value="0"></td></tr>
+                                            <tr><td>D.14. De 18 a 59 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.14 Inclusões 18 a 59 anos" value="0"></td></tr>
+                                            <tr><td>D.15. De 60 ou mais</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="SCFV - D.15 Inclusões 60 ou mais" value="0"></td></tr>
                                         </tbody>
                                     </table>
 
                                     <!-- BLOCO 4: AÇÕES E ATIVIDADES REALIZADAS -->
-                                    <div class="rma-section-header">BLOCO 4 - AÇÕES E ATIVIDADES REALIZADAS</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">E. Volume de Ações e Atividades Realizadas</p>
+                                    <div class="rma-section-header">Bloco 4 – Ações e Atividades Realizadas</div>
+                                   
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
-                                                <th>Atividade / Ação Realizada</th>
+                                                <th>E. Volume de Ações e Atividades Realizadas</th>
                                                 <th style="width: 120px; text-align: center;">Total</th>
                                             </tr>
                                         </thead>
@@ -875,47 +868,58 @@
                                             <tr><td>E.6. Capacitações</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.6 Capacitações" value="0"></td></tr>
                                             <tr><td>E.7. Participação em Eventos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.7 Participação em Eventos" value="0"></td></tr>
                                             <tr><td>E.8. Palestras</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.8 Palestras" value="0"></td></tr>
-                                            <tr><td>E.9. Estudo de Caso</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.9 Estudo de Caso" value="0"></td></tr>
+                                            <tr><td>E.9 Estudo de Caso</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.9 Estudo de Caso" value="0"></td></tr>
                                         </tbody>
                                     </table>
 
                                     <!-- BLOCO 5: GESTÃO TERRITORIAL -->
-                                    <div class="rma-section-header">BLOCO 5 - GESTÃO TERRITORIAL</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">F. Atendimentos realizados a usuários por subterritórios</p>
+                                    <div class="rma-section-header">Bloco 5 – Gestão Territorial</div> 
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
-                                                <th>Subterritório / Região</th>
+                                                <th>F. Atendimentos realizados a usuários por subterritórios</th>
                                                 <th style="width: 120px; text-align: center;">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tbody-territorios-cras">
-                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.1 - Nome" placeholder="Subterritório F.1"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.1 - Total Atendimentos" value="0"></td></tr>
-                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.2 - Nome" placeholder="Subterritório F.2"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.2 - Total Atendimentos" value="0"></td></tr>
-                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.3 - Nome" placeholder="Subterritório F.3"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.3 - Total Atendimentos" value="0"></td></tr>
-                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.4 - Nome" placeholder="Subterritório F.4"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.4 - Total Atendimentos" value="0"></td></tr>
-                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.5 - Nome" placeholder="Subterritório F.5"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.5 - Total Atendimentos" value="0"></td></tr>
-                                            <tr><td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.6 - Nome" placeholder="Subterritório F.6"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.6 - Total Atendimentos" value="0"></td></tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.1 - Nome" placeholder="F.1. Nome do Subterritório 1"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.1 - Total Atendimentos" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.2 - Nome" placeholder="F.2. Nome do Subterritório 2"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.2 - Total Atendimentos" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.3 - Nome" placeholder="F.3. Nome do Subterritório 3"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.3 - Total Atendimentos" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.4 - Nome" placeholder="F.4. Nome do Subterritório 4"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.4 - Total Atendimentos" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.5 - Nome" placeholder="F.5. Nome do Subterritório 5"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.5 - Total Atendimentos" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Subterritório F.6 - Nome" placeholder="F.6. Nome do Subterritório 6"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Subterritório F.6 - Total Atendimentos" value="0"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                    
-                                    <!-- BOTÃO ADICIONADO NO BLOCO 5 -->
-                                    <div style="margin-bottom: 1.5rem; text-align: right;">
-                                        <button type="button" class="btn-report" onclick="adicionarTerritorioCras()" style="background-color: var(--primary); color: white; border: none;">
-                                            ➕ Adicionar Subterritório
-                                        </button>
-                                    </div>
+                                    <button type="button" class="btn-report" style="margin-bottom: 1.5rem;" onclick="adicionarTerritorioCras()">➕ Adicionar Subterritório</button>
 
-                                    <!-- IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR -->
-                                    <div class="rma-section-header">IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR</div>
+                                    <!-- IDENTIFICAÇÃO DO RESPONSÁVEL -->
+                                    <div class="rma-section-header">IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR(A) CRAS</div>
                                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
                                         <div class="form-group" style="margin:0;">
-                                            <label>Nome do Coordenador do Programa</label>
-                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador - Nome" placeholder="Nome completo do coordenador" required>
+                                            <label>Nome do Coordenador(a) / Técnico Responsável</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador CRAS - Nome" placeholder="Nome completo" required>
                                         </div>
                                         <div class="form-group" style="margin:0;">
-                                            <label>CPF do Coordenador</label>
-                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador - CPF" placeholder="000.000.000-00" required>
+                                            <label>CPF ou Registro Profissional (CRESS/CRP)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador CRAS - Registro/CPF" placeholder="000.000.000-00 ou CRESS" required>
                                         </div>
                                     </div>
 
@@ -943,7 +947,6 @@
                         </div>
                     `;
                 } else if (s.isRmaCreas) {
-                    // FORMULÁRIO RMA CREAS COMPLETO
                     section.innerHTML = `
                         <div class="page-header">
                             <h1 class="page-title">${s.titulo}</h1>
@@ -960,150 +963,162 @@
                                         <label><strong>Mês/Ano de Referência</strong></label>
                                         <input type="month" id="${s.key}-mes-ano" required>
                                     </div>
+<!-- BLOCO 1 -->
+    <div class="block-title">Bloco 1 – Serviço de Proteção e Atendimento Especializado a Famílias e Indivíduos (PAEFI)</div>
 
-                                    <!-- BLOCO 1: PAEFI -->
-                                    <div class="rma-section-header">BLOCO 1 - SERVIÇO DE PROTEÇÃO E ATENDIMENTO ESPECIALIZADO A FAMÍLIAS E INDIVÍDUOS (PAEFI)</div>
-                                    
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">A. Volume de Famílias em Acompanhamento pelo PAEFI</p>
-                                    <table class="rma-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Indicadores de Acompanhamento PAEFI</th>
-                                                <th style="width: 120px; text-align: center;">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>A.1. Total de famílias/indivíduos em acompanhamento pelo PAEFI no início do mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.1 Em acompanhamento no início do mês" value="0"></td></tr>
-                                            <tr><td>A.2. Novas famílias/indivíduos inseridos no acompanhamento durante o mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.2 Novos casos no mês" value="0"></td></tr>
-                                            <tr><td>A.3. Famílias/indivíduos desligados do acompanhamento durante o mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.3 Desligados no mês" value="0"></td></tr>
-                                            <tr><td>A.4. Demanda reprimida (famílias aguardando inserção no PAEFI)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAEFI - A.4 Demanda Reprimida" value="0"></td></tr>
-                                        </tbody>
-                                    </table>
+    <div class="section-title">A. Volume de Famílias em Acompanhamento pelo PAEFI</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Indicador</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>A.1. Total de casos (famílias ou indivíduos) em acompanhamento pelo PAEFI</td><td class="num">0</td></tr>
+            <tr><td>A.2. Novos casos (famílias ou indivíduos) inseridos no acompanhamento durante o mês</td><td class="num">0</td></tr>
+            <tr><td>A.3. Desligamento Familiar</td><td class="num">0</td></tr>
+            <tr><td>A.4. Demanda Reprimida</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
 
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b; margin-top: 1rem;">B. Perfil dos Novos Casos Inseridos no Acompanhamento (Mês de Referência)</p>
-                                    <table class="rma-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Perfil Identificado</th>
-                                                <th style="width: 120px; text-align: center;">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>B.1. Famílias beneficiárias do Programa Bolsa Família (PBF)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.1 Beneficiárias Bolsa Família" value="0"></td></tr>
-                                            <tr><td>B.2. Famílias com membros beneficiários do BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.2 Beneficiários BPC" value="0"></td></tr>
-                                            <tr><td>B.3. Famílias com crianças/adolescentes em situação de trabalho infantil</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.3 Trabalho Infantil" value="0"></td></tr>
-                                            <tr><td>B.4. Famílias com crianças/adolescentes em Serviços de Acolhimento</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.4 Crianças/Adolescentes Acolhidos" value="0"></td></tr>
-                                            <tr><td>B.5. Famílias/indivíduos com violação associada ao uso abusivo de substâncias psicoativas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.5 Substâncias Psicoativas" value="0"></td></tr>
-                                            <tr><td>B.6. Famílias com adolescentes em cumprimento de MSE em meio aberto</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.6 MSE em Meio Aberto" value="0"></td></tr>
-                                            <tr><td>B.7. Famílias/indivíduos atendidos que não receberam o primeiro atendimento especializado no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Perfil - B.7 Aguardando 1º Atendimento" value="0"></td></tr>
-                                        </tbody>
-                                    </table>
+    <div class="section-title">B. Perfil dos Novos Casos Inseridos no Acompanhamento (Mês de Referência)</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Condição / Perfil</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>B.1. Famílias beneficiárias do Programa Bolsa Família</td><td class="num">0</td></tr>
+            <tr><td>B.2. Famílias com membros beneficiários do BPC</td><td class="num">0</td></tr>
+            <tr><td>B.3. Famílias com crianças ou adolescentes em situação de trabalho infantil</td><td class="num">0</td></tr>
+            <tr><td>B.4. Famílias com crianças ou adolescentes em Serviços de Acolhimento</td><td class="num">0</td></tr>
+            <tr><td>B.5. Famílias com violência/violação associada ao uso abusivo de substâncias psicoativas</td><td class="num">0</td></tr>
+            <tr><td>B.7. Famílias com adolescente em cumprimento de Medidas Socioeducativas em meio aberto</td><td class="num">0</td></tr>
+            <tr><td>B.8. Total de famílias/indivíduos que não receberam o primeiro atendimento</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
 
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b; margin-top: 1rem;">C a I. Motivos de Inserção / Violações de Direitos Identificadas nos Novos Casos</p>
-                                    <table class="rma-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Tipo de Violação de Direitos Identificada</th>
-                                                <th style="width: 120px; text-align: center;">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>C.1. Crianças/adolescentes vítimas de violência física/psicológica intrafamiliar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.1 Violência Intrafamiliar Criança/Adolescente" value="0"></td></tr>
-                                            <tr><td>C.2. Crianças/adolescentes vítimas de abuso sexual</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.2 Abuso Sexual Criança/Adolescente" value="0"></td></tr>
-                                            <tr><td>C.3. Crianças/adolescentes vítimas de exploração sexual</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.3 Exploração Sexual Criança/Adolescente" value="0"></td></tr>
-                                            <tr><td>C.4. Crianças/adolescentes em negligência ou abandono</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - C.4 Negligência Criança/Adolescente" value="0"></td></tr>
-                                            <tr><td>D.1. Pessoas idosas vítimas de violência intrafamiliar/física/psicológica</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - D.1 Idosos Violência Intrafamiliar" value="0"></td></tr>
-                                            <tr><td>D.2. Pessoas idosas em situação de negligência ou abandono</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - D.2 Idosos Negligência/Abandono" value="0"></td></tr>
-                                            <tr><td>E.1. Pessoas com deficiência vítimas de violência intrafamiliar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - E.1 PcD Violência Intrafamiliar" value="0"></td></tr>
-                                            <tr><td>E.2. Pessoas com deficiência em situação de negligência/abandono</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - E.2 PcD Negligência/Abandono" value="0"></td></tr>
-                                            <tr><td>F.1. Mulheres vítimas de violência intrafamiliar ou de gênero</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - F.1 Mulheres Violência Doméstica" value="0"></td></tr>
-                                            <tr><td>G.1. Pessoas vítimas de tráfico de seres humanos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - G.1 Tráfico de Pessoas" value="0"></td></tr>
-                                            <tr><td>H.1. Pessoas vítimas de discriminação por orientação sexual / identidade de gênero / raça</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - H.1 Discriminação/Homofobia/Racismo" value="0"></td></tr>
-                                            <tr><td>I.1. Pessoas em situação de rua atendidas vinculadas ao PAEFI</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Violação - I.1 Pessoas em Situação de Rua" value="0"></td></tr>
-                                        </tbody>
-                                    </table>
+    <div class="section-title">B.6. Pessoas Vítimas de Violência/Violações por Faixa Etária e Sexo</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sexo</th>
+                <th class="num">0 a 12 anos</th>
+                <th class="num">13 a 17 anos</th>
+                <th class="num">18 a 59 anos</th>
+                <th class="num">60+ anos</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Masculino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>Feminino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
 
-                                    <!-- BLOCO 2: ATENDIMENTOS REALIZADOS -->
-                                    <div class="rma-section-header">BLOCO 2 - ATENDIMENTOS E AÇÕES REALIZADAS NO AMBITO DO PAEFI</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">M. Quantitativo de Atendimentos no Mês</p>
-                                    <table class="rma-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Tipo de Atendimento / Ação</th>
-                                                <th style="width: 120px; text-align: center;">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>M.1. Atendimentos individualizados realizados durante o mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.1 Individualizados" value="0"></td></tr>
-                                            <tr><td>M.2. Atendimentos em grupo / oficinas com famílias realizados no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.2 Em Grupo" value="0"></td></tr>
-                                            <tr><td>M.3. Famílias encaminhadas para acompanhamento no CRAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.3 Encaminhadas ao CRAS" value="0"></td></tr>
-                                            <tr><td>M.4. Visitas domiciliares realizadas pela equipe do CREAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.4 Visitas Domiciliares" value="0"></td></tr>
-                                            <tr><td>M.5. Atendimentos realizados pelo Assistente Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.5 Serviço Social" value="0"></td></tr>
-                                            <tr><td>M.6. Atendimentos realizados pelo Psicólogo(a)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.6 Psicologia" value="0"></td></tr>
-                                            <tr><td>M.7. Atendimentos realizados pelo Advogado(a) / Orientador Jurídico</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Atendimentos - M.7 Orientação Jurídica" value="0"></td></tr>
-                                        </tbody>
-                                    </table>
+    <div class="section-title">C. Crianças e Adolescentes que Ingressaram no PAEFI</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação de Violência / Violação</th>
+                <th>Sexo</th>
+                <th class="num">0 a 6 anos</th>
+                <th class="num">7 a 12 anos</th>
+                <th class="num">13 a 17 anos</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td rowspan="2">C.1. Violência intrafamiliar (física/psicológica)</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td rowspan="2">C.2. Abuso sexual</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td rowspan="2">C.3. Exploração sexual</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td rowspan="2">C.4. Negligência ou abandono</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
 
-                                    <div class="form-group" style="margin-top: 1rem;">
-                                        <label>Detalhamento Qualitativo das Ações do PAEFI (Estudos de Caso, Reuniões de Rede e Articulações)</label>
-                                        <textarea class="campo-resposta" data-rotulo="PAEFI - Resumo Qualitativo e Articulações" placeholder="Descreva os principais encaminhamentos para o Poder Judiciário, Conselho Tutelar, Saúde e atividades de rede..."></textarea>
-                                    </div>
+    <div class="grid-2">
+        <div>
+            <div class="section-title">D. Idosos (60+ anos)</div>
+            <table>
+                <thead><tr><th>Situação</th><th class="num">Masc.</th><th class="num">Fem.</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>D.1. Violência intrafamiliar</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+                    <tr><td>D.2. Negligência/Abandono</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div class="section-title">F. Mulheres Adultas (18-59)</div>
+            <table>
+                <thead><tr><th>Situação</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>F.1. Violência intrafamiliar</td><td class="num">0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                                    <!-- BLOCO 3: MEDIDAS SOCIOEDUCATIVAS -->
-                                    <div class="rma-section-header">BLOCO 3 - SERVIÇO DE PROTEÇÃO SOCIAL A ADOLESCENTES EM CUMPRIMENTO DE MEDIDAS SOCIOEDUCATIVAS (LA / PSC)</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">J. Volume de Adolescentes em Medida Socioeducativa em Meio Aberto</p>
-                                    <table class="rma-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Indicadores do Serviço de MSE</th>
-                                                <th style="width: 120px; text-align: center;">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>J.1. Total de adolescentes em cumprimento de MSE em meio aberto no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.1 Total em Cumprimento" value="0"></td></tr>
-                                            <tr><td>J.2. Adolescentes em cumprimento de Liberdade Assistida (LA)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.2 Em Liberdade Assistida (LA)" value="0"></td></tr>
-                                            <tr><td>J.3. Adolescentes em cumprimento de Prestação de Serviços à Comunidade (PSC)</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.3 Em Prestação de Serviços (PSC)" value="0"></td></tr>
-                                            <tr><td>J.4. Novos adolescentes que ingressaram na MSE no mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.4 Novos Ingressos" value="0"></td></tr>
-                                            <tr><td>J.5. Adolescentes que tiveram a medida encerrada/desligada no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="MSE - J.5 Desligados/Encerrados" value="0"></td></tr>
-                                        </tbody>
-                                    </table>
+    <!-- BLOCO 2 -->
+    <div class="block-title">Bloco 2 – Atendimentos Realizados no CREAS</div>
 
-                                    <!-- BLOCO 4: ABORDAGEM SOCIAL -->
-                                    <div class="rma-section-header">BLOCO 4 - SERVIÇO ESPECIALIZADO EM ABORDAGEM SOCIAL</div>
-                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">K & L. Pessoas Abordadas e Abordagens Realizadas</p>
-                                    <table class="rma-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Indicadores de Abordagem Social</th>
-                                                <th style="width: 120px; text-align: center;">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>K.1. Total de pessoas distintas abordadas no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.1 Pessoas Distintas Abordadas" value="0"></td></tr>
-                                            <tr><td>K.2. Crianças ou adolescentes em situação de trabalho infantil identificados na abordagem</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.2 Crianças em Trabalho Infantil" value="0"></td></tr>
-                                            <tr><td>K.3. Crianças ou adolescentes em situação de exploração sexual identificados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.3 Crianças em Exploração Sexual" value="0"></td></tr>
-                                            <tr><td>K.4. Pessoas adultas usuárias de crack ou outras drogas em situação de rua</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - K.4 Adultos Usuários de Drogas/Rua" value="0"></td></tr>
-                                            <tr><td>L.1. Quantidade total de procedimentos de abordagem realizados no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Abordagem - L.1 Total de Abordagens Realizadas" value="0"></td></tr>
-                                        </tbody>
-                                    </table>
+    <div class="section-title">M. Atendimentos no Mês de Referência</div>
+    <table>
+        <thead><tr><th>Tipo de Atendimento</th><th class="num">Total</th></tr></thead>
+        <tbody>
+            <tr><td>M.1. Atendimentos individualizados realizados</td><td class="num">0</td></tr>
+            <tr><td>M.2. Atendimentos em grupo realizados</td><td class="num">0</td></tr>
+            <tr><td>M.3. Famílias encaminhadas para o CRAS</td><td class="num">0</td></tr>
+            <tr><td>M.4. Visitas domiciliares realizadas</td><td class="num">0</td></tr>
+            <tr><td>M.5. Atendimento Assistente Social</td><td class="num">0</td></tr>
+            <tr><td>M.6. Atendimento Psicólogo(a)</td><td class="num">0</td></tr>
+            <tr><td>M.7. Atendimento Advogado(a)</td><td class="num">0</td></tr>
+            <tr><td>M.8. Atendimento Multiprofissional</td><td class="num">0</td></tr>
+            <tr><td>M.9. Atendimento Coordenação</td><td class="num">0</td></tr>
+            <tr><td>M.10. Atendimento Recepção</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
 
-                                    <!-- IDENTIFICAÇÃO DO RESPONSÁVEL -->
-                                    <div class="rma-section-header">IDENTIFICAÇÃO DO RESPONSÁVEL PELO PREENCHIMENTO DAS INFORMAÇÕES</div>
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                                        <div class="form-group" style="margin:0;">
-                                            <label>Nome do Responsável</label>
-                                            <input type="text" class="campo-resposta" data-rotulo="Responsável - Nome" placeholder="Nome completo" required>
-                                        </div>
-                                        <div class="form-group" style="margin:0;">
-                                            <label>Cargo / Função</label>
-                                            <input type="text" class="campo-resposta" data-rotulo="Responsável - Cargo" placeholder="Ex: Coordenador / Assistente Social" required>
-                                        </div>
-                                        <div class="form-group" style="margin:0;">
-                                            <label>CPF do Responsável</label>
-                                            <input type="text" class="campo-resposta" data-rotulo="Responsável - CPF" placeholder="000.000.000-00" required>
-                                        </div>
-                                    </div>
+    <!-- BLOCO 3 -->
+    <div class="block-title">Bloco 3 – Medidas Socioeducativas (LA / PSC)</div>
+    
+    <div class="section-title">J. Volume de Adolescentes em MSE</div>
+    <table>
+        <thead><tr><th>Indicador</th><th class="num">Total</th></tr></thead>
+        <tbody>
+            <tr><td>J.1. Total de adolescentes em cumprimento de MSE (LA e/ou PSC)</td><td class="num">0</td></tr>
+            <tr><td>J.2. Adolescentes em cumprimento de Liberdade Assistida (LA)</td><td class="num">0</td></tr>
+            <tr><td>J.3. Adolescentes em cumprimento de Prestação de Serviços à Comunidade (PSC)</td><td class="num">0</td></tr>
+            <tr><td>J.4. Novos adolescentes inseridos no mês</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
 
+    <!-- BLOCO 4 -->
+    <div class="block-title">Bloco 4 – Serviço Especializado em Abordagem Social</div>
+    
+    <div class="section-title">K. Pessoas Abordadas pela Equipe</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sexo</th>
+                <th class="num">0-12 anos</th>
+                <th class="num">13-17 anos</th>
+                <th class="num">18-59 anos</th>
+                <th class="num">60+ anos</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Masculino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>Feminino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+        </tbody>
+    </table>
                                     <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RMA CREAS no Firebase</button>
                                 </form>
                             </div>
@@ -1127,8 +1142,550 @@
                             </div>
                         </div>
                     `;
+                } else if (s.isRmaCadunico) {
+                    section.innerHTML = `
+                        <div class="page-header">
+                            <h1 class="page-title">${s.titulo}</h1>
+                        </div>
+                        <div class="sub-tabs">
+                            <button class="sub-tab-btn active" id="btn-subtab-${s.key}-envio" onclick="switchSubTab('${s.key}', 'envio')">📝 Preencher RPM CadÚnico Oficial</button>
+                            <button class="sub-tab-btn" id="btn-subtab-${s.key}-historico" onclick="switchSubTab('${s.key}', 'historico')">📜 Histórico de Enviados</button>
+                        </div>
+
+                        <div id="subtab-${s.key}-envio">
+                            <div class="card">
+                                <form id="form-${s.key}" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('${s.nome}', '${s.key}-mes-ano', 'form-${s.key}');">
+                                    <div class="form-group" style="max-width: 260px; margin-bottom: 1.5rem;">
+                                        <label><strong>Mês/Ano de Referência</strong></label>
+                                        <input type="month" id="${s.key}-mes-ano" required>
+                                    </div>
+
+                                    <!-- BLOCO 1: TOTAL DE ATENDIMENTOS REALIZADOS -->
+                                    <div class="rma-section-header">BLOCO 1 - TOTAL DE ATENDIMENTOS REALIZADOS</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicador / Item</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>1.1 Quantidade de Famílias</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.1 Quantidade de Famílias" value="0"></td></tr>
+                                            <tr><td>1.2 Quantidade de Atendimentos - Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.2 Quantidade de Atendimentos CadÚnico" value="0"></td></tr>
+                                            <tr><td>1.3 Quantidade de Ações</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.3 Quantidade de Ações" value="0"></td></tr>
+                                            <tr><td>1.4 Quantidade de Atendimentos - Ações Descentralizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.4 Atendimentos Ações Descentralizadas" value="0"></td></tr>
+                                            <tr><td>1.5 Quantidade de Buscas Ativas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.5 Quantidade de Buscas Ativas" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 2: FRACIONAMENTO DOS ATENDIMENTOS INDIVIDUALIZADOS -->
+                                    <div class="rma-section-header">BLOCO 2 - FRACIONAMENTO DOS ATENDIMENTOS INDIVIDUALIZADOS REALIZADOS NO CADÚNICO</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Atendimento / Visita</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>2.1 Atualização Cadastral</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.1 Atualização Cadastral" value="0"></td></tr>
+                                            <tr><td>2.2 Inclusão de Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.2 Inclusão de Família" value="0"></td></tr>
+                                            <tr><td>2.3 Exclusão de Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.3 Exclusão de Família" value="0"></td></tr>
+                                            <tr><td>2.4 Inclusão de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.4 Inclusão de Pessoa" value="0"></td></tr>
+                                            <tr><td>2.5 Exclusão de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.5 Exclusão de Pessoa" value="0"></td></tr>
+                                            <tr><td>2.6 Encaminhamentos Recebidos de Outras Políticas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.6 Encaminhamentos Recebidos de Outras Políticas" value="13"></td></tr>
+                                            <tr><td>2.7 Encaminhamentos Para Assistente Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.7 Encaminhamentos Para Assistente Social" value="4"></td></tr>
+                                            <tr><td>2.8 Encaminhamentos Para Coordenação</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.8 Encaminhamentos Para Coordenação" value="30"></td></tr>
+
+                                            <tr style="background-color: #f0fdf4; font-weight: bold;"><td colspan="2" style="color: var(--primary-hover);">Atendimento / Visita</td></tr>
+                                            <tr><td>2.9 Atualização Cadastral</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.9 Atualização Cadastral" value="114"></td></tr>
+                                            <tr><td>2.10 Inclusão de Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.10 Inclusão de Família" value="7"></td></tr>
+                                            <tr><td>2.11 Exclusão de Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.11 Exclusão de Família" value="0"></td></tr>
+                                            <tr><td>2.12 Inclusão de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.12 Inclusão de Pessoa" value="17"></td></tr>
+                                            <tr><td>2.13 Exclusão de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.13 Exclusão de Pessoa" value="26"></td></tr>
+                                            <tr><td>2.14 Inclusão Família BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.14 Inclusão Família BPC" value="2"></td></tr>
+                                            <tr><td>2.15 Atualização Família BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.15 Atualização Família BPC" value="2"></td></tr>
+                                            <tr><td>2.16 Transferência de Cidade</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.16 Transferência de Cidade" value="2"></td></tr>
+                                            <tr><td>2.17 Transferência de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.17 Transferência de Pessoa" value="0"></td></tr>
+                                            <tr><td>2.18 Transferência de RF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.18 Transferência de RF" value="0"></td></tr>
+                                            <tr><td>2.19 Atualização de Família em Situação de Rua</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.19 Atualização de Família em Situação de Rua" value="0"></td></tr>
+                                            <tr><td>2.20 Inclusão de Família em Situação de Rua</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.20 Inclusão de Família em Situação de Rua" value="0"></td></tr>
+                                            <tr><td>2.21 Familias Quilombolas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.21 Familias Quilombolas" value="0"></td></tr>
+                                            <tr><td>2.22 Familias Indigenas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.22 Familias Indigenas" value="0"></td></tr>
+                                            <tr><td>2.23 Familias de Catadores de Materias Recicláveis</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.23 Familias de Catadores de Materias Recicláveis" value="0"></td></tr>
+                                            <tr><td>2.24 Familias de Terreiros</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.24 Familias de Terreiros" value="0"></td></tr>
+                                            <tr><td>2.25 Familias de Presos do Sistema Carcerario</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.25 Familias de Presos do Sistema Carcerario" value="0"></td></tr>
+                                            <tr><td>2.26 Encaminhamentos Para a Assistente Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.26 Encaminhamentos Para a Assistente Social" value="0"></td></tr>
+                                            <tr><td>2.27 Encaminhamentos Para a Coordenação</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.27 Encaminhamentos Para a Coordenação" value="0"></td></tr>
+
+                                            <tr style="background-color: #f0fdf4; font-weight: bold;"><td colspan="2" style="color: var(--primary-hover);">Digitação</td></tr>
+                                            <tr><td>2.28 Atualização Cadastral</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.28 Atualização Cadastral" value="140"></td></tr>
+                                            <tr><td>2.29 Inclusão de Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.29 Inclusão de Família" value="41"></td></tr>
+                                            <tr><td>2.30 Exclusão de Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.30 Exclusão de Família" value="0"></td></tr>
+                                            <tr><td>2.31 Inclusão de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.31 Inclusão de Pessoa" value="10"></td></tr>
+                                            <tr><td>2.32 Exclusão de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.32 Exclusão de Pessoa" value="21"></td></tr>
+                                            <tr><td>2.33 Inclusão Família BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.33 Inclusão Família BPC" value="4"></td></tr>
+                                            <tr><td>2.34 Atualização Família BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.34 Atualização Família BPC" value="21"></td></tr>
+                                            <tr><td>2.35 Transferência de Cidade</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.35 Transferência de Cidade" value="11"></td></tr>
+                                            <tr><td>2.36 Transferência de Pessoa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.36 Transferência de Pessoa" value="0"></td></tr>
+                                            <tr><td>2.37 Transferência de RF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - 2.37 Transferência de RF" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 3: AÇÕES -->
+                                    <div class="rma-section-header">BLOCO 3 - AÇÕES</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Ação</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>3.1 Agendamentos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.1 Agendamentos" value="12"></td></tr>
+                                            <tr><td>3.2 Folha Resumo</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.2 Folha Resumo" value="12"></td></tr>
+                                            <tr><td>3.3 Consulta - SIBEC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.3 Consulta - SIBEC" value="12"></td></tr>
+                                            <tr><td>3.4 Orientações - Outros Programas Sociais</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.4 Orientações - Outros Programas Sociais" value="0"></td></tr>
+                                            <tr><td>3.5 Encaminhamentos Recebidos da Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.5 Encaminhamentos Recebidos da Rede Socioassistencial" value="0"></td></tr>
+                                            <tr><td>3.6 Encaminhamentos Recebidos de Outras Políticas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.6 Encaminhamentos Recebidos de Outras Políticas" value="0"></td></tr>
+                                            <tr><td>3.7 Encaminhamentos Para Assistente Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.7 Encaminhamentos Para Assistente Social" value="0"></td></tr>
+                                            <tr><td>3.8 Encaminhamentos Para Coordenação</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - 3.8 Encaminhamentos Para Coordenação" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 4: MANUTENÇÃO -->
+                                    <div class="rma-section-header">BLOCO 4 - MANUTENÇÃO</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Manutenção</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>4.1 SIBEC - Bloqueios</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - 4.1 SIBEC - Bloqueios" value="0"></td></tr>
+                                            <tr><td>4.2 SIBEC - Desbloqueios</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - 4.2 SIBEC - Desbloqueios" value="16"></td></tr>
+                                            <tr><td>4.3 SIBEC - Reversão de Cancelados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - 4.3 SIBEC - Reversão de Cancelados" value="0"></td></tr>
+                                            <tr><td>4.4 SIBEC - Desligamentos Voluntários</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - 4.4 SIBEC - Desligamentos Voluntários" value="0"></td></tr>
+                                            <tr><td>4.5 SIBEC - Concedidos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - 4.5 SIBEC - Concedidos" value="51"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 5: SERVIÇO SOCIAL -->
+                                    <div class="rma-section-header">BLOCO 5 - SERVIÇO SOCIAL</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo de Atendimento / Ação - Serviço Social</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>5.1 Buscas Ativas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.1 Buscas Ativas" value="21"></td></tr>
+                                            <tr><td>5.2 Atendimento do Serviço Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.2 Atendimento do Serviço Social" value="1"></td></tr>
+                                            <tr><td>5.3 Encaminhamentos das Demais Políticas Públicas e/ou Sistema de Garantia de Direitos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.3 Encaminhamentos das Demais Políticas Públicas" value="4"></td></tr>
+                                            <tr><td>5.4 Encaminhamentos da Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.4 Encaminhamentos da Rede Socioassistencial" value="2"></td></tr>
+                                            <tr><td>5.5 Número de Famílias em Descumprimento de Condicionalidades - Educação</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.5 Descumprimento Condicionalidades - Educação" value="19"></td></tr>
+                                            <tr><td>5.6 Número de Famílias em Descumprimento de Condicionalidades - Saúde</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.6 Descumprimento Condicionalidades - Saúde" value="0"></td></tr>
+                                            <tr><td>5.7 Encaminhamento de Famílias com Crianças ou Adolescentes em Situação de Trabalho Infantil para o CadÚnico</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.7 Encaminhamento Trabalho Infantil CadÚnico" value="0"></td></tr>
+                                            <tr><td>5.8 Palestras/Sala de Espera</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.8 Palestras/Sala de Espera" value="0"></td></tr>
+                                            <tr><td>5.9 Visitas - Serviço Social</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.9 Visitas - Serviço Social" value="2"></td></tr>
+                                            <tr><td>5.10 Famílias BPC</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.10 Famílias BPC" value="0"></td></tr>
+                                            <tr><td>5.11 Visitas Institucionais</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.11 Visitas Institucionais" value="0"></td></tr>
+                                            <tr><td>5.12 Encaminhamentos Para as Demais Políticas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.12 Encaminhamentos Para as Demais Políticas" value="0"></td></tr>
+                                            <tr><td>5.13 Encaminhamentos Para a Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.13 Encaminhamentos Para a Rede Socioassistencial" value="4"></td></tr>
+                                            <tr><td>5.14 Reunião Interna/Externa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.14 Reunião Interna/Externa" value="0"></td></tr>
+                                            <tr><td>5.15 Ações Itinerantes</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.15 Ações Itinerantes" value="0"></td></tr>
+                                            <tr><td>5.16 Atendimentos de Famílias em Situação de Rua</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.16 Atendimentos Famílias em Situação de Rua" value="1"></td></tr>
+                                            <tr><td>5.17 Benefícios Eventuais Solicitados</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.17 Benefícios Eventuais Solicitados" value="1"></td></tr>
+                                            <tr><td>5.18 Articulação com a Rede</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.18 Articulação com a Rede" value="0"></td></tr>
+                                            <tr><td>5.19 Articulação com a Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.19 Articulação com a Rede Socioassistencial" value="0"></td></tr>
+                                            <tr><td>5.20 Volume de Benefícios Eventuais Concedidos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - 5.20 Volume de Benefícios Eventuais Concedidos" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 6: COORDENAÇÃO -->
+                                    <div class="rma-section-header">BLOCO 6 - COORDENAÇÃO</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Ação / Atendimento - Coordenação</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>6.1 Atendimentos Coordenação</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.1 Atendimentos Coordenação" value="119"></td></tr>
+                                            <tr><td>6.2 Encaminhamentos das Demais Políticas Públicas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.2 Encaminhamentos das Demais Políticas Públicas" value="1"></td></tr>
+                                            <tr><td>6.3 Encaminhamentos da Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.3 Encaminhamentos da Rede Socioassistencial" value="1"></td></tr>
+                                            <tr><td>6.4 Encaminhamento de Famílias com Crianças ou Adolescentes em Situação de Trabalho Infantil Para o Cadúnico</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.4 Encaminhamento Trabalho Infantil Para CadÚnico" value="0"></td></tr>
+                                            <tr><td>6.5 Palestras/Sala de Espera</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.5 Palestras/Sala de Espera" value="0"></td></tr>
+                                            <tr><td>6.6 Visitas Institucionais</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.6 Visitas Institucionais" value="0"></td></tr>
+                                            <tr><td>6.7 Encaminhamentos Para as Demais Políticas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.7 Encaminhamentos Para as Demais Políticas" value="4"></td></tr>
+                                            <tr><td>6.8 Encaminhamentos Para a Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.8 Encaminhamentos Para a Rede Socioassistencial" value="1"></td></tr>
+                                            <tr><td>6.9 Reunião Interna/Externa</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.9 Reunião Interna/Externa" value="3"></td></tr>
+                                            <tr><td>6.10 Ações Itinerantes</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.10 Ações Itinerantes" value="0"></td></tr>
+                                            <tr><td>6.11 Articulação Com a Rede</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.11 Articulação Com a Rede" value="0"></td></tr>
+                                            <tr><td>6.12 Articulação Com a Rede Socioassistencial</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.12 Articulação Com a Rede Socioassistencial" value="2"></td></tr>
+                                            <tr><td>6.13 Denúncias Recebidas - Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.13 Denúncias Recebidas - Cadastro Único" value="0"></td></tr>
+                                            <tr><td>6.14 Denúncias Recebidas - Bolsa Família</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - 6.14 Denúncias Recebidas - Bolsa Família" value="1"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR -->
+                                    <div class="rma-section-header">IDENTIFICAÇÃO DO RESPONSÁVEL / COORDENADOR(A)</div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group" style="margin:0;">
+                                            <label>Nome do Coordenador(a) / Responsável</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador - Nome" placeholder="Nome completo do coordenador" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>CPF do Coordenador(a) / Responsável</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador - CPF" placeholder="000.000.000-00" required>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RPM CadÚnico no Firebase</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="subtab-${s.key}-historico" style="display: none;">
+                            <div class="card">
+                                <div class="section-title">Histórico de ${s.nome}</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mês/Ano Ref.</th>
+                                            <th>Data de Envio</th>
+                                            <th>Enviado Por</th>
+                                            <th>Status</th>
+                                            <th style="text-align: center; width: 180px;">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-relatorios-${s.key}"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else if (s.isRmaCriancaFeliz) {
+                    // FORMULÁRIO COMPLETO DO PROGRAMA CRIANÇA FELIZ (DO PDF)
+                    section.innerHTML = `
+                        <div class="page-header">
+                            <h1 class="page-title">${s.titulo}</h1>
+                        </div>
+                        <div class="sub-tabs">
+                            <button class="sub-tab-btn active" id="btn-subtab-${s.key}-envio" onclick="switchSubTab('${s.key}', 'envio')">📝 Preencher RMA Criança Feliz Oficial</button>
+                            <button class="sub-tab-btn" id="btn-subtab-${s.key}-historico" onclick="switchSubTab('${s.key}', 'historico')">📜 Histórico de Enviados</button>
+                        </div>
+
+                        <div id="subtab-${s.key}-envio">
+                            <div class="card">
+                                <form id="form-${s.key}" onsubmit="event.preventDefault(); enviarRelatorioEstruturado('${s.nome}', '${s.key}-mes-ano', 'form-${s.key}');">
+                                    <div class="form-group" style="max-width: 260px; margin-bottom: 1.5rem;">
+                                        <label><strong>Mês/Ano de Referência</strong></label>
+                                        <input type="month" id="${s.key}-mes-ano" required>
+                                    </div>
+
+                                    <!-- BLOCO 1 - IDENTIFICAÇÃO -->
+                                    <div class="rma-section-header">BLOCO 1 - IDENTIFICAÇÃO</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">A. Identificação do Programa</p>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group" style="margin:0;">
+                                            <label>A.1. CRAS/Área de Referência</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 1 - A.1 CRAS/Área de Referência" placeholder="Nome do CRAS ou área" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>A.2. Supervisor(a)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 1 - A.2 Supervisor(a)" placeholder="Nome do supervisor(a)" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>A.3. Visitador(a) Equipe</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 1 - A.3 Visitador(a) Equipe" placeholder="Nome do visitador/equipe" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>A.4. Data de Envio</label>
+                                            <input type="date" class="campo-resposta" data-rotulo="Bloco 1 - A.4 Data de Envio" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- BLOCO 2 - PÚBLICO ACOMPANHADO NO MÊS -->
+                                    <div class="rma-section-header">BLOCO 2 - PÚBLICO ACOMPANHADO NO MÊS</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">C. Volume de atendimentos no mês de referência</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Público / Indicador</th>
+                                                <th style="width: 120px; text-align: center;">Quantidade</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>C.1. Famílias em acompanhamento ativo</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - C.1 Famílias em acompanhamento ativo" value="0"></td></tr>
+                                            <tr><td>C.2. Novas inclusões no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - C.2 Novas inclusões no mês" value="0"></td></tr>
+                                            <tr><td>C.3. Desligamentos no mês</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - C.3 Desligamentos no mês" value="0"></td></tr>
+                                            <tr><td>C.4. Gestantes acompanhadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - C.4 Gestantes acompanhadas" value="0"></td></tr>
+                                            <tr><td>C.5. Crianças de 0 a 3 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - C.5 Crianças de 0 a 3 anos" value="0"></td></tr>
+                                            <tr><td>C.6. Crianças BPC até 6 anos</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 2 - C.6 Crianças BPC até 6 anos" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 3 - VISITAS DOMICILIARES -->
+                                    <div class="rma-section-header">BLOCO 3 - VISITAS DOMICILIARES</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">D. Volume das visitas no mês de referência por Visitador(a)</p>
+                                    
+                                    <!-- VISITADOR 1 -->
+                                    <div style="background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                                            <label>D.1. Visitador (Nome)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 3 - D.1 Visitador 1 (Nome)" placeholder="Nome do Visitador 1">
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem;">
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.2. Visitas previstas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.2 Visitas previstas (Visitador 1)" value="0" style="width:100%;"></div>
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.3. Visitas Realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.3 Visitas Realizadas (Visitador 1)" value="0" style="width:100%;"></div>
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.4. Visitas não realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.4 Visitas não realizadas (Visitador 1)" value="0" style="width:100%;"></div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 0.75rem; margin-bottom:0;">
+                                            <label>D.8. Principais motivos (Visitador 1)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 3 - D.8 Motivos não realização (Visitador 1)" placeholder="Descreva os motivos...">
+                                        </div>
+                                    </div>
+
+                                    <!-- VISITADOR 2 -->
+                                    <div style="background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                                            <label>D.5. Visitador (Nome)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 3 - D.5 Visitador 2 (Nome)" placeholder="Nome do Visitador 2">
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem;">
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.6. Visitas previstas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.6 Visitas previstas (Visitador 2)" value="0" style="width:100%;"></div>
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.7. Visitas Realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.7 Visitas Realizadas (Visitador 2)" value="0" style="width:100%;"></div>
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.9. Visitas não realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.9 Visitas não realizadas (Visitador 2)" value="0" style="width:100%;"></div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 0.75rem; margin-bottom:0;">
+                                            <label>D.10. Principais motivos (Visitador 2)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 3 - D.10 Motivos não realização (Visitador 2)" placeholder="Descreva os motivos...">
+                                        </div>
+                                    </div>
+
+                                    <!-- VISITADOR 3 -->
+                                    <div style="background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                                            <label>D.11. Visitador (Nome)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 3 - D.11 Visitador 3 (Nome)" placeholder="Nome do Visitador 3">
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem;">
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.12. Visitas previstas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.12 Visitas previstas (Visitador 3)" value="0" style="width:100%;"></div>
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.13. Visitas Realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.13 Visitas Realizadas (Visitador 3)" value="0" style="width:100%;"></div>
+                                            <div><label style="font-size: 0.8rem; font-weight:600;">D.14. Visitas não realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - D.14 Visitas não realizadas (Visitador 3)" value="0" style="width:100%;"></div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 0.75rem; margin-bottom:0;">
+                                            <label>D.15. Principais motivos (Visitador 3)</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 3 - D.15 Motivos não realização (Visitador 3)" placeholder="Descreva os motivos...">
+                                        </div>
+                                    </div>
+
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">E. Total de Visitas</p>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>E. Total de Visitas</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>E.1. Visitas Previstas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - E.1 Total Visitas Previstas" value="0"></td></tr>
+                                            <tr><td>E.2. Visitas Realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - E.2 Total Visitas Realizadas" value="0"></td></tr>
+                                            <tr><td>E.3. Visitas não realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - E.3 Total Visitas não realizadas" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 4 - DEMANDAS IDENTIFICADAS -->
+                                    <div class="rma-section-header">BLOCO 4 - DEMANDAS IDENTIFICADAS</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>F. Volume de demandas identificadas</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>F.1. Insegurança Alimentar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - F.1 Insegurança Alimentar" value="0"></td></tr>
+                                            <tr><td>F.2. Violência doméstica/familiar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - F.2 Violência doméstica/familiar" value="0"></td></tr>
+                                            <tr><td>F.3. Negligência infantil</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - F.3 Negligência infantil" value="0"></td></tr>
+                                            <tr><td>F.4. Atualização CadÚnico</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - F.4 Atualização CadÚnico" value="0"></td></tr>
+                                            <tr><td>F.5. Extrema pobreza</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - F.5 Extrema pobreza" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- BLOCO 5 - ENCAMINHAMENTOS -->
+                                    <div class="rma-section-header">BLOCO 5 - ENCAMINHAMENTOS</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>G. Encaminhamentos Realizados</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>G.1. CRAS</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - G.1 CRAS" value="0"></td></tr>
+                                            <tr><td>G.2. Saúde</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - G.2 Saúde" value="0"></td></tr>
+                                            <tr><td>G.3. Conselho Tutelar</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - G.3 Conselho Tutelar" value="0"></td></tr>
+                                            <tr><td>G.4. Educação</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - G.4 Educação" value="0"></td></tr>
+                                            <tr><td>G.5. Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 5 - G.5 Cadastro Único" value="0"></td></tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="rma-section-header">BLOCO 6 - TERRITÓRIOS COM A MAIOR DEMANDA</div>
+                                    <table class="rma-table">
+                                        <thead>
+                                            <tr>
+                                                <th>H. Territorialização</th>
+                                                <th style="width: 120px; text-align: center;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody-territorios-pcf">
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Bloco 6 - H.1 Nome do Território" placeholder="H.1. Nome do Território"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - H.1 Total Demanda" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="campo-resposta" data-rotulo="Bloco 6 - H.2 Nome do Território" placeholder="H.2. Nome do Território"></td>
+                                                <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - H.2 Total Demanda" value="0"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn-report" style="margin-bottom: 1.5rem;" onclick="adicionarTerritorioCriancaFeliz()">➕ Adicionar Território</button>
+
+                                   <!-- BLOCO 7 - PERFIL -->
+<div class="rma-section-header">BLOCO 7 - PERFIL</div>
+<p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">1. Perfil dos usuários</p>
+
+<!-- 1.1 PERFIL DE RAÇA / COR -->
+<p style="font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem 0; color: #1e293b;">1.1. Perfil de Raça/Cor</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
+    <div><label style="font-size:0.8rem; font-weight:600;">Branca</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.1 Branca" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Preta</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.1 Preta" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Parda</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.1 Parda" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Amarela</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.1 Amarela" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Indígena</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.1 Indígena" value="0" style="width:100%;"></div>
+</div>
+
+<!-- 1.2 GÊNERO -->
+<p style="font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem 0; color: #1e293b;">1.2. Gênero / Identidade de Gênero</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
+    <div><label style="font-size:0.8rem; font-weight:600;">Masculino</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.2 Masculino" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Feminino</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.2 Feminino" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Não binário(a)</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.2 Não binário(a)" value="0" style="width:100%;"></div>
+</div>
+
+<!-- 1.3 IDENTIDADE ESPECÍFICA -->
+<p style="font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem 0; color: #1e293b;">1.3. Identidade Específica</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
+    <div><label style="font-size:0.8rem; font-weight:600;">Travesti / Trans</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.3 Travesti/Trans" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Nenhuma das opções</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.3 Nenhuma das opções" value="0" style="width:100%;"></div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+    <div class="form-group" style="margin:0;">
+        <label>1.4. Pertence a grupos tradicionais e específicos</label>
+        <input type="text" class="campo-resposta" data-rotulo="Bloco 7 - 1.4 Grupos tradicionais e específicos" placeholder="Preencher observações...">
+    </div>
+    <div class="form-group" style="margin:0;">
+        <label>1.5. Faixa de renda</label>
+        <input type="text" class="campo-resposta" data-rotulo="Bloco 7 - 1.5 Faixa de renda" placeholder="Preencher informação de renda...">
+    </div>
+</div>
+
+<p style="font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem 0; color: #1e293b;">1.6. Faixa etária (Gestantes)</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
+    <div><label style="font-size:0.8rem; font-weight:600;">Adolescentes</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Gestantes Adolescentes" value="0" style="width:100%;"></div>
+    <div><label style="font-size:0.8rem; font-weight:600;">Adultas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Gestantes Adultas" value="0" style="width:100%;"></div>
+</div>
+
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                                        <div class="form-group" style="margin:0;">
+                                            <label>1.4. Pertence a grupos tradicionais e específicos</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 7 - 1.4 Grupos tradicionais e específicos" placeholder="Preencher observações...">
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>1.5. Faixa de renda</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Bloco 7 - 1.5 Faixa de renda" placeholder="Preencher informação de renda...">
+                                        </div>
+                                    </div>
+
+                                    <p style="font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem 0; color: #1e293b;">1.6. Faixa etária (Gestantes)</p>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
+                                        <div><label style="font-size:0.8rem; font-weight:600;">Adolescentes</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Gestantes Adolescentes" value="0" style="width:100%;"></div>
+                                        <div><label style="font-size:0.8rem; font-weight:600;">Adultas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Gestantes Adultas" value="0" style="width:100%;"></div>
+                                        <div><label style="font-size:0.8rem; font-weight:600;">Total</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Total Gestantes" value="0" style="width:100%;"></div>
+                                    </div>
+
+                                    <!-- BLOCO DE AÇÕES -->
+                                    <div class="rma-section-header">BLOCO DE AÇÕES</div>
+                                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">J. Ações no mês de referência</p>
+                                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center;">
+                                            <div><label style="font-size:0.8rem; font-weight:600;">J.1. Ações realizadas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - J.1 Total de ações realizadas" value="0" style="width:100%;"></div>
+                                            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem; font-weight:600;">J.2. Quais?</label><input type="text" class="campo-resposta" data-rotulo="Ações - J.2 Quais ações realizadas" placeholder="Descreva quais ações..."></div>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center;">
+                                            <div><label style="font-size:0.8rem; font-weight:600;">J.3. Participações</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - J.3 Ações em que participaram" value="0" style="width:100%;"></div>
+                                            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem; font-weight:600;">J.4. Quais?</label><input type="text" class="campo-resposta" data-rotulo="Ações - J.4 Quais participações" placeholder="Descreva quais..."></div>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center;">
+                                            <div><label style="font-size:0.8rem; font-weight:600;">J.5. Capacitações</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - J.5 Capacitações" value="0" style="width:100%;"></div>
+                                            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem; font-weight:600;">J.6. Quais?</label><input type="text" class="campo-resposta" data-rotulo="Ações - J.6 Quais capacitações" placeholder="Descreva quais..."></div>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center;">
+                                            <div><label style="font-size:0.8rem; font-weight:600;">J.7. Reuniões internas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - J.7 Reuniões internas" value="0" style="width:100%;"></div>
+                                            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem; font-weight:600;">J.8. Quais?</label><input type="text" class="campo-resposta" data-rotulo="Ações - J.8 Quais reuniões internas" placeholder="Descreva quais..."></div>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center;">
+                                            <div><label style="font-size:0.8rem; font-weight:600;">J.9. Reuniões externas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - J.9 Reuniões externas" value="0" style="width:100%;"></div>
+                                            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem; font-weight:600;">J.10. Quais?</label><input type="text" class="campo-resposta" data-rotulo="Ações - J.10 Quais reuniões externas" placeholder="Descreva quais..."></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- IDENTIFICAÇÃO DO COORDENADOR -->
+                                    <div class="rma-section-header">IDENTIFICAÇÃO DO COORDENADOR DO PROGRAMA</div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group" style="margin:0;">
+                                            <label>Nome do Coordenador do Programa</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador PCF - Nome" placeholder="Nome completo do coordenador" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;">
+                                            <label>CPF do Coordenador</label>
+                                            <input type="text" class="campo-resposta" data-rotulo="Coordenador PCF - CPF" placeholder="000.000.000-00" required>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RMA Criança Feliz no Firebase</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="subtab-${s.key}-historico" style="display: none;">
+                            <div class="card">
+                                <div class="section-title">Histórico de ${s.nome}</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mês/Ano Ref.</th>
+                                            <th>Data de Envio</th>
+                                            <th>Enviado Por</th>
+                                            <th>Status</th>
+                                            <th style="text-align: center; width: 180px;">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-relatorios-${s.key}"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
                 } else {
-                    // OUTROS SERVIÇOS
                     let roteirosHtml = s.perguntas.map(p => `
                         <div style="background-color: #ffffff; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem;">
                             <div style="margin-bottom: 0.75rem;">
@@ -1192,7 +1749,6 @@
             selectNovoServico.appendChild(optVig);
         }
 
-        // FUNÇÃO PARA ADICIONAR SUBTERRITÓRIO DINAMICAMENTE NO BLOCO 5 DO CRAS
         function adicionarTerritorioCras() {
             const tbody = document.getElementById('tbody-territorios-cras');
             if (!tbody) return;
@@ -1233,7 +1789,6 @@
             renderizarUsuarios();
         });
 
-        // CRIAÇÃO DO ADMIN INICIAL CASO BANCO ESTEJA VAZIO
         db.collection('usuarios').get().then(snapshot => {
             if (snapshot.empty) {
                 db.collection('usuarios').add({
@@ -1329,7 +1884,6 @@
             if (element) element.classList.add('active');
         }
 
-        // SALVAMENTO DE RELATÓRIO NO BANCO DE DADOS FIREBASE
         function enviarRelatorioEstruturado(nomeServico, inputMesId, formId) {
             const mesAnoVal = document.getElementById(inputMesId).value;
             const formElement = document.getElementById(formId);
@@ -1395,248 +1949,87 @@
             }
         }
 
-        // FUNÇÃO PARA APAGAR / EXCLUIR RELATÓRIO DO FIREBASE
-        function excluirRelatorio(idRelatorio) {
-            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
-            const nomeServ = relatorio ? `${relatorio.servico} (${formatarMesAno(relatorio.mesAno)})` : "este relatório";
-
-            if (confirm(`Tem certeza que deseja EXCLUIR permanentemente o relatório do ${nomeServ}?\n\nEsta ação apagará os dados do banco de dados e não poderá ser desfeita.`)) {
-                db.collection('relatorios').doc(idRelatorio).delete().then(() => {
-                    alert("Relatório excluído com sucesso do Firebase!");
-                }).catch(err => {
-                    alert("Erro ao excluir relatório: " + err.message);
-                });
-            }
+        function formatarMesAno(mesAnoStr) {
+            if (!mesAnoStr) return '';
+            const [ano, mes] = mesAnoStr.split('-');
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            return `${meses[parseInt(mes, 10) - 1]} / ${ano}`;
         }
 
-        function alternarBloqueioVigilancia(idRelatorio) {
-            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
-            if (relatorio) {
-                const statusAtual = (relatorio.bloqueado !== false);
-                const novoStatus = !statusAtual;
-
-                db.collection('relatorios').doc(idRelatorio).update({
-                    bloqueado: novoStatus
-                }).then(() => {
-                    alert(novoStatus 
-                        ? `Relatório do ${relatorio.servico} (${formatarMesAno(relatorio.mesAno)}) foi BLOQUEADO.`
-                        : `Relatório do ${relatorio.servico} (${formatarMesAno(relatorio.mesAno)}) foi LIBERADO para alteração!`
-                    );
-                }).catch(err => alert("Erro ao alternar bloqueio: " + err.message));
-            }
-        }
-
-        function prepararEdicaoServico(servicoKey, idRelatorio) {
-            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
-            if (!relatorio) return;
-
-            if (relatorio.bloqueado !== false) {
-                alert("Este relatório está bloqueado. Solicite a liberação à Vigilância para poder editar.");
-                return;
-            }
-
-            const formId = 'form-' + servicoKey;
-            const formElement = document.getElementById(formId);
-            if (!formElement) return;
-
-            const inputMes = document.getElementById(`${servicoKey}-mes-ano`);
-            if (inputMes) inputMes.value = relatorio.mesAno;
-
-            const campos = formElement.querySelectorAll('.campo-resposta');
-            campos.forEach(campo => {
-                const rotulo = campo.dataset.rotulo;
-                if (rotulo && relatorio.observacoes) {
-                    const regex = new RegExp(`📌 ${rotulo.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}:\\s*([^\\n]*)`);
-                    const match = relatorio.observacoes.match(regex);
-                    campo.value = (match && match[1]) ? match[1].trim() : '';
-                }
-            });
-
-            switchSubTab(servicoKey, 'envio');
-            alert(`Relatório de ${formatarMesAno(relatorio.mesAno)} recarregado nos campos para edição. Faça seus ajustes e clique em Salvar.`);
-        }
-
-        // VISUALIZAR RELATÓRIO COMPLETO EM MODAL
-        function abrirVisualizacao(idRelatorio) {
-            const relatorio = relatoriosEnviados.find(r => r.id === idRelatorio);
-            if (!relatorio) return;
-
-            document.getElementById('modal-vis-titulo').textContent = `📄 Relatório: ${relatorio.servico} - ${formatarMesAno(relatorio.mesAno)}`;
-            document.getElementById('modal-vis-conteudo').innerHTML = `
-                <div style="margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid #cbd5e1; font-size: 0.85rem; color: #64748b;">
-                    <strong>Enviado por:</strong> ${relatorio.enviadoPor || '-'} &nbsp;|&nbsp; <strong>Data de Envio:</strong> ${relatorio.dataEnvio || '-'}
-                </div>
-                <div>${relatorio.observacoes || 'Nenhum conteúdo registrado neste relatório.'}</div>
-            `;
-            document.getElementById('modal-visualizar-relatorio').style.display = 'flex';
-        }
-
-        function fecharModalVisualizar() {
-            document.getElementById('modal-visualizar-relatorio').style.display = 'none';
-        }
-
-        // ATUALIZAÇÃO DAS TABELAS DE HISTÓRICO E MONITORAMENTO
         function atualizarTodasTabelasRelatorios() {
             const isVigilancia = usuarioLogado && (usuarioLogado.servico === "Vigilância Socioassistencial");
 
+            const tbodyMonitoramento = document.getElementById('tbody-monitoramento-direto');
+            const tbodyGeral = document.getElementById('tbody-relatorios-geral');
+
+            if (tbodyMonitoramento) tbodyMonitoramento.innerHTML = '';
+            if (tbodyGeral) tbodyGeral.innerHTML = '';
+
             SERVICOS_CONFIG.forEach(s => {
-                const tbody = document.getElementById(`tbody-relatorios-${s.key}`);
-                if (!tbody) return;
-                tbody.innerHTML = '';
-
-                const relsDoServico = relatoriosEnviados.filter(r => r.servico === s.nome);
-
-                if (relsDoServico.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhum relatório enviado até o momento.</td></tr>`;
-                } else {
-                    relsDoServico.slice().reverse().forEach(r => {
-                        const estaBloqueado = (r.bloqueado !== false);
-                        const badgeHtml = estaBloqueado 
-                            ? `<span class="badge-locked">🔒 Bloqueado</span>` 
-                            : `<span class="badge-unlocked">🔓 Liberado</span>`;
-                        
-                        const botaoEditarHtml = estaBloqueado 
-                            ? `<button disabled style="opacity: 0.5; cursor: not-allowed;" class="btn-action-sm btn-edit">🔒 Bloqueado</button>` 
-                            : `<button onclick="prepararEdicaoServico('${s.key}', '${r.id}')" class="btn-action-sm btn-edit">✏️ Editar</button>`;
-
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td><strong>${formatarMesAno(r.mesAno)}</strong></td>
-                            <td>${r.dataEnvio || '-'}</td>
-                            <td>${r.enviadoPor || '-'}</td>
-                            <td>${badgeHtml}</td>
-                            <td style="text-align: center;">
-                                <div style="display: flex; gap: 0.35rem; justify-content: center;">
-                                    <button onclick="abrirVisualizacao('${r.id}')" class="btn-action-sm btn-view">👁️ Ver</button>
-                                    ${botaoEditarHtml}
-                                </div>
-                            </td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                }
+                const tbodyServico = document.getElementById(`tbody-relatorios-${s.key}`);
+                if (tbodyServico) tbodyServico.innerHTML = '';
             });
 
-            const tbodyMonit = document.getElementById('tbody-monitoramento-direto');
-            if (tbodyMonit) {
-                tbodyMonit.innerHTML = '';
-                if (relatoriosEnviados.length === 0) {
-                    tbodyMonit.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum relatório recebido até o momento.</td></tr>`;
-                } else {
-                    relatoriosEnviados.slice().reverse().forEach(r => {
-                        const estaBloqueado = (r.bloqueado !== false);
-                        const badgeHtml = estaBloqueado 
-                            ? `<span class="badge-locked">🔒 Bloqueado</span>` 
-                            : `<span class="badge-unlocked">🔓 Liberado</span>`;
+            relatoriosEnviados.forEach(rel => {
+                const statusBadge = rel.bloqueado !== false 
+                    ? `<span class="badge-locked">🔒 Finalizado / Bloqueado</span>` 
+                    : `<span class="badge-unlocked">🔓 Liberado p/ Edição</span>`;
 
-                        const btnVigilancia = estaBloqueado
-                            ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar</button>`
-                            : `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-lock">🔒 Bloquear</button>`;
-
-                        const btnApagar = `<button onclick="excluirRelatorio('${r.id}')" class="btn-action-sm btn-delete">🗑️ Apagar</button>`;
-
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td><strong>${r.servico}</strong></td>
-                            <td>${formatarMesAno(r.mesAno)}</td>
-                            <td>${r.dataEnvio || '-'}</td>
-                            <td>${r.enviadoPor || '-'}</td>
-                            <td>${badgeHtml}</td>
-                            <td style="text-align: center;">
-                                <div style="display: flex; gap: 0.35rem; justify-content: center; flex-wrap: wrap;">
-                                    <button onclick="abrirVisualizacao('${r.id}')" class="btn-action-sm btn-view">👁️ Ver</button>
-                                    ${isVigilancia ? btnVigilancia : ''}
-                                    ${isVigilancia ? btnApagar : ''}
-                                </div>
-                            </td>
-                        `;
-                        tbodyMonit.appendChild(tr);
-                    });
+                let acoesAdmin = '';
+                if (isVigilancia) {
+                    if (rel.bloqueado !== false) {
+                        acoesAdmin = `<button class="btn-action-sm btn-unlock" onclick="liberarRelatorio('${rel.id}')">🔓 Liberar Edição</button>`;
+                    } else {
+                        acoesAdmin = `<button class="btn-action-sm btn-lock" onclick="bloquearRelatorio('${rel.id}')">🔒 Bloquear</button>`;
+                    }
+                    acoesAdmin += `<button class="btn-action-sm btn-delete" onclick="excluirRelatorio('${rel.id}')">🗑️ Excluir</button>`;
                 }
-            }
 
-            if (document.getElementById('modal-geral-relatorios').style.display === 'flex') {
-                abrirModalGeralRelatorios();
-            }
-        }
+                const acoesCompletas = `<button class="btn-action-sm btn-view" onclick="visualizarRelatorio('${rel.id}')">👁️ Ver Relatório</button> ${acoesAdmin}`;
 
-        function formatarMesAno(valor) {
-            if (!valor) return '';
-            const partes = valor.split('-');
-            return partes.length === 2 ? `${partes[1]}/${partes[0]}` : valor;
-        }
-
-        function abrirModalGeralRelatorios() {
-            const tbodyGeral = document.getElementById('tbody-relatorios-geral');
-            const isVigilancia = usuarioLogado && (usuarioLogado.servico === "Vigilância Socioassistencial");
-            tbodyGeral.innerHTML = '';
-
-            if (relatoriosEnviados.length === 0) {
-                tbodyGeral.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhum relatório armazenado até o momento.</td></tr>`;
-            } else {
-                relatoriosEnviados.slice().reverse().forEach(r => {
-                    const estaBloqueado = (r.bloqueado !== false);
-                    const badgeHtml = estaBloqueado 
-                        ? `<span class="badge-locked">🔒 Bloqueado</span>` 
-                        : `<span class="badge-unlocked">🔓 Liberado</span>`;
-
-                    const btnVigilancia = estaBloqueado
-                        ? `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-unlock">🔓 Liberar</button>`
-                        : `<button onclick="alternarBloqueioVigilancia('${r.id}')" class="btn-action-sm btn-lock">🔒 Bloquear</button>`;
-
-                    const btnApagar = `<button onclick="excluirRelatorio('${r.id}')" class="btn-action-sm btn-delete">🗑️ Apagar</button>`;
-
+                if (tbodyMonitoramento) {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><strong>${r.servico}</strong></td>
-                        <td>${formatarMesAno(r.mesAno)}</td>
-                        <td>${r.dataEnvio || '-'}</td>
-                        <td>${r.enviadoPor || '-'}</td>
-                        <td>${badgeHtml}</td>
-                        <td style="text-align: center;">
-                            <div style="display: flex; gap: 0.35rem; justify-content: center; flex-wrap: wrap;">
-                                <button onclick="abrirVisualizacao('${r.id}')" class="btn-action-sm btn-view">👁️ Ver</button>
-                                ${isVigilancia ? btnVigilancia : ''}
-                                ${isVigilancia ? btnApagar : ''}
-                            </div>
-                        </td>
+                        <td><strong>${rel.servico}</strong></td>
+                        <td>${formatarMesAno(rel.mesAno)}</td>
+                        <td>${rel.dataEnvio}</td>
+                        <td>${rel.enviadoPor || '-'}</td>
+                        <td>${statusBadge}</td>
+                        <td style="text-align: center;">${acoesCompletas}</td>
                     `;
-                    tbodyGeral.appendChild(tr);
-                });
-            }
-
-            document.getElementById('modal-geral-relatorios').style.display = 'flex';
-        }
-
-        function fecharModalGeral() {
-            document.getElementById('modal-geral-relatorios').style.display = 'none';
-        }
-
-        function cadastrarNovoUsuario() {
-            const nome = document.getElementById('novo-nome').value.trim();
-            const usuario = document.getElementById('novo-usuario').value.trim();
-            const senha = document.getElementById('nova-senha').value.trim();
-            const servico = document.getElementById('novo-servico').value;
-
-            if (nome && usuario && senha) {
-                const existe = usuariosCadastrados.some(u => u.usuario.toLowerCase() === usuario.toLowerCase());
-                if (existe) {
-                    alert('Este login já está em uso por outro usuário!');
-                    return;
+                    tbodyMonitoramento.appendChild(tr);
                 }
 
-                db.collection('usuarios').add({
-                    nome: nome,
-                    usuario: usuario,
-                    senha: senha,
-                    servico: servico
-                }).then(() => {
-                    alert(`Usuário de "${servico}" cadastrado com sucesso!`);
-                    document.getElementById('novo-nome').value = '';
-                    document.getElementById('novo-usuario').value = '';
-                    document.getElementById('nova-senha').value = '';
-                }).catch(err => alert("Erro ao salvar: " + err.message));
-            }
+                if (tbodyGeral) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${rel.servico}</strong></td>
+                        <td>${formatarMesAno(rel.mesAno)}</td>
+                        <td>${rel.dataEnvio}</td>
+                        <td>${rel.enviadoPor || '-'}</td>
+                        <td>${statusBadge}</td>
+                        <td style="text-align: center;">${acoesCompletas}</td>
+                    `;
+                    tbodyGeral.appendChild(tr);
+                }
+
+                if (mapaServicos[rel.servico]) {
+                    const tbodyServico = document.getElementById(`tbody-relatorios-${mapaServicos[rel.servico].key}`);
+                    if (tbodyServico) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${formatarMesAno(rel.mesAno)}</td>
+                            <td>${rel.dataEnvio}</td>
+                            <td>${rel.enviadoPor || '-'}</td>
+                            <td>${statusBadge}</td>
+                            <td style="text-align: center;">
+                                <button class="btn-action-sm btn-view" onclick="visualizarRelatorio('${rel.id}')">👁️ Ver</button>
+                            </td>
+                        `;
+                        tbodyServico.appendChild(tr);
+                    }
+                }
+            });
         }
 
         function renderizarUsuarios() {
@@ -1647,47 +2040,87 @@
             usuariosCadastrados.forEach(user => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${user.nome}</td>
+                    <td><strong>${user.nome}</strong></td>
                     <td>${user.usuario}</td>
                     <td>${user.servico}</td>
                     <td style="text-align: center;">
-                        <button onclick="alterarSenhaUsuario('${user.id}')" style="background: var(--warning); color: white; border: none; padding: 0.35rem 0.65rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 600; margin-right: 0.2rem;">Senha</button>
-                        <button onclick="removerUsuario('${user.id}')" style="background: var(--danger); color: white; border: none; padding: 0.35rem 0.65rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 600;">Excluir</button>
+                        <button class="btn-action-sm btn-delete" onclick="excluirUsuario('${user.id}')">🗑️ Excluir</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function alterarSenhaUsuario(id) {
-            const user = usuariosCadastrados.find(u => u.id === id);
-            if (!user) return;
+        function cadastrarNovoUsuario() {
+            const nome = document.getElementById('novo-nome').value.trim();
+            const usuario = document.getElementById('novo-usuario').value.trim();
+            const senha = document.getElementById('nova-senha').value.trim();
+            const servico = document.getElementById('novo-servico').value;
 
-            const novaSenha = prompt(`Digite a nova senha para "${user.nome}":`);
-            if (novaSenha !== null) {
-                if (novaSenha.trim() === '') {
-                    alert('A senha não pode estar em branco!');
-                    return;
-                }
-                db.collection('usuarios').doc(id).update({
-                    senha: novaSenha.trim()
-                }).then(() => alert('Senha atualizada!')).catch(err => alert("Erro: " + err.message));
-            }
-        }
-
-        function removerUsuario(id) {
-            if (usuariosCadastrados.length <= 1) {
-                alert('É necessário manter ao menos um usuário ativo no sistema.');
+            if (!nome || !usuario || !senha) {
+                alert('Preencha todos os campos do usuário.');
                 return;
             }
-            if (confirm('Deseja realmente remover este usuário?')) {
-                db.collection('usuarios').doc(id).delete().then(() => alert('Usuário removido!')).catch(err => alert("Erro: " + err.message));
+
+            db.collection('usuarios').add({ nome, usuario, senha, servico }).then(() => {
+                alert('Usuário cadastrado com sucesso!');
+                document.getElementById('novo-nome').value = '';
+                document.getElementById('novo-usuario').value = '';
+                document.getElementById('nova-senha').value = '';
+            }).catch(err => alert("Erro ao cadastrar usuário: " + err.message));
+        }
+
+        function excluirUsuario(id) {
+            if (confirm('Deseja realmente remover este usuário do sistema?')) {
+                db.collection('usuarios').doc(id).delete().then(() => {
+                    alert('Usuário removido.');
+                });
             }
         }
 
-        window.onload = function() {
-            gerarEstruturaDinamica();
-        };
+        function liberarRelatorio(id) {
+            db.collection('relatorios').doc(id).update({ bloqueado: false }).then(() => {
+                alert('Relatório liberado para edição pelo técnico do serviço.');
+            });
+        }
+
+        function bloquearRelatorio(id) {
+            db.collection('relatorios').doc(id).update({ bloqueado: true }).then(() => {
+                alert('Relatório bloqueado com sucesso.');
+            });
+        }
+
+        function excluirRelatorio(id) {
+            if (confirm('Deseja realmente excluir este relatório permanentemente do banco de dados?')) {
+                db.collection('relatorios').doc(id).delete().then(() => {
+                    alert('Relatório excluído com sucesso.');
+                });
+            }
+        }
+
+        function visualizarRelatorio(id) {
+            const rel = relatoriosEnviados.find(r => r.id === id);
+            if (!rel) return;
+
+            document.getElementById('modal-vis-titulo').textContent = `📄 ${rel.servico} - Ref. ${formatarMesAno(rel.mesAno)}`;
+            document.getElementById('modal-vis-conteudo').textContent = rel.observacoes || 'Nenhum detalhe registrado.';
+            document.getElementById('modal-visualizar-relatorio').style.display = 'flex';
+        }
+
+        function fecharModalVisualizar() {
+            document.getElementById('modal-visualizar-relatorio').style.display = 'none';
+        }
+
+        function abrirModalGeralRelatorios() {
+            document.getElementById('modal-geral-relatorios').style.display = 'flex';
+        }
+
+        function fecharModalGeral() {
+            document.getElementById('modal-geral-relatorios').style.display = 'none';
+        }
+
+        // INICIALIZAÇÃO DO SISTEMA
+        gerarEstruturaDinamica();
     </script>
 </body>
 </html>

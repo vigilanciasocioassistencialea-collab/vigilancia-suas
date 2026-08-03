@@ -964,9 +964,9 @@
                                         <input type="month" id="${s.key}-mes-ano" required>
                                     </div>
 <!-- BLOCO 1 -->
-    <div class="block-title">Bloco 1 – Serviço de Proteção e Atendimento Especializado a Famílias e Indivíduos (PAEFI)</div>
+    <div class="block-header">Bloco 1 – Serviço de Proteção e Atendimento Especializado à Famílias e Indivíduos – PAEFI</div>
 
-    <div class="section-title">A. Volume de Famílias em Acompanhamento pelo PAEFI</div>
+    <div class="section-title">A. Volume de famílias em acompanhamento pelo PAEFI</div>
     <table>
         <thead>
             <tr>
@@ -975,151 +975,847 @@
             </tr>
         </thead>
         <tbody>
-            <tr><td>A.1. Total de casos (famílias ou indivíduos) em acompanhamento pelo PAEFI</td><td class="num">0</td></tr>
-            <tr><td>A.2. Novos casos (famílias ou indivíduos) inseridos no acompanhamento durante o mês</td><td class="num">0</td></tr>
-            <tr><td>A.3. Desligamento Familiar</td><td class="num">0</td></tr>
-            <tr><td>A.4. Demanda Reprimida</td><td class="num">0</td></tr>
+            <tr><td>A.1. Total de casos (famílias ou indivíduos) em acompanhamento pelo PAEFI</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>A.2. Novos casos (famílias ou indivíduos) inseridos no acompanhamento do PAEFI durante o mês de referência</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>A.3. Desligamento Familiar</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>A.4 Demanda Reprimida</td><td class="num"><input type="number" min="0" value="0"></td></tr>
         </tbody>
     </table>
 
-    <div class="section-title">B. Perfil dos Novos Casos Inseridos no Acompanhamento (Mês de Referência)</div>
+    <div class="section-title">B. Perfil dos novos casos inseridos no acompanhamento do PAEFI no mês de referência</div>
     <table>
         <thead>
             <tr>
-                <th>Condição / Perfil</th>
+                <th>Perfil</th>
                 <th class="num">Total</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>B.1. Famílias beneficiárias do Programa Bolsa Família</td><td class="num">0</td></tr>
-            <tr><td>B.2. Famílias com membros beneficiários do BPC</td><td class="num">0</td></tr>
-            <tr><td>B.3. Famílias com crianças ou adolescentes em situação de trabalho infantil</td><td class="num">0</td></tr>
-            <tr><td>B.4. Famílias com crianças ou adolescentes em Serviços de Acolhimento</td><td class="num">0</td></tr>
-            <tr><td>B.5. Famílias com violência/violação associada ao uso abusivo de substâncias psicoativas</td><td class="num">0</td></tr>
-            <tr><td>B.7. Famílias com adolescente em cumprimento de Medidas Socioeducativas em meio aberto</td><td class="num">0</td></tr>
-            <tr><td>B.8. Total de famílias/indivíduos que não receberam o primeiro atendimento</td><td class="num">0</td></tr>
+            <tr><td>B.1. Famílias beneficiárias do Programa Bolsa Família</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>B.2. Famílias com membros beneficiários do BPC</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>B.3. Famílias com crianças ou adolescentes em situação de trabalho infantil</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>B.4. Famílias com crianças ou adolescentes em Serviços de Acolhimento</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>B.5. Famílias cuja situação de violência/ violação esteja associada ao uso abusivo de substâncias psicoativas</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>B.7. Famílias com adolescente em cumprimento de Medidas Socioeducativas em meio aberto</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>B.8. Total de famílias/indivíduos que não receberam o primeiro atendimento</td><td class="num"><input type="number" min="0" value="0"></td></tr>
         </tbody>
     </table>
+    <div class="alert-box">
+        <strong>Atenção!</strong> Os itens B1 a B5 e B7 buscam identificar apenas alguns perfis de famílias. É normal que algumas famílias contadas no item A2 não se enquadrem em nenhuma das condições acima, enquanto outras podem se enquadrar simultaneamente em mais de uma condição. Portanto, a soma de B1 a B5 e B7 não terá, necessariamente, o mesmo valor relatado em A2.
+    </div>
 
-    <div class="section-title">B.6. Pessoas Vítimas de Violência/Violações por Faixa Etária e Sexo</div>
+    <div class="section-title">Quantidade e perfil das pessoas vítimas de violência ou violações de direitos que ingressaram no PAEFI, durante o mês de referência (apenas indivíduos inseridos no acompanhamento no mês de referência)</div>
     <table>
         <thead>
             <tr>
+                <th rowspan="2">B.6. Quantidade de pessoas vitimadas, que ingressaram no PAEFI, durante o mês de referência (apenas para os novos casos)</th>
+                <th>Sexo</th>
+                <th class="num">0 a 12 Anos</th>
+                <th class="num">13 a 17 Anos</th>
+                <th class="num">18 a 59 anos</th>
+                <th class="num">60 anos ou mais</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td class="num"><input type="number" min="0" value="0" placeholder="Total"></td>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert-box">
+        <strong>Atenção!</strong> O total informado em B6 não é necessariamente igual a A2, uma vez que em um novo caso (família) inserido no PAEFI poderá haver mais de uma pessoa vitimada.
+    </div>
+
+    <div class="section-title">C. Crianças ou adolescentes em situações de violência ou violações, que ingressaram no PAEFI durante o mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
+                <th>Sexo</th>
+                <th class="num">0 a 6 anos</th>
+                <th class="num">7 a 12 Anos</th>
+                <th class="num">13 a 17 anos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">C.1. Crianças ou adolescentes vítimas de violência intrafamiliar (física ou psicológica)</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">C.2. Crianças ou adolescentes vítimas de abuso sexual</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">C.3. Crianças ou adolescentes vítimas de exploração sexual</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">C.4. Crianças ou adolescentes vítimas de negligência ou abandono</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">Crianças ou adolescentes em situação de Trabalho Infantil, que ingressaram no PAEFI durante o mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
+                <th>Sexo</th>
+                <th class="num">0 a 12 Anos</th>
+                <th class="num">13 a 15 anos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">C.5. Crianças ou adolescentes em situação de trabalho infantil (até 15 anos)</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="alert-box">
+        <strong>Atenção!</strong> Do item ”C” ao item “I” devem ser informadas as situações de violência ou violações de direitos identificadas entre as pessoas que ingressaram no PAEFI no mês de referência (novos casos). Uma mesma pessoa pode ter sido vítima de múltiplas violências/violações.
+    </div>
+
+    <div class="section-title">D. Idosos - 60 anos ou mais - em situações de violência ou violações que ingressaram no PAEFI durante o mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
+                <th>Sexo</th>
+                <th class="num">60 anos ou mais</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">D.1. Pessoas idosas vítimas de violência intrafamiliar (física, psicológica ou sexual)</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">D.2. Pessoas idosas vítimas de negligência ou abandono</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">E. Pessoas com deficiência, em situações de violência ou violações, que ingressaram no PAEFI durante o mês de Referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
+                <th>Sexo</th>
+                <th class="num">0 a 12 Anos</th>
+                <th class="num">13 a 17 anos</th>
+                <th class="num">18 a 59 Anos</th>
+                <th class="num">60 anos ou mais</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">E.1. Pessoas com deficiência vítimas de violência intrafamiliar (física, psicológica ou sexual)</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">E.2. Pessoas com deficiência vítimas de negligência ou abandono</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">F. Mulheres adultas vítimas de violência intrafamiliar que ingressaram no PAEFI durante o mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>F.1. Mulheres adultas (18 a 59 anos) vítimas de violência intrafamiliar (física, psicológica ou sexual)</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">G. Pessoas vítimas de tráficos de seres humanos que ingressaram no PAEFI durante o mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
                 <th>Sexo</th>
                 <th class="num">0 a 12 anos</th>
                 <th class="num">13 a 17 anos</th>
-                <th class="num">18 a 59 anos</th>
-                <th class="num">60+ anos</th>
-                <th class="num">Total</th>
+                <th class="num">18 a 59 Anos</th>
+                <th class="num">60 anos ou mais</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>Masculino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td>Feminino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr>
+                <td rowspan="2">G.1. Pessoas vítimas de tráficos de seres humanos</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
         </tbody>
     </table>
 
-    <div class="section-title">C. Crianças e Adolescentes que Ingressaram no PAEFI</div>
+    <div class="section-title">H. Pessoas vítimas de discriminação por orientação sexual que ingressaram no PAEFI durante o mês de referência</div>
     <table>
         <thead>
             <tr>
-                <th>Situação de Violência / Violação</th>
-                <th>Sexo</th>
-                <th class="num">0 a 6 anos</th>
-                <th class="num">7 a 12 anos</th>
-                <th class="num">13 a 17 anos</th>
+                <th>Situação</th>
                 <th class="num">Total</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td rowspan="2">C.1. Violência intrafamiliar (física/psicológica)</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td rowspan="2">C.2. Abuso sexual</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td rowspan="2">C.3. Exploração sexual</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td rowspan="2">C.4. Negligência ou abandono</td><td>Masc.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td>Fem.</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr>
+                <td>H.1. Pessoas vítimas de discriminação por orientação sexual</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
         </tbody>
     </table>
 
+    <div class="section-title">I. Pessoas em situação de rua que ingressaram no PAEFI durante o mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situação</th>
+                <th class="num">Total</th>
+                <th>Sexo</th>
+                <th class="num">0 a 12 anos</th>
+                <th class="num">13 a 17 anos</th>
+                <th class="num">18 a 59 Anos</th>
+                <th class="num">60 anos ou mais</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">I.1. Pessoas em situação de rua</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">1.1 Territorialização</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Território</th>
+                <th class="num">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1. <input type="text" placeholder="Preencher localidade / bairro..."></td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>2. <input type="text" placeholder="Preencher localidade / bairro..."></td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>3. <input type="text" placeholder="Preencher localidade / bairro..."></td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>4. <input type="text" placeholder="Preencher localidade / bairro..."></td><td class="num"><input type="number" min="0" value="0"></td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">1.2 Em relação ao perfil das pessoas vítimas de violência ou violações de direitos que ingressaram no PAEFI, durante o mês de referência</div>
     <div class="grid-2">
         <div>
-            <div class="section-title">D. Idosos (60+ anos)</div>
             <table>
-                <thead><tr><th>Situação</th><th class="num">Masc.</th><th class="num">Fem.</th><th class="num">Total</th></tr></thead>
+                <thead><tr><th>1.2.1 Tipo de Violência</th><th class="num">Total</th></tr></thead>
                 <tbody>
-                    <tr><td>D.1. Violência intrafamiliar</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-                    <tr><td>D.2. Negligência/Abandono</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+                    <tr><td>Negligência</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Violência Patrimonial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Psicológica</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Abuso Sexual</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Ameaça</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Física</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead><tr><th>1.2.2. Faixa Etária</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>0 a 12 anos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>0 a 6 anos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>13 a 17 anos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>18 a 59 anos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>60 anos ou mais</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
                 </tbody>
             </table>
         </div>
+
         <div>
-            <div class="section-title">F. Mulheres Adultas (18-59)</div>
             <table>
-                <thead><tr><th>Situação</th><th class="num">Total</th></tr></thead>
+                <thead><tr><th>1.2.3. Sexo/Gênero</th><th class="num">Total</th></tr></thead>
                 <tbody>
-                    <tr><td>F.1. Violência intrafamiliar</td><td class="num">0</td></tr>
+                    <tr><td>Masculino</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Feminino</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead><tr><th>1.2.4. Identidade de gênero</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Masculino</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Feminino</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Não binário(a)</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead><tr><th>1.2.5. Cor/Raça</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Branca</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Preta</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Parda</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Amarela</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Indígena</td><td class="num"><input type="number" min="0" value="0"></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
     <!-- BLOCO 2 -->
-    <div class="block-title">Bloco 2 – Atendimentos Realizados no CREAS</div>
+    <div class="block-header">Bloco 2 – Atendimentos Realizados no CREAS</div>
 
-    <div class="section-title">M. Atendimentos no Mês de Referência</div>
+    <div class="section-title">M. Atendimentos realizados no mês de referência</div>
     <table>
         <thead><tr><th>Tipo de Atendimento</th><th class="num">Total</th></tr></thead>
         <tbody>
-            <tr><td>M.1. Atendimentos individualizados realizados</td><td class="num">0</td></tr>
-            <tr><td>M.2. Atendimentos em grupo realizados</td><td class="num">0</td></tr>
-            <tr><td>M.3. Famílias encaminhadas para o CRAS</td><td class="num">0</td></tr>
-            <tr><td>M.4. Visitas domiciliares realizadas</td><td class="num">0</td></tr>
-            <tr><td>M.5. Atendimento Assistente Social</td><td class="num">0</td></tr>
-            <tr><td>M.6. Atendimento Psicólogo(a)</td><td class="num">0</td></tr>
-            <tr><td>M.7. Atendimento Advogado(a)</td><td class="num">0</td></tr>
-            <tr><td>M.8. Atendimento Multiprofissional</td><td class="num">0</td></tr>
-            <tr><td>M.9. Atendimento Coordenação</td><td class="num">0</td></tr>
-            <tr><td>M.10. Atendimento Recepção</td><td class="num">0</td></tr>
+            <tr><td>M.1. Total de atendimentos individualizados realizados no mês de referência</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.2. Total de atendimentos em grupo realizados no mês de referência</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.3. Famílias encaminhadas para o CRAS durante no mês de referência</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.4. Visitas domiciliares realizadas no mês de referência</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.5. Atendimento da/o Assistente Social</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.6. Atendimento da/a Psicóloga(o)</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.7. Atendimento da/o Advogado</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.8. Atendimento Multiprofissional</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.9. Atendimento Coordenação</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>M.10 Atendimento Recepção</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">2.1 Ações e Atividades Desenvolvidas no Âmbito do PAEFI</div>
+    <table>
+        <thead><tr><th>2.1.1 Ações e Atividades</th><th class="num">Total</th><th>QUAIS</th></tr></thead>
+        <tbody>
+            <tr><td>• Palestras</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Participação em Eventos</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Ações Socioeducativas</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Encaminhamento para a Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Encaminhamento para a Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Encaminhamento para o Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Articulação com a Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Articulação com a Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Articulação com o Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Visitas institucionais</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Ações de busca ativa</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Reunião com a rede interna e externa</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• REUNIÃO COM EQUIPE INTERNA</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Elaboração de Relatórios</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
+            <tr><td>• Estudo de Caso</td><td class="num"><input type="number" min="0" value="0"></td><td><input type="text" placeholder="Especificar..."></td></tr>
         </tbody>
     </table>
 
     <!-- BLOCO 3 -->
-    <div class="block-title">Bloco 3 – Medidas Socioeducativas (LA / PSC)</div>
-    
-    <div class="section-title">J. Volume de Adolescentes em MSE</div>
+    <div class="block-header">Bloco 3 – Serviço de Proteção Social a Adolescente em Cumprimento de Medida Socioeducativa (LA/PSC)</div>
+
+    <div class="section-title">J. Volume de adolescentes em cumprimento de Medidas Socioeducativas</div>
     <table>
         <thead><tr><th>Indicador</th><th class="num">Total</th></tr></thead>
         <tbody>
-            <tr><td>J.1. Total de adolescentes em cumprimento de MSE (LA e/ou PSC)</td><td class="num">0</td></tr>
-            <tr><td>J.2. Adolescentes em cumprimento de Liberdade Assistida (LA)</td><td class="num">0</td></tr>
-            <tr><td>J.3. Adolescentes em cumprimento de Prestação de Serviços à Comunidade (PSC)</td><td class="num">0</td></tr>
-            <tr><td>J.4. Novos adolescentes inseridos no mês</td><td class="num">0</td></tr>
+            <tr><td>J.1. Total de adolescentes em cumprimento de Medidas Socioeducativas (LA e/ou PSC)</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>J.2. Quantidade de adolescentes em cumprimento de Liberdade Assistida – LA</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>J.3. Quantidade de adolescentes em cumprimento de Prestação de Serviços à Comunidade – PSC</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>J.4 . Quantidade de adolescentes em cumprimento para ser localizado/identificado</td><td class="num"><input type="number" min="0" value="0"></td></tr>
         </tbody>
     </table>
 
-    <!-- BLOCO 4 -->
-    <div class="block-title">Bloco 4 – Serviço Especializado em Abordagem Social</div>
-    
-    <div class="section-title">K. Pessoas Abordadas pela Equipe</div>
+    <div class="section-title">Quantidade e perfil dos novos adolescentes inseridos no Serviço, no mês de referência</div>
     <table>
         <thead>
             <tr>
+                <th>Indicador</th>
+                <th class="num">Total</th>
                 <th>Sexo</th>
-                <th class="num">0-12 anos</th>
-                <th class="num">13-17 anos</th>
-                <th class="num">18-59 anos</th>
-                <th class="num">60+ anos</th>
                 <th class="num">Total</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>Masculino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-            <tr><td>Feminino</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr>
+                <td rowspan="2">J.4. Total de novos adolescentes em cumprimento de Medidas Socioeducativas(LA e/ou PSC), inseridos em acompanhamento no mês de referência</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">J.5. Novos adolescentes em cumprimento de LA, inseridos em acompanhamento no mês de referência</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">J.6. Novos adolescentes em cumprimento de PSC, inseridos em acompanhamento no mês de referência</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
         </tbody>
     </table>
-                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RMA CREAS no Firebase</button>
+
+    <div class="section-title">3.1 Medidas Socioeducativas – Novos Casos</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Números de Novos Casos</th>
+                <th class="num">TOTAL</th>
+                <th class="num"><input type="number" min="0" value="0"></th>
+                <th class="num">12 a 17 anos</th>
+                <th class="num">18 a 21 anos incompletos</th>
+                <th class="num">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">Sexo Feminino</td>
+                <td class="num"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td colspan="2">Sexo Masculino</td>
+                <td class="num"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="grid-2">
+        <div>
+            <table>
+                <thead><tr><th>Medida Socioeducativa</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Somente Liberdade Assistida – LA</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Somente Prestação de Serviço à Comunidade – PSC</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>LA e PSC</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead><tr><th>Usuário de Drogas</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Sim</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Não</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <table>
+                <thead><tr><th>Beneficiário do PBF</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Sim</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Não</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><th>Total:</th><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+
+            <table>
+                <thead><tr><th>Encaminhamentos novos casos</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Rede do Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-title">3.1.1 Área de moradia e Área de infração dos novos indivíduos em MSE:</div>
+    <table>
+        <thead><tr><th>Localização</th><th>Bairro</th></tr></thead>
+        <tbody>
+            <tr><td>Local de moradia</td><td><input type="text" placeholder="Preencher bairro..."></td></tr>
+            <tr><td>Local da infração</td><td><input type="text" placeholder="Preencher bairro..."></td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">3.2 Atendimentos – Medida Socioeducativa</div>
+    <table>
+        <thead><tr><th>3.2.1 Quantidade de atendimentos realizados ao público de Medidas Socioeducativas</th><th class="num">Total</th></tr></thead>
+        <tbody>
+            <tr><td>• Atendimento Social</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Atendimento Psicológico</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Atendimento Jurídico</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Atendimento Multiprofissional</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Atividades Coletivas</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Encaminhamento para a Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Encaminhamento para Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Encaminhamento para o Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Articulação com a Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Articulação com a Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Articulação com o Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Visita Domiciliar</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Visita Institucional</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Relatórios encaminhados ao poder judiciário</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Quantidades de casos arquivados</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Quantidades de casos suspensos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Estudo de Caso</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Ações de busca ativa</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Palestras</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Participação em Eventos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Ações Socioeducativas</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>• Reunião com a rede interna e externa</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+        </tbody>
+    </table>
+
+    <!-- BLOCO 4 -->
+    <div class="block-header">Bloco 4 – Serviço Especializado em Abordagem Social</div>
+
+    <div class="section-title">K. Quantidade e perfil de pessoas abordadas pela equipe do Serviço de Abordagem, no mês de referência</div>
+    <table>
+        <thead>
+            <tr>
+                <th>K.1. Pessoas abordadas pelo Serviço de Abordagem Social, durante o mês de referência</th>
+                <th class="num">Total</th>
+                <th>Sexo</th>
+                <th class="num">0 a 12 anos</th>
+                <th class="num">13 a 17 anos</th>
+                <th class="num">18 a 59 anos</th>
+                <th class="num">60 ou mais</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">K.1. Pessoas abordadas pelo Serviço de Abordagem Social</td>
+                <td class="num" rowspan="2"><input type="number" min="0" value="0"></td>
+                <td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">Situações identificadas pelo Serviço Especializado em Abordagem Social, no mês de referência</div>
+    <table>
+        <thead><tr><th>Situação</th><th class="num">Total</th></tr></thead>
+        <tbody>
+            <tr><td>K.2. Crianças ou adolescentes em situação de trabalho infantil (até 15 anos)</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>K.3. Crianças ou adolescentes em situação de exploração sexual</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>K.4. Crianças ou adolescentes usuárias de crack ou outras drogas</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>K.5. Pessoas adultas usuárias de crack ou outras drogas ilícitas</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+            <tr><td>K.6. Migrantes</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">L. Volume de abordagens realizadas</div>
+    <table>
+        <thead><tr><th>Indicador</th><th class="num">Total</th></tr></thead>
+        <tbody>
+            <tr><td>L.1. Quantidade total de abordagens realizadas (compreendida como o número de pessoas abordadas, multiplicado pelo número de vezes em que foram abordadas durante o mês)</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">4.1 Detalhamento da Abordagem Social</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Situações Identificadas</th>
+                <th>Sexo</th>
+                <th class="num">0 a 17 anos</th>
+                <th class="num">18 a 59 anos</th>
+                <th class="num">60 anos ou mais</th>
+                <th class="num">TOTAL DE INDIVÍDUOS ABORDADOS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">4.1.1 Trabalho Infantil</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.1<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.1.2. Exploração sexual de criança e/ou adolescente</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.2.<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.1.3. Situação de rua</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.3.<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.1.4. Uso abusivo de drogas ilícitas</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.4.<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.1.5. Negligência e violências</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.5.<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.1.6. Mendicância</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.6.<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.1.7. Uso de Álcool e drogas</td><td>Masculino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num" rowspan="2">Total do 4.1.7.<br><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td>Feminino</td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <td colspan="5">Outros. Qual? <input type="text" placeholder="Especificar..."></td>
+                <td class="num"><input type="number" min="0" value="0"></td>
+            </tr>
+            <tr>
+                <th colspan="5">TOTAL</th>
+                <td class="num">Total geral<br><input type="number" min="0" value="0"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="grid-2">
+        <div>
+            <div class="section-title">4.2 Encaminhamentos e Articulações Realizados pela Abordagem Social</div>
+            <table>
+                <thead><tr><th>Ação</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Encaminhamento para Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Encaminhamento para Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Encaminhamento para o Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Articulação com a Rede Socioassistencial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Articulação com a Rede Intersetorial</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Articulação com o Sistema de Garantia de Direitos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="section-title">4.3 Ações e Atividades da Abordagem Social</div>
+            <table>
+                <thead><tr><th>Atividade</th><th class="num">Total</th></tr></thead>
+                <tbody>
+                    <tr><td>Reunião com a rede interna e externa</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Visita Domiciliar</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Visita Institucional</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Busca Ativa</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>Palestras</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>• Participação em Eventos</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>• Ações Socioeducativas</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>• Elaboração de Relatórios</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>• Estudo de Caso</td><td class="num"><input type="number" min="0" value="0"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>                                    <button type="submit" class="btn" style="width: auto; padding: 0.85rem 2.5rem; font-size: 1rem;">💾 Salvar e Enviar RMA CREAS no Firebase</button>
                                 </form>
                             </div>
                         </div>

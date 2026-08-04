@@ -1399,7 +1399,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <table class="rma-table">
                                         <thead>
                                             <tr>
@@ -1583,18 +1582,18 @@
                                         <thead>
                                             <tr>
                                                 <th>Território / Bairro</th>
+                                                <style></style>
                                                 <th style="width: 150px; text-align: center;">Total de Famílias</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="container-territorializacao">
+                                        <tbody id="container-territorializacao-creas">
                                             <tr><td>Território 1: <input type="text" class="campo-resposta" data-rotulo="1.1 Territorialização - Território 1 Nome" placeholder="Nome do Bairro/Região" style="width: 70%; display: inline-block;"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="1.1 Territorialização - Território 1 Total Famílias" value="0"></td></tr>
                                             <tr><td>Território 2: <input type="text" class="campo-resposta" data-rotulo="1.1 Territorialização - Território 2 Nome" placeholder="Nome do Bairro/Região" style="width: 70%; display: inline-block;"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="1.1 Territorialização - Território 2 Total Famílias" value="0"></td></tr>
                                             <tr><td>Território 3: <input type="text" class="campo-resposta" data-rotulo="1.1 Territorialização - Território 3 Nome" placeholder="Nome do Bairro/Região" style="width: 70%; display: inline-block;"></td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="1.1 Territorialização - Território 3 Total Famílias" value="0"></td></tr>
                                         </tbody>
                                     </table>
-                                    <button type="button" class="btn btn-secondary" onclick="adicionarTerritorio()" style="width: auto; padding: 0.5rem 1rem; margin-bottom: 1.5rem;">➕ Adicionar mais 1 Território</button>
-
-                                    <!-- 1.2 PERFIL DAS PESSOAS VÍTIMAS -->
+                                    <button type="button" class="btn btn-secondary" onclick="adicionarTerritorioCreas()" style="width: auto; padding: 0.5rem 1rem; margin-bottom: 1.5rem;">➕ Adicionar mais 1 Território</button>
+<!-- 1.2 PERFIL DAS PESSOAS VÍTIMAS -->
                                     <div class="rma-section-header">1.2 Em relação ao perfil das pessoas vítimas de violência ou violações de direitos (ingressadas no mês)</div>
                                     <table class="rma-table">
                                         <thead>
@@ -2115,6 +2114,7 @@
                                             <tr><td>Estudo de Caso</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="4.3 Estudo de Caso" value="0"></td></tr>
                                         </tbody>
                                     </table>
+ 
                     ${rodapeResponsavel}
                 `;
             }
@@ -2132,7 +2132,7 @@
                                         <tbody>
                                             <tr><td>1.1 Quantidade de Famílias</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.1 Quantidade de Famílias" value="0"></td></tr>
                                             <tr><td>1.2 Quantidade de Atendimentos - Cadastro Único</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.2 Quantidade de Atendimentos CadÚnico" value="0"></td></tr>
-                                            <tr><td>1.3 Quantidade de Ações</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.3 Quantidade de Ações" value="0"></td></tr>
+                                           <tr><td>1.3 Quantidade de Ações</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.3 Quantidade de Ações" value="0"></td></tr>
                                             <tr><td>1.4 Quantidade de Atendimentos - Ações Descentralizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.4 Atendimentos Ações Descentralizadas" value="0"></td></tr>
                                             <tr><td>1.5 Quantidade de Buscas Ativas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 1 - 1.5 Quantidade de Buscas Ativas" value="0"></td></tr>
                                         </tbody>
@@ -2406,7 +2406,6 @@
                                             <tr><td>E.3. Visitas não realizadas</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 3 - E.3 Total Visitas não realizadas" value="0"></td></tr>
                                         </tbody>
                                     </table>
-
                                     <!-- BLOCO 4 - DEMANDAS IDENTIFICADAS -->
                                     <div class="rma-section-header">BLOCO 4 - DEMANDAS IDENTIFICADAS</div>
                                     <table class="rma-table">
@@ -2451,7 +2450,7 @@
                                                 <th style="width: 120px; text-align: center;">Total</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tbody-territorios-pcf">
+                                        <tbody id="tbody-territorios-cfeliz">
                                             <tr>
                                                 <td><input type="text" class="campo-resposta" data-rotulo="Bloco 6 - H.1 Nome do Território" placeholder="H.1. Nome do Território"></td>
                                                 <td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 6 - H.1 Total Demanda" value="0"></td>
@@ -2462,9 +2461,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button type="button" class="btn-report" style="margin-bottom: 1.5rem;" onclick="adicionarTerritorioCriancaFeliz()">➕ Adicionar Território</button>
-
-                                   <!-- BLOCO 7 - PERFIL -->
+                                    <button type="button" class="btn-report" style="margin-bottom: 1.5rem;" onclick="adicionarTerritorioCF()">➕ Adicionar Território</button>
+<!-- BLOCO 7 - PERFIL -->
 <div class="rma-section-header">BLOCO 7 - PERFIL</div>
 <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b;">1. Perfil dos usuários</p>
 
@@ -2519,14 +2517,7 @@
                                             <label>1.5. Faixa de renda</label>
                                             <input type="text" class="campo-resposta" data-rotulo="Bloco 7 - 1.5 Faixa de renda" placeholder="Preencher informação de renda...">
                                         </div>
-                                    </div>
-
-                                    <p style="font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem 0; color: #1e293b;">1.6. Faixa etária (Gestantes)</p>
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
-                                        <div><label style="font-size:0.8rem; font-weight:600;">Adolescentes</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Gestantes Adolescentes" value="0" style="width:100%;"></div>
-                                        <div><label style="font-size:0.8rem; font-weight:600;">Adultas</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Gestantes Adultas" value="0" style="width:100%;"></div>
-                                        <div><label style="font-size:0.8rem; font-weight:600;">Total</label><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 7 - 1.6 Total Gestantes" value="0" style="width:100%;"></div>
-                                    </div>
+                                    </div>                                 
 
                                     <!-- BLOCO DE AÇÕES -->
                                     <div class="rma-section-header">BLOCO DE AÇÕES</div>
@@ -2557,7 +2548,7 @@
                                             <div class="form-group" style="margin:0;"><label style="font-size:0.8rem; font-weight:600;">J.10. Quais?</label><input type="text" class="campo-resposta" data-rotulo="Ações - J.10 Quais reuniões externas" placeholder="Descreva quais..."></div>
                                         </div>
                                     </div>
-                    ${rodapeResponsavel}
+                                                       ${rodapeResponsavel}
                 `;
             }
 
@@ -2661,6 +2652,8 @@
                                             <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;↳ E.5.1 Quais?</td><td><input type="text" class="campo-resposta" data-rotulo="Bloco 4 - E.5.1 Territórios atendidos (Quais)" placeholder="Especificar territórios"></td></tr>
                                         </tbody>
                                     </table>
+
+                                            
                     ${rodapeResponsavel}
                 `;
             }
@@ -2772,6 +2765,7 @@
                                             <tr><td>E.6. UBS de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Bloco 4 - E.6 UBS de referência" value="0"></td></tr>
                                         </tbody>
                                     </table>
+                                           
                     ${rodapeResponsavel}
                 `;
             }

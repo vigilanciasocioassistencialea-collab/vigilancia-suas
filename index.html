@@ -126,12 +126,6 @@
         .btn:hover { background-color: var(--primary-hover); }
         .btn:active { transform: scale(0.99); }
 
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: #334155;
-        }
-        .btn-secondary:hover { background-color: #cbd5e1; }
-
         .error-message {
             color: var(--danger);
             font-size: 0.85rem;
@@ -966,9 +960,7 @@
     </div>
 
     <script>
-        // =========================================================================
         // CONFIGURAÇÃO DO FIREBASE (EMBEDDED NO CÓDIGO)
-        // =========================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyBd0jLCU-lPFiabjG8yr-k7fmTJM81PgXU",
             authDomain: "vigilancia-suas.firebaseapp.com",
@@ -1035,7 +1027,7 @@
             input.value = v;
         }
 
-        // PERSISTÊNCIA DE DADOS (LOCAL + FIREBASE)
+        // PERSISTÊNCIA DE DADOS (RELATÓRIOS E USUÁRIOS NO FIREBASE)
         function salvarRelatoriosBD() {
             localStorage.setItem('vigilancia_relatorios', JSON.stringify(relatoriosBD));
             if (isFirebaseConnected && dbFirebase) {
@@ -1045,7 +1037,21 @@
                         ultimaAtualizacao: new Date().toISOString()
                     });
                 } catch(e) {
-                    console.error("Erro ao sincronizar Firestore:", e);
+                    console.error("Erro ao sincronizar Firestore (Relatórios):", e);
+                }
+            }
+        }
+
+        function salvarUsuariosBD() {
+            localStorage.setItem('vigilancia_usuarios', JSON.stringify(usuariosBD));
+            if (isFirebaseConnected && dbFirebase) {
+                try {
+                    dbFirebase.collection("usuarios_vigilancia").doc("todos_usuarios").set({
+                        dados: usuariosBD,
+                        ultimaAtualizacao: new Date().toISOString()
+                    });
+                } catch(e) {
+                    console.error("Erro ao sincronizar Firestore (Usuários):", e);
                 }
             }
         }
@@ -1053,11 +1059,20 @@
         async function sincronizarComFirebase() {
             if (isFirebaseConnected && dbFirebase) {
                 try {
-                    const doc = await dbFirebase.collection("relatorios_vigilancia").doc("todos_relatorios").get();
-                    if (doc.exists && doc.data().dados) {
-                        relatoriosBD = doc.data().dados;
+                    // Carrega e sincroniza relatórios do Firebase
+                    const docRel = await dbFirebase.collection("relatorios_vigilancia").doc("todos_relatorios").get();
+                    if (docRel.exists && docRel.data().dados) {
+                        relatoriosBD = docRel.data().dados;
                         localStorage.setItem('vigilancia_relatorios', JSON.stringify(relatoriosBD));
                         renderizarMonitoramentoGeral();
+                    }
+
+                    // Carrega e sincroniza usuários do Firebase
+                    const docUser = await dbFirebase.collection("usuarios_vigilancia").doc("todos_usuarios").get();
+                    if (docUser.exists && docUser.data().dados) {
+                        usuariosBD = docUser.data().dados;
+                        localStorage.setItem('vigilancia_usuarios', JSON.stringify(usuariosBD));
+                        renderizarListaUsuarios();
                     }
                 } catch(e) {
                     console.error("Erro ao sincronizar dados do Firebase:", e);
@@ -2809,7 +2824,6 @@
             menuContainer.innerHTML = '';
 
             SERVICOS_CONFIG.forEach(s => {
-                // Menu Lateral
                 const menuLink = document.createElement('a');
                 menuLink.className = 'nav-item';
                 menuLink.id = `nav-servico-${s.key}`;
@@ -2817,7 +2831,6 @@
                 menuLink.innerText = s.nome;
                 menuContainer.appendChild(menuLink);
 
-                // Aba do Serviço
                 const sec = document.createElement('section');
                 sec.id = `tab-servico-${s.key}`;
                 sec.className = 'tab-content';
@@ -2975,7 +2988,7 @@
             }
         }
 
-        // SUBMISSÃO DE RELATÓRIO
+        // SUBMISSÃO DE RELATÓRIO (COM SALVAMENTO NO FIREBASE)
         function enviarRelatorioServico(servicoKey, nomeServico) {
             const mesInput = document.getElementById(`mes-ref-${servicoKey}`);
             if (!mesInput || !mesInput.value) {
@@ -3022,20 +3035,21 @@
 
             relatoriosBD = relatoriosBD.filter(r => !(r.servicoKey === servicoKey && r.mesRef === mesRef));
             relatoriosBD.push(novoRelatorio);
+            
+            // Salva Localmente e no Firebase Firestore
             salvarRelatoriosBD();
 
-            alert("Relatório mensal enviado e registrado com sucesso!");
+            alert("Relatório mensal enviado e registrado com sucesso no Firebase!");
             
             const btnHist = container.parentNode.querySelector('.sub-tab-btn:nth-child(2)');
             if (btnHist) alternarSubAba(servicoKey, 'historico', btnHist);
         }
 
-        // RENDERIZAR PAINEL DE MONITORAMENTO GERAL (DESIGNS & METRICAS)
+        // RENDERIZAR PAINEL DE MONITORAMENTO GERAL
         function renderizarMonitoramentoGeral() {
             const tbody = document.getElementById('tbody-monitoramento-direto');
             tbody.innerHTML = '';
 
-            // Atualiza Métricas Resumidas
             const total = relatoriosBD.length;
             const bloqueados = relatoriosBD.filter(r => r.status === 'Bloqueado').length;
             const liberados = relatoriosBD.filter(r => r.status === 'Liberado').length;
@@ -3200,7 +3214,7 @@
             });
         }
 
-        // GESTÃO DE USUÁRIOS E ALTERAÇÃO DE SENHA
+        // GESTÃO DE USUÁRIOS E ALTERAÇÃO DE SENHA (COM SALVAMENTO NO FIREBASE)
         function carregarOpcoesUsuarios() {
             const select = document.getElementById('novo-servico');
             select.innerHTML = '<option value="Administrador">Administrador</option>';
@@ -3222,9 +3236,11 @@
 
             const novo = { id: Date.now().toString(), nome, usuario, senha, servico };
             usuariosBD.push(novo);
-            localStorage.setItem('vigilancia_usuarios', JSON.stringify(usuariosBD));
+            
+            // Salva Localmente e envia para o Firebase Firestore
+            salvarUsuariosBD();
 
-            alert("Usuário cadastrado com sucesso!");
+            alert("Usuário cadastrado com sucesso no Firebase!");
             document.getElementById('novo-nome').value = '';
             document.getElementById('novo-usuario').value = '';
             document.getElementById('nova-senha').value = '';
@@ -3271,16 +3287,18 @@
             const user = usuariosBD.find(x => x.id === id);
             if (user && novaSenha) {
                 user.senha = novaSenha;
-                localStorage.setItem('vigilancia_usuarios', JSON.stringify(usuariosBD));
+                // Atualiza local e no Firebase
+                salvarUsuariosBD();
                 alert(`Senha do usuário ${user.usuario} alterada com sucesso!`);
                 fecharModalSenha();
             }
         }
 
         function excluirUsuario(id) {
-            if (confirm("Deseja remover este usuário?")) {
+            if (confirm("Deseja remover este usuário do sistema e do banco de dados?")) {
                 usuariosBD = usuariosBD.filter(u => u.id !== id);
-                localStorage.setItem('vigilancia_usuarios', JSON.stringify(usuariosBD));
+                // Atualiza local e no Firebase
+                salvarUsuariosBD();
                 renderizarListaUsuarios();
             }
         }

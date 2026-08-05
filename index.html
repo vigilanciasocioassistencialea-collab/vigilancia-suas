@@ -1065,6 +1065,7 @@
                         relatoriosBD = docRel.data().dados;
                         localStorage.setItem('vigilancia_relatorios', JSON.stringify(relatoriosBD));
                         renderizarMonitoramentoGeral();
+                        SERVICOS_CONFIG.forEach(s => carregarOuLimparDadosMes(s.key));
                     }
 
                     // Carrega e sincroniza usuários do Firebase
@@ -1110,7 +1111,7 @@
                                         </thead>
                                         <tbody>
                                             <tr><td>A.1. Total de famílias em acompanhamento pelo PAIF</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.1 Total de famílias em acompanhamento" value="0"></td></tr>
-                                            <tr><td>A.2. Novas famílias inseridas no acompanhamento do PAIF durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.2 Novas famílias inseridas no mês" value="0"></td></tr>
+<tr><td>A.2. Novas famílias inseridas no acompanhamento do PAIF durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.2 Novas famílias inseridas no mês" value="0"></td></tr>
                                             <tr><td>A.3. Desligamento de acompanhamento pelo PAIF durante o mês de referência</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="PAIF - A.3 Desligamento de acompanhamento no mês" value="0"></td></tr>
                                         </tbody>
                                     </table>
@@ -1221,7 +1222,6 @@
                                             <tr><td>E.9 Estudo de Caso</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="Ações - E.9 Estudo de Caso" value="0"></td></tr>
                                         </tbody>
                                     </table>
-
                                     <!-- BLOCO 5: GESTÃO TERRITORIAL -->
                                     <div class="rma-section-header">Bloco 5 – Gestão Territorial</div> 
                                     <table class="rma-table">
@@ -2113,7 +2113,7 @@
                                             <tr><td>Elaboração de Relatórios</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="4.3 Elaboração de Relatórios" value="0"></td></tr>
                                             <tr><td>Estudo de Caso</td><td style="text-align: center;"><input type="number" min="0" class="rma-input-num campo-resposta" data-rotulo="4.3 Estudo de Caso" value="0"></td></tr>
                                         </tbody>
-                                    </table>
+                                    </table> 
  
                     ${rodapeResponsavel}
                 `;
@@ -2303,7 +2303,7 @@
                                             <label>A.1. CRAS/Área de Referência</label>
                                             <input type="text" class="campo-resposta" data-rotulo="Bloco 1 - A.1 CRAS/Área de Referência" placeholder="Nome do CRAS ou área" required>
                                         </div>
-                                        <div class="form-group" style="margin:0;">
+                                       <div class="form-group" style="margin:0;">
                                             <label>A.2. Supervisor(a)</label>
                                             <input type="text" class="campo-resposta" data-rotulo="Bloco 1 - A.2 Supervisor(a)" placeholder="Nome do supervisor(a)" required>
                                         </div>
@@ -2810,6 +2810,48 @@
             tbody.appendChild(tr);
         }
 
+        // CARREGAR OU LIMPAR FORMULÁRIO SEGUNDO O MÊS SELECIONADO
+        function carregarOuLimparDadosMes(servicoKey) {
+            const mesInput = document.getElementById(`mes-ref-${servicoKey}`);
+            if (!mesInput) return;
+            const mesRef = mesInput.value;
+            const container = document.getElementById(`subtab-${servicoKey}-formulario`);
+            if (!container) return;
+
+            const campos = container.querySelectorAll('.campo-resposta');
+
+            if (!mesRef) {
+                campos.forEach(c => {
+                    if (c.type === 'number') {
+                        c.value = '0';
+                    } else {
+                        c.value = '';
+                    }
+                });
+                return;
+            }
+
+            const relatorioExistente = relatoriosBD.find(r => r.servicoKey === servicoKey && r.mesRef === mesRef);
+
+            if (relatorioExistente && relatorioExistente.dados) {
+                campos.forEach((c, index) => {
+                    const rotulo = c.getAttribute('data-rotulo') || c.placeholder || 'Campo';
+                    const dadoSalvo = relatorioExistente.dados.find(d => d.rotulo === rotulo) || relatorioExistente.dados[index];
+                    if (dadoSalvo !== undefined && dadoSalvo.valor !== undefined) {
+                        c.value = dadoSalvo.valor;
+                    }
+                });
+            } else {
+                campos.forEach(c => {
+                    if (c.type === 'number') {
+                        c.value = '0';
+                    } else {
+                        c.value = '';
+                    }
+                });
+            }
+        }
+
         // CONSTRUÇÃO DINÂMICA DA INTERFACE DOS SERVIÇOS
         function renderizarEstruturaServicos() {
             const container = document.getElementById('dynamic-services-container');
@@ -2851,7 +2893,7 @@
                                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                                     <div class="form-group">
                                         <label>Mês / Ano de Referência</label>
-                                        <input type="month" id="mes-ref-${s.key}" required class="campo-mes-ref">
+                                        <input type="month" id="mes-ref-${s.key}" required class="campo-mes-ref" onchange="carregarOuLimparDadosMes('${s.key}')">
                                     </div>
                                 </div>
                             </div>
@@ -2903,6 +2945,7 @@
             if (subaba === 'formulario') {
                 formDiv.style.display = 'block';
                 histDiv.style.display = 'none';
+                carregarOuLimparDadosMes(servicoKey);
             } else {
                 formDiv.style.display = 'none';
                 histDiv.style.display = 'block';
